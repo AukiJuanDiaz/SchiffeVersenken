@@ -1,6 +1,7 @@
 *.arff
 /kiel_gdynia
 /BrhvHH/Daten/Data_prepared_complete.csv
+/BrhvHH/Daten/DataSetWithDateTimeFeatures.csv
 /BrhvHH/Daten/CompleteDatabaseWithTripdurationSmaller3000Min.csv
 /BrhvHH/Daten/CondensedDataSetGroupByTripIDLatLong.csv
 /KielGdynia/kiel_gdynia.csv
