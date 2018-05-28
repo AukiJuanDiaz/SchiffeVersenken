@@ -1,0 +1,2 @@
+SELECT TripID, ID, WeekdayInt, WeekOfYearInt, HourInt, TripDurationInMinutes, RemainingTravelTimeInMinutes, shiptype, dp.Length, Breadth, Draught, Latitude, Longitude, SOG, COG, TH
+FROM data_prepared AS dp
