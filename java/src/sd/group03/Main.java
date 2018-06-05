@@ -14,8 +14,11 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class Main {
 
     public static void main(String[] args) {
+    	
+    	System.out.println("hallo, wie geht es dir?");
+    	
 
-        String basePath = "/home/thilo/Documents/Uni/sd/group03/java/";
+        String basePath = "H:\\git\\group03\\java";
         Path agentPath = Paths.get(basePath, "agents/test");
         Path dataPath = Paths.get(basePath, "datasets/Data_prepared_complete.arff");
 
@@ -64,5 +67,6 @@ public class Main {
         {
             System.out.println(e.getMessage());
         }
+        
     }
 }
