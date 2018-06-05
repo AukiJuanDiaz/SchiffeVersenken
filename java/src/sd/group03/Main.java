@@ -14,6 +14,8 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class Main {
 
     public static void main(String[] args) {
+    	
+    	System.out.println("Hallo, Marrone");
 
         String basePath = "/home/thilo/Documents/Uni/sd/group03/java/";
         Path agentPath = Paths.get(basePath, "agents/test");
