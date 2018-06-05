@@ -15,8 +15,8 @@ public class Main {
 
     public static void main(String[] args) {
     	
-    	System.out.println("hallo, wie geht es dir?");
-    	
+
+    	System.out.println("Hallo, Marrone");
 
         String basePath = "H:\\git\\group03\\java";
         Path agentPath = Paths.get(basePath, "agents/test");
