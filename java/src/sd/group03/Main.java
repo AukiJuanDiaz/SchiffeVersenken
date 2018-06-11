@@ -1,15 +1,13 @@
 package sd.group03;
 
-import java.io.BufferedReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Enumeration;
-
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
-
 import weka.core.converters.ConverterUtils.DataSource;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Enumeration;
 
 public class Main {
 
@@ -18,54 +16,41 @@ public class Main {
 
     	System.out.println("Hallo, Marrone");
 
-        String basePath = "H:\\git\\group03\\java";
-        Path agentPath = Paths.get(basePath, "agents/test");
-        Path dataPath = Paths.get(basePath, "datasets/Data_prepared_complete.arff");
+        //String basePath = "H:\\git\\group03\\java";
+        String basePath = "/home/thilo/Documents/Uni/sd/group03/java/";
+
+        Path dataPath = Paths.get(basePath, "datasets/DataSetWithDateTimeFeatures.csv");
+        Path configPath = Paths.get(basePath, "src/sampleConfig.json");
 
         try {
 
             DataSource src = new DataSource(dataPath.toString());
             Instances trainingSet = src.getDataSet();
-
-            trainingSet.deleteAttributeAt(0);
-            trainingSet.deleteAttributeAt(0);
-            trainingSet.deleteAttributeAt(0);
-            trainingSet.deleteAttributeAt(0);
-
-            trainingSet.deleteAttributeAt(1);
-            trainingSet.deleteAttributeAt(1);
-
-
-            trainingSet.deleteAttributeAt(2);
-            trainingSet.deleteAttributeAt(2);
-            trainingSet.deleteAttributeAt(2);
-
-            trainingSet.deleteAttributeAt(3);
-            trainingSet.deleteAttributeAt(trainingSet.numAttributes()-1);
-            //trainingSet.setClassIndex(3);
-
-
-            //Instance inst = trainingSet.firstInstance();
             Instance inst = trainingSet.instance(2);
-            //System.out.println("Class " + inst.classAttribute() + " " + inst.classValue());
 
-            Enumeration<Attribute> en = inst.enumerateAttributes();
-
-            while(en.hasMoreElements())
-            {
-                Attribute a = en.nextElement();
-                //System.out.println("Att: " + a);
+            Enumeration<Attribute> en = trainingSet.enumerateAttributes();
+            while(en.hasMoreElements()) {
+                Attribute att = en.nextElement();
+                System.out.println("Att: " + att.name() + " index: " + att.index());
+                ModelInput.setAttributeIndex(att.name(), att.index());
             }
-            //inst.setClassMissing();
 
-            Agent agent = new Agent(agentPath.toString());
+            trainingSet.setClassIndex(ModelInput.getAttributeIndex("RemainingTravelTimeInMinutes"));
 
-            System.out.println(inst);
-            System.out.println(agent.makePrediction(inst));
+            Broker broker = new Broker(configPath.toString());
+
+            ModelInput mi = broker.createModelInput(inst);
+
+            mi.prettyPrint();
+
+            Route r = broker.getRouteForPrediction(mi);
+            double prediction = r.makePrediction(mi);
+
+            System.out.println("Prediction: " + prediction);
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + " " + e.getCause());
         }
         
     }

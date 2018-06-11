@@ -1,51 +1,54 @@
 package sd.group03;
 
-import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.Set;
-import weka.core.Instance;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Agent {
 
-    HashSet<Predictor> predictors;
+    //HashSet<Predictor> predictors;
+    private Predictor[] predictors;
+    private double minimumLongitude, maximumLongitude;
 
-    public Agent(String path) throws RuntimeException {
-        System.out.println("\nLooking for models in path: " + path);
+    public Agent(JSONObject obj) throws RuntimeException {
 
-        predictors = new HashSet<Predictor>();
-        for (Predictor.PredictorType pt : Predictor.PredictorType.values()) {
+        //System.out.println("\nLooking for models in path: " + path);
 
-            String modelName = pt.name() + ".model";
-            System.out.print("Looking for model: " + modelName + "...");
-            Path predictorModel = Paths.get(path, modelName);
+        minimumLongitude = obj.getDouble("minLong");
+        maximumLongitude = obj.getDouble("maxLong");
 
-            if (Files.exists(predictorModel)) {
-                System.out.println(" FOUND!");
-                try {
-                    Predictor p = new Predictor(pt, predictorModel.toString());
-                    predictors.add(p);
-                }
-                catch(Exception e)  {
-                   System.out.println(e.getMessage());
-                }
-            } else System.out.println("NOT FOUND!");
-        }
+        JSONArray jsonPredictors = obj.getJSONArray("predictors");
 
-        if (predictors.isEmpty()) {
-            throw new RuntimeException("Found no appropriate model files in path: " + path);
+        predictors = new Predictor[jsonPredictors.length()];
+
+        for(int i = 0; i < jsonPredictors.length(); ++i) {
+            try {
+                Predictor p = new Predictor( (JSONObject) jsonPredictors.get(i));
+                predictors[i] = p;
+            }
+            catch (Exception e) {
+               System.out.println(e.getMessage());
+            }
+
         }
     }
 
-    public Instance makePrediction(Instance inst) {
-        Instance copy = (Instance) inst.copy();
+    public ModelInput makePrediction(ModelInput inst) {
+        ModelInput copy = new ModelInput(inst);
 
         for (Predictor p : predictors) {
             double res = p.makePrediction(inst);
-            copy.setValue(p.classIndex(), res);
+            copy.setValue(p.getClassIndex(), res);
         }
         return copy;
+    }
+
+    public boolean isApplicable(ModelInput inst) {
+
+        double instLong = inst.value("Longitude");
+
+        inst.prettyPrint();
+
+        return ( minimumLongitude <= instLong && instLong < maximumLongitude );
     }
 }
 

@@ -1,5 +1,6 @@
 package sd.group03;
 
+import org.json.JSONObject;
 import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Utils;
@@ -14,16 +15,19 @@ public class Predictor {
 
     private Classifier model;
     public PredictorType type;
+    private int classIndex;
 
-    public Predictor(PredictorType t, String modelPath) throws Exception
+    public Predictor(JSONObject obj) throws Exception
     {
-        type = t;
         try {
+            type = PredictorType.valueOf(obj.getString("predictorType"));
+            String modelPath = obj.getString("modelPath");
             model = (Classifier) weka.core.SerializationHelper.read(modelPath);
+            classIndex = obj.getInt("classIndex");
         }
         catch (Exception e)
         {
-            System.out.println("Error reading model file: " + modelPath);
+            System.out.println("Error reading model file: " );
             throw e;
         }
     }
@@ -34,7 +38,7 @@ public class Predictor {
 
         try {
             res = model.classifyInstance(inst);
-            System.out.println("Prediction: " + res);
+            //System.out.println("Prediction: " + res);
         }
         catch (Exception e)
         {
@@ -42,12 +46,6 @@ public class Predictor {
         }
         return res;
     }
-
-    public int classIndex()
-    {
-        return classIndexForPredictorType(this.type);
-    }
-
 
     // Calculate RMSE for instances
     // DOES NOT WORK FOR COG -> 360 and 0 degrees are the same and not maximally different
@@ -57,8 +55,10 @@ public class Predictor {
 
         for(Instance i : instances)
         {
-            double actual = i.value(classIndex());
+            double actual = i.value(classIndex);
             double predicted = makePrediction(i);
+
+            System.out.println("Error: " + (actual - predicted));
 
             error += Math.pow(actual - predicted, 2);
         }
@@ -68,18 +68,7 @@ public class Predictor {
         return Math.sqrt(error);
     }
 
-    // Index for the attribute that will be predicted.
-    // MUST BE ADJUSTED!!
-    static private int classIndexForPredictorType(PredictorType t)
-    {
-        switch (t)
-        {
-            case PT_COMPLETE:
-                return 3;
-            case PT_SOG:
-                return 4;
-            default:
-                return -1;
-        }
+    public int getClassIndex() {
+        return classIndex;
     }
 }
