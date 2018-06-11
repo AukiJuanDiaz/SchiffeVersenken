@@ -17,15 +17,23 @@ import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
+import javax.swing.JTextField;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.JTextPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MainFrame2 implements ActionListener {
-
+	
+	// Declare Elements in GUI
 	private JFrame frame;
 	JButton testButton;
 	JPanel inputForm;
 	JPanel mapView; 
 	JPanel textLog;
-	JLabel label;
+	JTextField textField;
+	String FilePathInput;
 
 	/**
 	 * Launch the application.
@@ -54,6 +62,8 @@ public class MainFrame2 implements ActionListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// To DO: Set Sizes of the window, frame, dynamically?
+		// Initialize frame and the three panels
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,18 +77,25 @@ public class MainFrame2 implements ActionListener {
 		textLog = new JPanel();
 		textLog.setBackground(Color.DARK_GRAY);
 		
+		// Initialize the Open File-Button
+		testButton = new JButton("Open File");
+		testButton.setBackground(Color.WHITE);
+		testButton.addActionListener(this);
 		
-		
-		
-		
-		
-		
-		
-		System.out.println("Eclipse nervt");
-		
-		
-		
-		
+		// Initialize the text input field
+		textField = new JTextField();
+		textField.setColumns(8);
+		textField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					handleInput();			
+				}
+			}
+		});
+
+		// Create a label in inputForm-Panel
+		JLabel lblEnterFilePath = new JLabel("Enter file path: ");
 		
 		// Automatically generated code by groupGrid in Design-Mode
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -98,30 +115,56 @@ public class MainFrame2 implements ActionListener {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(mapView, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textLog, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
-						.addComponent(inputForm, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+							.addComponent(textLog, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		
-		// Initialize elements
-		testButton = new JButton("Hallo, Arne");
-		testButton.setBackground(Color.WHITE);
-		testButton.addActionListener(this); 
-		
-		label = new JLabel();
-		
-		inputForm.add(testButton);
-		inputForm.add(label);
-	}
+		GroupLayout gl_inputForm = new GroupLayout(inputForm);
+		gl_inputForm.setHorizontalGroup(
+			gl_inputForm.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_inputForm.createSequentialGroup()
+					.addGroup(gl_inputForm.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_inputForm.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblEnterFilePath))
+						.addGroup(gl_inputForm.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_inputForm.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(testButton)))
+					.addContainerGap(23, Short.MAX_VALUE))
+		);
+		gl_inputForm.setVerticalGroup(
+			gl_inputForm.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_inputForm.createSequentialGroup()
+					.addGap(43)
+					.addComponent(lblEnterFilePath)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(testButton)
+					.addContainerGap(128, Short.MAX_VALUE))
+		);
+		inputForm.setLayout(gl_inputForm);
+		// End of Automatically generated code by groupGrid in Design-Mode
+	} //End of initialize
+	
 	
 	public void actionPerformed(ActionEvent ae) {
-		System.out.println("test");
+		
 		if(ae.getSource() == this.testButton){
-			label.setText("Hallo, Hauke");
+			handleInput();			
 		}
+	}
+	
+	public void handleInput(){
+		FilePathInput = textField.getText();
+		System.out.println(FilePathInput);
 	}
 }
