@@ -17,7 +17,8 @@ public class Main {
     	
 
     	System.out.println("Hallo, Marrone");
-
+    	System.out.println("Hallo, Team");
+    	
         String basePath = "H:\\git\\group03\\java";
         Path agentPath = Paths.get(basePath, "agents/test");
         Path dataPath = Paths.get(basePath, "datasets/Data_prepared_complete.arff");
