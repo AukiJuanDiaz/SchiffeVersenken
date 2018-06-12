@@ -1,12 +1,15 @@
 *.arff
 /kiel_gdynia
 /BrhvHH/Daten/Data_prepared_complete.csv
-/BrhvHH/Daten/DataSetWithDateTimeFeatures.csv
-/BrhvHH/Daten/CompleteDatabaseWithTripdurationSmaller3000Min.csv
-/BrhvHH/Daten/CondensedDataSetGroupByTripIDLatLong.csv
+
+/BrhvHH/Daten/SubstepsDuringDataPreparation/DataSetWithDateTimeFeatures.csv
+/BrhvHH/Daten/SubstepsDuringDataPreparation/CompleteDatabaseWithTripdurationSmaller3000Min.csv
+/BrhvHH/Daten/SubstepsDuringDataPreparation/CondensedDataSetGroupByTripIDLatLong.csv
+/BrhvHH/Daten/SubstepsDuringDataPreparation/Data_prepared_complete.csv
+
 /KielGdynia/kiel_gdynia.csv
 /KielGdynia/Daten/SubstepsDuringDataPreparation/CompleteDataSetAfterCleaning.csv
 /KielGdynia/Daten/DatasetWithTimeFeatures.csv
-/BrhvHH/Daten/SubstepsDuringDataPreparation/Data_prepared_complete.csv 
+
 
 /BrhvHH/Daten/FinalePredictionDaten.csv
