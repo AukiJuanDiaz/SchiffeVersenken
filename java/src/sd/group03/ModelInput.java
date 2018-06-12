@@ -1,19 +1,14 @@
 package sd.group03;
 
-import weka.core.DenseInstance;
-import weka.core.Instance;
-import weka.core.Utils;
+import weka.core.*;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ModelInput extends DenseInstance {
 
     private static HashMap<String,Integer> attributeIndexMap;
-
-    static {
-        attributeIndexMap = new HashMap<String, Integer>();
-    }
 
     // In java werden konstruktoren nicht vererbt, daher rufen sie hier immer super auf
     ModelInput(double weight, double[] attValues) {
@@ -50,7 +45,19 @@ public class ModelInput extends DenseInstance {
         return attributeIndexMap.get(s);
     }
 
+    public static void initialiseModelInput(Instances set) {
 
+        attributeIndexMap = new HashMap<String, Integer>();
+
+        Enumeration<Attribute> en = set.enumerateAttributes();
+        while(en.hasMoreElements()) {
+            Attribute att = en.nextElement();
+            //System.out.println("Att: " + att.name() + " index: " + att.index());
+            setAttributeIndex(att.name(), att.index());
+        }
+
+        set.setClassIndex(getAttributeIndex("RemainingTravelTimeInMinutes"));
+    }
 
     public void prettyPrint() {
         for(Map.Entry<String, Integer> entry : attributeIndexMap.entrySet()) {

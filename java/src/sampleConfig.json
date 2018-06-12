@@ -11,9 +11,8 @@
           "predictors":
           [
             {
-              "predictorType": "PT_COMPLETE",
               "modelPath": "/home/thilo/Documents/Uni/sd/group03/java/agents/test2/gobalRandomTree2.model",
-              "classIndex": 6
+              "classAttribute": "RemainingTravelTimeInMinutes"
             }
           ]
         }

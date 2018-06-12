@@ -1,13 +1,11 @@
 package sd.group03;
 
-import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
 
 public class Main {
 
@@ -26,25 +24,10 @@ public class Main {
 
             DataSource src = new DataSource(dataPath.toString());
             Instances trainingSet = src.getDataSet();
-            Instance inst = trainingSet.instance(2);
-
-            Enumeration<Attribute> en = trainingSet.enumerateAttributes();
-            while(en.hasMoreElements()) {
-                Attribute att = en.nextElement();
-                System.out.println("Att: " + att.name() + " index: " + att.index());
-                ModelInput.setAttributeIndex(att.name(), att.index());
-            }
-
-            trainingSet.setClassIndex(ModelInput.getAttributeIndex("RemainingTravelTimeInMinutes"));
+            Instance inst = trainingSet.instance(12358);
 
             Broker broker = new Broker(configPath.toString());
-
-            ModelInput mi = broker.createModelInput(inst);
-
-            mi.prettyPrint();
-
-            Route r = broker.getRouteForPrediction(mi);
-            double prediction = r.makePrediction(mi);
+            double prediction = broker.makePrediction(trainingSet, inst);
 
             System.out.println("Prediction: " + prediction);
         }

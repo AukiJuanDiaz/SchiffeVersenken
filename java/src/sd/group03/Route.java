@@ -35,14 +35,14 @@ public class Route {
 
         boolean skipping = true;
 
-        for(int i = 0; i < agents.length; ++i) {
+        for(Agent a : agents) {
 
-           if(agents[i].isApplicable(cpy)) {
+            if(a.isApplicable(cpy)) {
 
-              skipping = false;
-              cpy = agents[i].makePrediction(cpy);
-           }
-           else if(!skipping) throw new RuntimeException("Agent rejected output from former Agent");
+                skipping = false;
+                cpy = a.makePrediction(cpy);
+            }
+            else if(!skipping) throw new RuntimeException("Agent rejected output from former Agent");
         }
 
         return cpy.value("RemainingTravelTimeInMinutes");

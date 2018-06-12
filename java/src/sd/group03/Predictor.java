@@ -7,23 +7,15 @@ import weka.core.Utils;
 
 public class Predictor {
 
-    public enum PredictorType
-    {
-        PT_COMPLETE,
-        PT_SOG
-    }
-
     private Classifier model;
-    public PredictorType type;
-    private int classIndex;
+    private String classAttribute;
 
     public Predictor(JSONObject obj) throws Exception
     {
         try {
-            type = PredictorType.valueOf(obj.getString("predictorType"));
             String modelPath = obj.getString("modelPath");
             model = (Classifier) weka.core.SerializationHelper.read(modelPath);
-            classIndex = obj.getInt("classIndex");
+            classAttribute = obj.getString("classAttribute");
         }
         catch (Exception e)
         {
@@ -37,8 +29,11 @@ public class Predictor {
         double res = Utils.missingValue();
 
         try {
+            // Set and reset the class attribute to the appropriate value for this predictor
+            int oldClassIndex = inst.classIndex();
+            inst.dataset().setClassIndex(getClassIndex());
             res = model.classifyInstance(inst);
-            //System.out.println("Prediction: " + res);
+            inst.dataset().setClassIndex(oldClassIndex);
         }
         catch (Exception e)
         {
@@ -55,7 +50,7 @@ public class Predictor {
 
         for(Instance i : instances)
         {
-            double actual = i.value(classIndex);
+            double actual = i.value(getClassIndex());
             double predicted = makePrediction(i);
 
             System.out.println("Error: " + (actual - predicted));
@@ -68,7 +63,11 @@ public class Predictor {
         return Math.sqrt(error);
     }
 
+    public String getClassAttribute() {
+        return classAttribute;
+    }
+
     public int getClassIndex() {
-        return classIndex;
+        return ModelInput.getAttributeIndex(getClassAttribute());
     }
 }

@@ -5,13 +5,10 @@ import org.json.JSONObject;
 
 public class Agent {
 
-    //HashSet<Predictor> predictors;
     private Predictor[] predictors;
     private double minimumLongitude, maximumLongitude;
 
     public Agent(JSONObject obj) throws RuntimeException {
-
-        //System.out.println("\nLooking for models in path: " + path);
 
         minimumLongitude = obj.getDouble("minLong");
         maximumLongitude = obj.getDouble("maxLong");
@@ -28,7 +25,6 @@ public class Agent {
             catch (Exception e) {
                System.out.println(e.getMessage());
             }
-
         }
     }
 
@@ -46,7 +42,7 @@ public class Agent {
 
         double instLong = inst.value("Longitude");
 
-        inst.prettyPrint();
+        //inst.prettyPrint();
 
         return ( minimumLongitude <= instLong && instLong < maximumLongitude );
     }
