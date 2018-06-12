@@ -24,17 +24,18 @@ import javax.swing.Box;
 import javax.swing.JTextPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.Font;
 
-public class MainFrame2 implements ActionListener {
+public class MainFrame2{
 	
 	// Declare Elements in GUI
 	private JFrame frame;
-	JButton testButton;
-	JPanel inputForm;
+	InputForm inputForm;
 	JPanel mapView; 
 	JPanel textLog;
-	JTextField textField;
-	String FilePathInput;
 	public static final int FRAME_SIZE_HEIGHT = 800;
 	public static final int FRAME_SIZE_WIDTH = 800;
 	
@@ -80,34 +81,13 @@ public class MainFrame2 implements ActionListener {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		inputForm = new JPanel();
-		inputForm.setBackground(Color.WHITE);
+		inputForm = new InputForm();
 		
 		mapView = new JPanel();
 		mapView.setBackground(Color.GREEN);
 		
-		textLog = new JPanel();
-		textLog.setBackground(Color.DARK_GRAY);
-		
-		// Initialize the Open File-Button
-		testButton = new JButton("Open File");
-		testButton.setBackground(Color.WHITE);
-		testButton.addActionListener(this);
-		
-		// Initialize the text input field
-		textField = new JTextField();
-		textField.setColumns(8);
-		textField.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER)
-				{
-					handleInput();			
-				}
-			}
-		});
+		textLog = new TextLog();
 
-		// Create a label in inputForm-Panel
-		JLabel lblEnterFilePath = new JLabel("Enter file path: ");
 		
 		// Automatically generated code by groupGrid in Design-Mode
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -115,68 +95,30 @@ public class MainFrame2 implements ActionListener {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(textLog, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-						.addComponent(mapView, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
+						.addComponent(mapView, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+						.addComponent(textLog, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+						.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 774, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(mapView, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textLog, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
+					.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 44, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textLog, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(mapView, GroupLayout.PREFERRED_SIZE, 543, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
+		
+
+
+
+		
 		frame.getContentPane().setLayout(groupLayout);
 		
-		GroupLayout gl_inputForm = new GroupLayout(inputForm);
-		gl_inputForm.setHorizontalGroup(
-			gl_inputForm.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_inputForm.createSequentialGroup()
-					.addGroup(gl_inputForm.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_inputForm.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblEnterFilePath))
-						.addGroup(gl_inputForm.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_inputForm.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(testButton)))
-					.addContainerGap(23, Short.MAX_VALUE))
-		);
-		gl_inputForm.setVerticalGroup(
-			gl_inputForm.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_inputForm.createSequentialGroup()
-					.addGap(43)
-					.addComponent(lblEnterFilePath)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(testButton)
-					.addContainerGap(128, Short.MAX_VALUE))
-		);
-		inputForm.setLayout(gl_inputForm);
-		// End of Automatically generated code by groupGrid in Design-Mode
+
 	} //End of initialize
-	
-	
-	public void actionPerformed(ActionEvent ae) {
-		
-		if(ae.getSource() == this.testButton){
-			handleInput();			
-		}
-	}
-	
-	public void handleInput(){
-		FilePathInput = textField.getText();
-		System.out.println(FilePathInput);
-	}
 }
