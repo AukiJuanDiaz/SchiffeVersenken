@@ -12,7 +12,21 @@ import javax.swing.GroupLayout.Alignment;
 
 public class TextLog extends JPanel{
 	
-	TextLog(){
+	private static TextLog instance; //Create the one instance of the Singleton Text Log
+	private int lineNumber = 1;
+	
+	public static TextLog getInstance() {
+		    if (TextLog.instance == null) {
+		    	TextLog.instance = new TextLog ();
+		    }
+		    return TextLog.instance;
+	}
+	
+	
+	
+	JTextArea textArea;
+	
+	private TextLog(){
 		this.setBackground(Color.DARK_GRAY);
 		
 		
@@ -32,7 +46,7 @@ public class TextLog extends JPanel{
 				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
 		);
 		
-		JTextArea textArea = new JTextArea(7,1);
+		textArea = new JTextArea(7,1);
 		textArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
 		textArea.setForeground(Color.GREEN);
 		textArea.setBackground(Color.BLACK);
@@ -40,20 +54,27 @@ public class TextLog extends JPanel{
 		scrollPane.setViewportView(textArea);
 		textArea.setLineWrap(true);
 		
-		textArea.setText("========= Ahoi du Landratte! =========");
+		textArea.setText("  Welcome on board.");
+		
 		this.setLayout(gl_textLog);
 		
 		// end GroupLayout on TextLogger
 		
-		
+	
 		
 	}
 	
 	
 	public void write(String input){
-		
+		String newLog = "\n" + lineNumber + " > " + input; 
+		textArea.append(newLog);
+		lineNumber++;
 	}
 	
+	public void clean(){
+		textArea.setText("  Welcome on board.");
+		lineNumber = 1;
+	}
 	
 
 }

@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -22,20 +25,26 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Font;
+import javax.swing.UIManager;
 
-public class MainFrame2{
+public class MainFrame2 implements ActionListener{
 	
 	// Declare Elements in GUI
 	private JFrame frame;
 	InputForm inputForm;
 	JPanel mapView; 
-	JPanel textLog;
+	TextLog textLog;
+	JMenuBar menuBar;
+	JMenu reset, credits;
+	JMenuItem resetItem, creditsItem;
 	public static final int FRAME_SIZE_HEIGHT = 800;
 	public static final int FRAME_SIZE_WIDTH = 800;
 	
@@ -60,6 +69,7 @@ public class MainFrame2{
 	 */
 	public MainFrame2() {
 		initialize();
+		
 	}
 
 	/**
@@ -81,13 +91,31 @@ public class MainFrame2{
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
+		// Add the top menu bar
+		menuBar = new JMenuBar();
+		reset = new JMenu("Reset");
+		resetItem = new JMenuItem("Reset the program.");
+		reset.add(resetItem);
+		menuBar.add(reset);
+		resetItem.addActionListener(this);
+		credits = new JMenu("Credits");
+		creditsItem = new JMenuItem("And the winner is...");
+		credits.add(creditsItem);
+		menuBar.add(credits);
+		creditsItem.addActionListener(this);
+		frame.setJMenuBar(menuBar);
+		
+		
 		inputForm = new InputForm();
 		
 		mapView = new JPanel();
-		mapView.setBackground(Color.GREEN);
+		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
 		
-		textLog = new TextLog();
-
+		textLog = TextLog.getInstance();
+		
+		
+		
 		
 		// Automatically generated code by groupGrid in Design-Mode
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -112,13 +140,23 @@ public class MainFrame2{
 					.addComponent(mapView, GroupLayout.PREFERRED_SIZE, 543, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
-		
-
-
-
-		
 		frame.getContentPane().setLayout(groupLayout);
+		//End of Group Layout for frame
 		
 
 	} //End of initialize
+	
+    public void actionPerformed(ActionEvent e) {
+    	// Function to handle the events in the menu bar
+    	JMenuItem source = (JMenuItem)(e.getSource());
+    	
+    	if(resetItem == source){
+    		TextLog.getInstance().clean();
+    	}
+    	
+    	// Return the credits for the work
+    	if(creditsItem == source){
+    		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Grünhagen, Thilo Fischer and Hauke Diers.");
+    	}
+    }
 }

@@ -77,7 +77,16 @@ public class InputForm extends JPanel implements ActionListener {
 	
 	public void handleInput(){
 		FilePathInput = textField.getText();
-		System.out.println(FilePathInput);
+		if(FilePathInput.isEmpty()){
+			TextLog.getInstance().write("");
+		} else {
+			String message = "Try to open file at \"" + FilePathInput + "\"...";
+			TextLog.getInstance().write(message);
+		}
+	}
+	
+	public String getInput(){
+		return FilePathInput;
 	}
 	
 }
