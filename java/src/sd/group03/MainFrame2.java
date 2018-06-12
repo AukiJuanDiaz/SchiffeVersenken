@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
@@ -34,7 +35,9 @@ public class MainFrame2 implements ActionListener {
 	JPanel textLog;
 	JTextField textField;
 	String FilePathInput;
-
+	public static final int FRAME_SIZE_HEIGHT = 800;
+	public static final int FRAME_SIZE_WIDTH = 800;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -62,10 +65,19 @@ public class MainFrame2 implements ActionListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		// To DO: Set Sizes of the window, frame, dynamically?
+		
 		// Initialize frame and the three panels
+		// Calculate Frame position
+		// Assumption: Screen is big enough for 800 x 800
+		int screenSizeHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+		int screenSizeWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+		int cornerX = (screenSizeWidth / 2) - (FRAME_SIZE_WIDTH / 2);
+		int cornerY = (screenSizeHeight / 2) - (FRAME_SIZE_HEIGHT / 2);
+		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		
+		frame.setBounds(cornerX, cornerY, FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		inputForm = new JPanel();
