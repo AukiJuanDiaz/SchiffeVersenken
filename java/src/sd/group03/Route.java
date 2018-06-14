@@ -30,7 +30,10 @@ public class Route {
         }
     }
 
-    public double makePrediction(ModelInput inst) throws RuntimeException {
+    public PredictionResult makePrediction(ModelInput inst) throws RuntimeException {
+
+        PredictionResult pr = new PredictionResult();
+
         ModelInput cpy = new ModelInput(inst);
 
         boolean skipping = true;
@@ -41,11 +44,11 @@ public class Route {
 
                 skipping = false;
                 cpy = a.makePrediction(cpy);
+                pr.addIntermediate(new ModelInput(cpy));
             }
             else if(!skipping) throw new RuntimeException("Agent rejected output from former Agent");
         }
-
-        return cpy.value("RemainingTravelTimeInMinutes");
+        return pr;
     }
 
     public boolean isApplicable(ModelInput inst) {

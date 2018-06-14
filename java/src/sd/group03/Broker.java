@@ -3,7 +3,6 @@ package sd.group03;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import weka.core.Instance;
-import weka.core.Instances;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -47,8 +46,8 @@ public class Broker {
         return null;
     }
 
-    public double makePrediction(Instances set, Instance inst) {
-        ModelInput.initialiseModelInput(set);
+    public PredictionResult makePrediction(Instance inst) {
+        ModelInput.initialiseModelInput(inst.dataset());
         ModelInput mi = createModelInput(inst);
         return getRouteForPrediction(mi).makePrediction(mi);
     }

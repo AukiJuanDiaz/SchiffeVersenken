@@ -1,16 +1,11 @@
 package sd.group03;
 
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
 
     public static void main(String[] args) {
-    	
 
     	System.out.println("Hallo, Marrone");
 
@@ -21,20 +16,16 @@ public class Main {
         Path configPath = Paths.get(basePath, "src/sampleConfig.json");
 
         try {
-
-            DataSource src = new DataSource(dataPath.toString());
-            Instances trainingSet = src.getDataSet();
-            Instance inst = trainingSet.instance(12358);
-
             Broker broker = new Broker(configPath.toString());
-            double prediction = broker.makePrediction(trainingSet, inst);
+            BrokerController bc = new BrokerController(broker);
 
-            System.out.println("Prediction: " + prediction);
+            PredictionResult prediction = bc.makePrediction(dataPath.toString());
+
+            System.out.println("Prediction: " + prediction.getETT());
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage() + " " + e.getCause());
         }
-        
     }
 }
