@@ -1,15 +1,8 @@
 package sd.group03;
 
-import java.io.BufferedReader;
+import java.awt.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
-
-import weka.core.Attribute;
-import weka.core.Instance;
-import weka.core.Instances;
-
-import weka.core.converters.ConverterUtils.DataSource;
 
 public class Main {
 
@@ -25,12 +18,22 @@ public class Main {
         Path configPath = Paths.get(basePath, "src/sampleConfig.json");
 
         try {
+
             Broker broker = new Broker(configPath.toString());
             BrokerController bc = new BrokerController(broker);
 
-            PredictionResult prediction = bc.makePrediction(dataPath.toString());
+            //PredictionResult prediction = bc.makePrediction(dataPath.toString());
+            //System.out.println("Prediction: " + prediction.getETT());
 
-            System.out.println("Prediction: " + prediction.getETT());
+            EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    try {
+                        MainFrame2 window = new MainFrame2(bc);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
         catch (Exception e)
         {

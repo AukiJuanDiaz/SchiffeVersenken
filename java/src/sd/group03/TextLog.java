@@ -1,14 +1,8 @@
 package sd.group03;
 
-import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.GroupLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
+import java.awt.*;
 
 public class TextLog extends JPanel{
 	
@@ -21,9 +15,7 @@ public class TextLog extends JPanel{
 		    }
 		    return TextLog.instance;
 	}
-	
-	
-	
+
 	JTextArea textArea;
 	
 	private TextLog(){
@@ -59,11 +51,7 @@ public class TextLog extends JPanel{
 		this.setLayout(gl_textLog);
 		
 		// end GroupLayout on TextLogger
-		
-	
-		
 	}
-	
 	
 	public void write(String input){
 		String newLog = "\n" + lineNumber + " > " + input; 
@@ -75,6 +63,4 @@ public class TextLog extends JPanel{
 		textArea.setText("  Welcome on board.");
 		lineNumber = 1;
 	}
-	
-
 }

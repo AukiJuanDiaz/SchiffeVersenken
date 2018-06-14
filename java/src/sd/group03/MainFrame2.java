@@ -1,39 +1,11 @@
 package sd.group03;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JSplitPane;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Toolkit;
-
-import javax.swing.JPanel;
-import java.awt.GridBagConstraints;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Color;
-import javax.swing.JTextField;
-import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.JTextPane;
-import javax.swing.KeyStroke;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import java.awt.Font;
-import javax.swing.UIManager;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame2 implements ActionListener{
 	
@@ -45,31 +17,17 @@ public class MainFrame2 implements ActionListener{
 	JMenuBar menuBar;
 	JMenu reset, credits;
 	JMenuItem resetItem, creditsItem;
+	BrokerController brokerController;
 	public static final int FRAME_SIZE_HEIGHT = 800;
 	public static final int FRAME_SIZE_WIDTH = 800;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame2 window = new MainFrame2();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public MainFrame2() {
+	public MainFrame2(BrokerController bc) {
+	    brokerController = bc;
 		initialize();
-		
+		frame.setVisible(true);
 	}
 
 	/**
@@ -107,7 +65,7 @@ public class MainFrame2 implements ActionListener{
 		frame.setJMenuBar(menuBar);
 		
 		
-		inputForm = new InputForm();
+		inputForm = new InputForm(brokerController);
 		
 		mapView = new JPanel();
 		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
@@ -156,7 +114,7 @@ public class MainFrame2 implements ActionListener{
     	
     	// Return the credits for the work
     	if(creditsItem == source){
-    		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Grünhagen, Thilo Fischer and Hauke Diers.");
+    		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Grï¿½nhagen, Thilo Fischer and Hauke Diers.");
     	}
     }
 }

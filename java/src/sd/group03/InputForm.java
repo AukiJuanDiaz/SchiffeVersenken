@@ -1,22 +1,22 @@
 package sd.group03;
-import java.awt.Color;
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
 public class InputForm extends JPanel implements ActionListener {
 	JButton testButton;
 	JTextField textField;
-	String FilePathInput;
+	BrokerController brokerController;
 	
-	
-	InputForm(){
+	InputForm(BrokerController bc){
 		this.setBackground(Color.WHITE);
+
+		brokerController = bc;
 		
 		// Initialize the Open File-Button
 		testButton = new JButton("Open File");
@@ -65,9 +65,7 @@ public class InputForm extends JPanel implements ActionListener {
 		this.setLayout(gl_inputForm);
 		// End of Automatically generated code by groupGrid in Design-Mode
 	}
-	
-	
-	
+
 	public void actionPerformed(ActionEvent ae) {
 		
 		if(ae.getSource() == this.testButton){
@@ -76,17 +74,13 @@ public class InputForm extends JPanel implements ActionListener {
 	}
 	
 	public void handleInput(){
-		FilePathInput = textField.getText();
-		if(FilePathInput.isEmpty()){
+		String input = textField.getText();
+		if(input.isEmpty()){
 			TextLog.getInstance().write("");
 		} else {
-			String message = "Try to open file at \"" + FilePathInput + "\"...";
+			String message = "Try to open file at \"" + input + "\"...";
 			TextLog.getInstance().write(message);
+			brokerController.makePrediction(input);
 		}
 	}
-	
-	public String getInput(){
-		return FilePathInput;
-	}
-	
 }

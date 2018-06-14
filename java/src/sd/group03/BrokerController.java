@@ -18,7 +18,8 @@ public class BrokerController {
             DataSource src = new DataSource(filePath);
             Instances trainingSet = src.getDataSet();
             Instance inst = trainingSet.instance(0);
-            return model.makePrediction(inst);
+            PredictionResult pr = model.makePrediction(inst);
+            TextLog.getInstance().write("Prediction: " + pr.getETT());
         }
         catch (Exception e) {
            System.out.println("Error during prediction: " + e.getMessage());
