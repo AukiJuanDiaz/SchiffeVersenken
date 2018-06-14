@@ -17,56 +17,24 @@ public class Main {
     	
 
     	System.out.println("Hallo, Marrone");
-    	System.out.println("Hallo, Team");
-    	
-        String basePath = "H:\\git\\group03\\java";
-        Path agentPath = Paths.get(basePath, "agents/test");
-        Path dataPath = Paths.get(basePath, "datasets/Data_prepared_complete.arff");
+
+        //String basePath = "H:\\git\\group03\\java";
+        String basePath = "/home/thilo/Documents/Uni/sd/group03/java/";
+
+        Path dataPath = Paths.get(basePath, "datasets/DataSetWithDateTimeFeatures.csv");
+        Path configPath = Paths.get(basePath, "src/sampleConfig.json");
 
         try {
+            Broker broker = new Broker(configPath.toString());
+            BrokerController bc = new BrokerController(broker);
 
-            DataSource src = new DataSource(dataPath.toString());
-            Instances trainingSet = src.getDataSet();
+            PredictionResult prediction = bc.makePrediction(dataPath.toString());
 
-            trainingSet.deleteAttributeAt(0);
-            trainingSet.deleteAttributeAt(0);
-            trainingSet.deleteAttributeAt(0);
-            trainingSet.deleteAttributeAt(0);
-
-            trainingSet.deleteAttributeAt(1);
-            trainingSet.deleteAttributeAt(1);
-
-
-            trainingSet.deleteAttributeAt(2);
-            trainingSet.deleteAttributeAt(2);
-            trainingSet.deleteAttributeAt(2);
-
-            trainingSet.deleteAttributeAt(3);
-            trainingSet.deleteAttributeAt(trainingSet.numAttributes()-1);
-            //trainingSet.setClassIndex(3);
-
-
-            //Instance inst = trainingSet.firstInstance();
-            Instance inst = trainingSet.instance(2);
-            //System.out.println("Class " + inst.classAttribute() + " " + inst.classValue());
-
-            Enumeration<Attribute> en = inst.enumerateAttributes();
-
-            while(en.hasMoreElements())
-            {
-                Attribute a = en.nextElement();
-                //System.out.println("Att: " + a);
-            }
-            //inst.setClassMissing();
-
-            Agent agent = new Agent(agentPath.toString());
-
-            System.out.println(inst);
-            System.out.println(agent.makePrediction(inst));
+            System.out.println("Prediction: " + prediction.getETT());
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + " " + e.getCause());
         }
         
     }

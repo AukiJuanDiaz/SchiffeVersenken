@@ -1,0 +1,28 @@
+{
+  "routes":
+  [
+    {
+      "name": "Bremerhaven-Hamburg",
+      "agents":
+      [
+        {
+          "minLong": 0,
+          "maxLong": 11,
+          "predictors":
+          [
+            {
+              "modelPath": "/home/thilo/Documents/Uni/sd/group03/java/agents/test2/gobalRandomTree2.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kiel-Gdynia",
+      "agents":
+      [
+      ]
+    }
+  ]
+}
