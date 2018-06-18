@@ -78,8 +78,9 @@ public class InputForm extends JPanel implements ActionListener {
 		if(input.isEmpty()){
 			TextLog.getInstance().write("");
 		} else {
-			String message = "Try to open file at \"" + input + "\"...";
+			String message = "Try to send file (\"" + input + "\") to Broker ...";
 			TextLog.getInstance().write(message);
+			
 			brokerController.makePrediction(input);
 		}
 	}
