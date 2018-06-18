@@ -1,6 +1,7 @@
 package sd.group03;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Route {
@@ -10,24 +11,37 @@ public class Route {
 
     public Route(JSONObject obj) throws RuntimeException {
 
-        name = obj.getString("name");
+        try {
+			name = obj.getString("name");
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
         System.out.println("Setting up Route: " + name);
 
-        JSONArray jsonAgents = obj.getJSONArray("agents");
+        JSONArray jsonAgents;
+		try {
+			jsonAgents = obj.getJSONArray("agents");
+
 
         agents = new Agent[jsonAgents.length()];
 
-        for(int i = 0; i < jsonAgents.length(); ++i) {
-
-            try {
-                Agent a = new Agent((JSONObject) jsonAgents.get(i));
-                agents[i] = a;
-            }
-            catch (RuntimeException e) {
-               System.out.println("Could not create Agent from json data: " + (JSONObject) jsonAgents.get(i));
-            }
-        }
+	        for(int i = 0; i < jsonAgents.length(); ++i) {
+	
+	            try {
+	                Agent a = new Agent((JSONObject) jsonAgents.get(i));
+	                agents[i] = a;
+	            }
+	            catch (RuntimeException e) {
+	               System.out.println("Could not create Agent from json data: " + (JSONObject) jsonAgents.get(i));
+	            }
+	        }
+        
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
 
     public PredictionResult makePrediction(ModelInput inst) throws RuntimeException {
