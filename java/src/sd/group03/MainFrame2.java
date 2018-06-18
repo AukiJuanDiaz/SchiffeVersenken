@@ -48,6 +48,7 @@ public class MainFrame2 implements ActionListener{
 		frame.setBounds(cornerX, cornerY, FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		
 		
 		// Add the top menu bar
@@ -67,8 +68,9 @@ public class MainFrame2 implements ActionListener{
 		
 		inputForm = new InputForm(brokerController);
 		
-		mapView = new JPanel();
+		mapView = new MapView();
 		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
+
 		
 		textLog = TextLog.getInstance();
 		
@@ -100,7 +102,7 @@ public class MainFrame2 implements ActionListener{
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		//End of Group Layout for frame
-		
+
 
 	} //End of initialize
 	
@@ -114,7 +116,7 @@ public class MainFrame2 implements ActionListener{
     	
     	// Return the credits for the work
     	if(creditsItem == source){
-    		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Gr�nhagen, Thilo Fischer and Hauke Diers.");
+    		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Gruenhagen, Thilo Fischer and Hauke Diers.");
     	}
     }
 }
