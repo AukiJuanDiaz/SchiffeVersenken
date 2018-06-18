@@ -7,9 +7,6 @@ import java.nio.file.Paths;
 public class Main {
 
     public static void main(String[] args) {
-    	
-
-    	System.out.println("Hallo, Marrone");
 
         //String basePath = "H:\\git\\group03\\java";
         String basePath = "/home/thilo/Documents/Uni/sd/group03/java/";

@@ -1,6 +1,7 @@
 package sd.group03;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import weka.core.Instance;
 
@@ -30,7 +31,10 @@ public class Broker {
         }
         catch( IOException e){
             System.out.println(e.getMessage());
-        }
+        } catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     private ModelInput createModelInput(Instance inst) {

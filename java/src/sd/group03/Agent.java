@@ -1,6 +1,7 @@
 package sd.group03;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Agent {
@@ -10,22 +11,28 @@ public class Agent {
 
     public Agent(JSONObject obj) throws RuntimeException {
 
-        minimumLongitude = obj.getDouble("minLong");
-        maximumLongitude = obj.getDouble("maxLong");
-
-        JSONArray jsonPredictors = obj.getJSONArray("predictors");
-
-        predictors = new Predictor[jsonPredictors.length()];
-
-        for(int i = 0; i < jsonPredictors.length(); ++i) {
-            try {
-                Predictor p = new Predictor( (JSONObject) jsonPredictors.get(i));
-                predictors[i] = p;
-            }
-            catch (Exception e) {
-               System.out.println(e.getMessage());
-            }
-        }
+        try {
+			minimumLongitude = obj.getDouble("minLong");
+	
+	        maximumLongitude = obj.getDouble("maxLong");
+	
+	        JSONArray jsonPredictors = obj.getJSONArray("predictors");
+	
+	        predictors = new Predictor[jsonPredictors.length()];
+	
+	        for(int i = 0; i < jsonPredictors.length(); ++i) {
+	            try {
+	                Predictor p = new Predictor( (JSONObject) jsonPredictors.get(i));
+	                predictors[i] = p;
+	            }
+	            catch (Exception e) {
+	               System.out.println(e.getMessage());
+	            }
+	        }
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
 
     public ModelInput makePrediction(ModelInput inst) {
