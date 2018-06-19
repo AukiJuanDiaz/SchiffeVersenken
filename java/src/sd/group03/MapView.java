@@ -26,7 +26,7 @@ public class MapView extends JPanel{
     
     private MapView() {
        try {
-    	   image = ImageIO.read(new File("src\\groﬂ.jpg"));
+    	   image = ImageIO.read(new File("src\\gross.jpg"));
       
        } catch (IOException ex) {
             System.out.println("error opeining the background image");
@@ -44,7 +44,7 @@ public class MapView extends JPanel{
 			   pic = "kg.jpg";
 			   break;
 		   default:
-			   pic = "groﬂ.jpg";
+			   pic = "gross.jpg";
 			   break;
    
     	}
