@@ -11,7 +11,7 @@
           "predictors":
           [
             {
-              "modelPath": "/home/thilo/Documents/Uni/sd/group03/java/agents/test2/gobalRandomTree2.model",
+              "modelPath": "../BrhvHH/WekaModelle/global/gobalRandomTree2.model",
               "classAttribute": "RemainingTravelTimeInMinutes"
             }
           ]

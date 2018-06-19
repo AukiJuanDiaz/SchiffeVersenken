@@ -6,8 +6,34 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MainFrame2 implements ActionListener{
+	
+	public static void main(String[] args) {
+
+        try {
+        	
+            EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    try {
+                        MainFrame2 window = new MainFrame2();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage() + " " + e.getCause());
+        }
+        
+    }
+	
+	
+	
 	
 	// Declare Elements in GUI
 	private JFrame frame;
@@ -24,8 +50,7 @@ public class MainFrame2 implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public MainFrame2(BrokerController bc) {
-	    brokerController = bc;
+	public MainFrame2() {
 		initialize();
 		frame.setVisible(true);
 	}

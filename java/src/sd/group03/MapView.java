@@ -15,7 +15,7 @@ public class MapView extends JPanel{
 
     public MapView() {
        try {                
-          image = ImageIO.read(new File("H:\\git\\group03\\java\\src\\sd\\group03\\BackgroundDefaultMap.png"));
+          image = ImageIO.read(new File("src\\sd\\group03\\BackgroundDefaultMap.png"));
        } catch (IOException ex) {
             System.out.println("error opeining the background image");
        }

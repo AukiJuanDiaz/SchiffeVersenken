@@ -39,7 +39,7 @@ public class TextLog extends JPanel{
 		);
 		
 		textArea = new JTextArea(7,1);
-		textArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
 		textArea.setForeground(Color.GREEN);
 		textArea.setBackground(Color.BLACK);
 		textArea.setEditable(false);
