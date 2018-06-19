@@ -78,10 +78,24 @@ public class InputForm extends JPanel implements ActionListener {
 		if(input.isEmpty()){
 			TextLog.getInstance().write("");
 		} else {
+			
+			// Test for MapView
+			if (input.contains("change 0"))
+				MapView.getinstance().changeMap(0);
+			if (input.contains("change 1"))
+				MapView.getinstance().changeMap(1);
+			if (input.contains("change 2"))
+				MapView.getinstance().changeMap(2);
+			if (input.contains("make point"))
+				MapView.getinstance().drawlivePoint(50,50,0xC71585);
+			
+			// Tests for MapView
+			
+			
 			String message = "Try to send file (\"" + input + "\") to Broker ...";
 			TextLog.getInstance().write(message);
 			
-			brokerController.makePrediction(input);
+// just Testing			brokerController.makePrediction(input);
 		}
 	}
 }

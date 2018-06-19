@@ -38,7 +38,7 @@ public class MainFrame2 implements ActionListener{
 	// Declare Elements in GUI
 	private JFrame frame;
 	InputForm inputForm;
-	JPanel mapView; 
+	MapView mapView; 
 	TextLog textLog;
 	JMenuBar menuBar;
 	JMenu reset, credits;
@@ -93,7 +93,7 @@ public class MainFrame2 implements ActionListener{
 		
 		inputForm = new InputForm(brokerController);
 		
-		mapView = new MapView();
+		mapView = MapView.getinstance();
 		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
 
 		
