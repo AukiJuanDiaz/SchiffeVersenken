@@ -2,13 +2,22 @@ package sd.group03;
 
 import weka.core.*;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ModelInput extends DenseInstance {
 
-    private static HashMap<String,Integer> attributeIndexMap;
+    private static List<String> attributes;
+
+    static {
+       attributes = Arrays.asList("RemainingTravelTimeInMinutes", "Latitude", "Longitude", "WeekdayInt", "WeekOfYearInt", "HourInt", "Length", "Breadth", "Draught", "SOG", "COG");
+    }
+
+    ModelInput() {
+        super(attributes.size());
+        setDataset(getNewDataset());
+    }
 
     // In java werden konstruktoren nicht vererbt, daher rufen sie hier immer super auf
     ModelInput(double weight, double[] attValues) {
@@ -28,41 +37,38 @@ public class ModelInput extends DenseInstance {
         super(numAttributes);
     }
 
+    public void setValue(String attrName, double val) {
+        Integer index = getAttributeIndex(attrName);
+        if(index != -1) setValue(index, val);
+    }
+
     public double value(String attrName) {
         // Only works if instance is attached to dataset...
         //return this.value(this.dataset().attribute(attrName));
 
         Integer index = getAttributeIndex(attrName);
-        if(index == null) return Utils.missingValue();
+        if(index == -1) return Utils.missingValue();
         return value(index);
     }
 
-    public static void setAttributeIndex(String s, Integer i) {
-        attributeIndexMap.put(s, i);
-    }
-
     public static Integer getAttributeIndex(String s) {
-        return attributeIndexMap.get(s);
+        return attributes.indexOf(s);
     }
 
-    public static void initialiseModelInput(Instances set) {
+    public static Instances getNewDataset() {
+        ArrayList<Attribute> atts = new ArrayList<>();
 
-        attributeIndexMap = new HashMap<String, Integer>();
-
-        Enumeration<Attribute> en = set.enumerateAttributes();
-        while(en.hasMoreElements()) {
-            Attribute att = en.nextElement();
-            //System.out.println("Att: " + att.name() + " index: " + att.index());
-            setAttributeIndex(att.name(), att.index());
+        for(String name : attributes) {
+            atts.add(new Attribute(name));
         }
 
-        set.setClassIndex(getAttributeIndex("RemainingTravelTimeInMinutes"));
+        return new Instances("dataset", atts,1);
     }
 
-    public void prettyPrint() {
-        for(Map.Entry<String, Integer> entry : attributeIndexMap.entrySet()) {
-            System.out.print(entry.getKey() + ": " + value(entry.getValue()) + "  ");
+    void prettyPrint() {
+        for(String a : attributes) {
+            System.out.print(a + ": " + value(a));
         }
-        System.out.println("");
+        System.out.print("");
     }
 }
