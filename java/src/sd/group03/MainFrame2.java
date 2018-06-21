@@ -94,7 +94,7 @@ public class MainFrame2 implements ActionListener{
 		
 		comboBox = new DropDownBox();
 		
-		mapView = MapView.getinstance();
+		mapView = MapView.getInstance();
 		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
 
 		
@@ -138,7 +138,7 @@ public class MainFrame2 implements ActionListener{
     	if(resetItem == source){
     		TextLog.getInstance().clean();
     		// Add more reset functionality, e.g. in map:
-    		MapView.getinstance().changeMap(0);
+    		MapView.getInstance().changeMap(0);
     		comboBox.setSelectedIndex(0);
     	}
     	

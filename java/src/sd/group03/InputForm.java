@@ -9,21 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 public class InputForm extends JPanel implements ActionListener {
 	JButton testButton;
 	JTextField textField;
@@ -94,20 +79,13 @@ public class InputForm extends JPanel implements ActionListener {
 		if(input.isEmpty()){
 			TextLog.getInstance().write("");
 		} else {
-			
-			// Test for MapView
-			if (input.contains("change 0"))
-				MapView.getinstance().changeMap(0);
-			if (input.contains("change 1"))
-				MapView.getinstance().changeMap(1);
-			if (input.contains("change 2"))
-				MapView.getinstance().changeMap(2);
-			if (input.contains("make point"))
-				MapView.getinstance().drawlivePoint(50,50,0xC71585);
-			
-			// Tests for MapView
-			
-			
+
+            // Tests for MapView
+			if (input.contains("make point")) {
+                MapView.getInstance().drawlivePoint(50, 50, 0xC71585);
+                return;
+            }
+
 			String message = "Try to send file (\"" + input + "\") to Broker ...";
 			TextLog.getInstance().write(message);
 

@@ -1,14 +1,12 @@
 package sd.group03;
 
-import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import java.awt.Color;
+import java.nio.file.Paths;
 
 public class MapView extends JPanel{
 
@@ -17,25 +15,20 @@ public class MapView extends JPanel{
     private BufferedImage image;
     private int route = 0; 
 
-    public static MapView getinstance() {
-	    if (MapView.instance == null) {
-	    	MapView.instance = new MapView();
+    public static MapView getInstance() {
+	    if (instance == null) {
+	    	instance = new MapView();
 	    }
     	return instance;
     }
     
     private MapView() {
-       try {
-    	   image = ImageIO.read(new File("src\\gross.jpg"));
-      
-       } catch (IOException ex) {
-            System.out.println("error opeining the background image");
-       }
+		changeMap(0);
     }
 
     public void changeMap(int num) {
     	route = num;
-    	String pic = "";
+    	String pic;
     	switch (route) {
 		   case 1:
 			   pic = "bh.jpg";
@@ -46,20 +39,18 @@ public class MapView extends JPanel{
 		   default:
 			   pic = "gross.jpg";
 			   break;
-   
     	}
     	try {
-			image = ImageIO.read(new File("src\\"+ pic));
-			instance.updateUI();
+			image = ImageIO.read(new File(Paths.get("src", pic).toString()));
+			updateUI();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
     
     public void drawlivePoint(int xKord, int yKord, int rgb) {
-    	instance.image.setRGB(xKord, yKord, rgb);
-    	instance.updateUI();
+    	image.setRGB(xKord, yKord, rgb);
+    	updateUI();
    	}
  
     
