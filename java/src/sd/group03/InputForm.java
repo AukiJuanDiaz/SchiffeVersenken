@@ -9,6 +9,21 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 public class InputForm extends JPanel implements ActionListener {
 	JButton testButton;
 	JTextField textField;
@@ -21,9 +36,12 @@ public class InputForm extends JPanel implements ActionListener {
 		testButton.setBackground(Color.WHITE);
 		testButton.addActionListener(this);
 		
+		
 		// Initialize the text input field
 		textField = new JTextField();
 		textField.setColumns(8);
+		
+		new TextHint(textField, "Bitte geben Sie hier den Pfad zur Datei ein...");
 		textField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)

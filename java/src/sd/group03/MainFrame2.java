@@ -34,10 +34,11 @@ public class MainFrame2 implements ActionListener{
 	InputForm inputForm;
 	MapView mapView; 
 	TextLog textLog;
+	DropDownBox comboBox;
 	JMenuBar menuBar;
 	JMenu reset, credits;
 	JMenuItem resetItem, creditsItem;
-	public static final int FRAME_SIZE_HEIGHT = 800;
+	public static final int FRAME_SIZE_HEIGHT = 1000;
 	public static final int FRAME_SIZE_WIDTH = 800;
 
 	/**
@@ -63,6 +64,7 @@ public class MainFrame2 implements ActionListener{
 		
 		frame = new JFrame();
 		
+		frame.setTitle("Schiffe versenken");		
 		frame.setBounds(cornerX, cornerY, FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,14 +88,15 @@ public class MainFrame2 implements ActionListener{
 		
 		inputForm = new InputForm();
 		
+		textLog = TextLog.getInstance();
+		
+		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+		
+		comboBox = new DropDownBox();
+		
 		mapView = MapView.getinstance();
 		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
 
-		
-		textLog = TextLog.getInstance();
-		
-		
-		
 		
 		// Automatically generated code by groupGrid in Design-Mode
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -104,6 +107,8 @@ public class MainFrame2 implements ActionListener{
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(mapView, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
 						.addComponent(textLog, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+						.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+						.addComponent(comboBox, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
 						.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 774, Short.MAX_VALUE))
 					.addContainerGap())
 		);
@@ -111,17 +116,19 @@ public class MainFrame2 implements ActionListener{
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 44, Short.MAX_VALUE)
+					.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textLog, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+					.addComponent(textLog, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap()
+					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(mapView, GroupLayout.PREFERRED_SIZE, 543, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		//End of Group Layout for frame
-
-
 	} //End of initialize
 	
     public void actionPerformed(ActionEvent e) {
@@ -130,6 +137,9 @@ public class MainFrame2 implements ActionListener{
     	
     	if(resetItem == source){
     		TextLog.getInstance().clean();
+    		// Add more reset functionality, e.g. in map:
+    		MapView.getinstance().changeMap(0);
+    		comboBox.setSelectedIndex(0);
     	}
     	
     	// Return the credits for the work
