@@ -67,7 +67,7 @@ public class ModelInput extends DenseInstance {
 
     void prettyPrint() {
         for(String a : attributes) {
-            System.out.print(a + ": " + value(a));
+            System.out.println(a + ": " + value(a));
         }
         System.out.print("");
     }

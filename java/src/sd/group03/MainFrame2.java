@@ -6,15 +6,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class MainFrame2 implements ActionListener{
 	
 	public static void main(String[] args) {
 
         try {
-        	
             EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     try {
@@ -32,9 +29,6 @@ public class MainFrame2 implements ActionListener{
         
     }
 	
-	
-	
-	
 	// Declare Elements in GUI
 	private JFrame frame;
 	InputForm inputForm;
@@ -43,7 +37,6 @@ public class MainFrame2 implements ActionListener{
 	JMenuBar menuBar;
 	JMenu reset, credits;
 	JMenuItem resetItem, creditsItem;
-	BrokerController brokerController;
 	public static final int FRAME_SIZE_HEIGHT = 800;
 	public static final int FRAME_SIZE_WIDTH = 800;
 
@@ -91,7 +84,7 @@ public class MainFrame2 implements ActionListener{
 		frame.setJMenuBar(menuBar);
 		
 		
-		inputForm = new InputForm(brokerController);
+		inputForm = new InputForm();
 		
 		mapView = new MapView();
 		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));

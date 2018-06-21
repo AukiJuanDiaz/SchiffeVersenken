@@ -7,17 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class InputForm extends JPanel implements ActionListener {
 	JButton testButton;
 	JTextField textField;
-	BrokerController brokerController;
-	
-	InputForm(BrokerController bc){
+
+	InputForm(){
 		this.setBackground(Color.WHITE);
 
-		brokerController = bc;
-		
 		// Initialize the Open File-Button
 		testButton = new JButton("Open File");
 		testButton.setBackground(Color.WHITE);
@@ -80,8 +78,13 @@ public class InputForm extends JPanel implements ActionListener {
 		} else {
 			String message = "Try to send file (\"" + input + "\") to Broker ...";
 			TextLog.getInstance().write(message);
-			
-			brokerController.makePrediction(input);
+
+			try {
+                (new Thread(new GUINetworkConnection("127.0.0.1", (short) 9812, input))).start();
+            }
+            catch (IOException e) {
+			    e.printStackTrace();
+            }
 		}
 	}
 }

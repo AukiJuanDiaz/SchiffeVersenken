@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -58,14 +57,16 @@ public class Broker {
             mi.setValue(a.name(), inst.value(a));
         }
 
-        if(mi.value("WeekdayInt") == Utils.missingValue()) {
+        // TODO: fix, ist leider buggy bei arff input
+        //if(mi.value("WeekdayInt") == Utils.missingValue())
+        {
             double wekaEpoch = inst.value(dataset.attribute("time"));
             long seconds = (long) wekaEpoch / 1000;
             int nanoseconds = (int) (wekaEpoch % 1000) * 1000;
 
             LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, nanoseconds, ZoneOffset.ofHours(1));
 
-            mi.setValue("WeekDayInt", dateTime.getDayOfWeek().getValue());
+            mi.setValue("WeekdayInt", dateTime.getDayOfWeek().getValue());
             WeekFields weekFields = WeekFields.of(Locale.getDefault());
             mi.setValue("WeekOfYearInt", dateTime.get(weekFields.weekOfWeekBasedYear()));
             mi.setValue("HourInt", dateTime.getHour());
@@ -84,9 +85,13 @@ public class Broker {
         return null;
     }
 
-    public PredictionResult makePrediction(Instance inst) {
+    // Habe ich mal synchronized gemacht um etwaige probleme mit Weka und threads zu vermeiden
+    // Kann aber auch sein, dass es ohne funktioniert
+    synchronized public PredictionResult makePrediction(Instance inst) {
         ModelInput mi = createModelInput(inst);
         mi.prettyPrint();
-        return getRouteForPrediction(mi).makePrediction(mi);
+        Route r = getRouteForPrediction(mi);
+        if(r != null) return r.makePrediction(mi);
+        else return null;
     }
 }
