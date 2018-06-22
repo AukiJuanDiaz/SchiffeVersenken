@@ -18,6 +18,10 @@ public class PredictionResult {
         return last.value("RemainingTravelTimeInMinutes");
     }
 
+    public boolean isValid() {
+        return !intermediateResults.isEmpty();
+    }
+
     public void addIntermediate(ModelInput mi) {
        intermediateResults.add(mi);
     }

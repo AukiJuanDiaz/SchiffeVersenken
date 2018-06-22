@@ -7,25 +7,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class InputForm extends JPanel implements ActionListener {
 	JButton testButton;
 	JTextField textField;
-	BrokerController brokerController;
-	
-	InputForm(BrokerController bc){
+
+	InputForm(){
 		this.setBackground(Color.WHITE);
 
-		brokerController = bc;
-		
 		// Initialize the Open File-Button
 		testButton = new JButton("Open File");
 		testButton.setBackground(Color.WHITE);
 		testButton.addActionListener(this);
 		
+		
 		// Initialize the text input field
 		textField = new JTextField();
 		textField.setColumns(8);
+		
+		new TextHint(textField, "Bitte geben Sie hier den Pfad zur Datei ein...");
 		textField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
@@ -78,24 +79,22 @@ public class InputForm extends JPanel implements ActionListener {
 		if(input.isEmpty()){
 			TextLog.getInstance().write("");
 		} else {
-			
-			// Test for MapView
-			if (input.contains("change 0"))
-				MapView.getinstance().changeMap(0);
-			if (input.contains("change 1"))
-				MapView.getinstance().changeMap(1);
-			if (input.contains("change 2"))
-				MapView.getinstance().changeMap(2);
-			if (input.contains("make point"))
-				MapView.getinstance().drawlivePoint(50,50,0xC71585);
-			
-			// Tests for MapView
-			
-			
+
+            // Tests for MapView
+			if (input.contains("make point")) {
+                MapView.getInstance().drawlivePoint(50, 50, 0xC71585);
+                return;
+            }
+
 			String message = "Try to send file (\"" + input + "\") to Broker ...";
 			TextLog.getInstance().write(message);
-			
-// just Testing			brokerController.makePrediction(input);
+
+			try {
+                (new Thread(new GUINetworkConnection("127.0.0.1", (short) 9812, input))).start();
+            }
+            catch (IOException e) {
+			    e.printStackTrace();
+            }
 		}
 	}
 }

@@ -9,7 +9,7 @@ public class TextLog extends JPanel{
 	private static TextLog instance; //Create the one instance of the Singleton Text Log
 	private int lineNumber = 1;
 	
-	public static TextLog getInstance() {
+	synchronized public static TextLog getInstance() {
 		    if (TextLog.instance == null) {
 		    	TextLog.instance = new TextLog ();
 		    }
@@ -53,13 +53,13 @@ public class TextLog extends JPanel{
 		// end GroupLayout on TextLogger
 	}
 	
-	public void write(String input){
+	synchronized public void write(String input){
 		String newLog = "\n" + lineNumber + " > " + input; 
 		textArea.append(newLog);
 		lineNumber++;
 	}
 	
-	public void clean(){
+	synchronized public void clean(){
 		textArea.setText("  Welcome on board.");
 		lineNumber = 1;
 	}
