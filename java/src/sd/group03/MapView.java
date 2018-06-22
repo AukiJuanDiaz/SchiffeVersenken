@@ -11,10 +11,6 @@ import java.nio.file.Paths;
 public class MapView extends JPanel{
 	
 
-	private static final double WIDTH = 774;
-	private static final double HEIGHT = 543;
-	
-
 	private static MapView instance;
 	
     private BufferedImage image;
@@ -62,6 +58,9 @@ public class MapView extends JPanel{
 
 		double TOP_LAT = 0;
 		double BOT_LAT = 0;
+		
+		double height= (double)instance.getHeight();
+
 
 		
 		switch (route) {
@@ -79,11 +78,13 @@ public class MapView extends JPanel{
 			break;
 		}
 		
-		int yPix = (int) (HEIGHT - (lat - BOT_LAT)* HEIGHT/(TOP_LAT - BOT_LAT) );
+		int yPix = (int) (height - (lat - BOT_LAT)* height/(TOP_LAT - BOT_LAT) );
 		return yPix;
 	}
 	
 	public static int x_Geo2Pix(double lon, int route) {
+		
+		double width= (double) instance.getWidth();
 		
 		double LEFT_LON = 7.973;
 		double RIGHT_LON = 10.292;
@@ -103,7 +104,7 @@ public class MapView extends JPanel{
 			break;
 		}
 		
-		int xPix = (int) ((lon - LEFT_LON)*(WIDTH / (RIGHT_LON - LEFT_LON)));
+		int xPix = (int) ((lon - LEFT_LON)*(width / (RIGHT_LON - LEFT_LON)));
 		return xPix;
 	}
  
