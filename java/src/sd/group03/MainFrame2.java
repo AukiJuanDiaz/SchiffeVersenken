@@ -38,8 +38,8 @@ public class MainFrame2 implements ActionListener, ItemListener{
 	TextLog textLog;
 	DropDownBox comboBox;
 	JMenuBar menuBar;
-	JMenu reset, credits;
-	JMenuItem resetItem, creditsItem;
+	JMenu connection, reset, credits;
+	JMenuItem connectionItem, resetItem, creditsItem;
 	public static JCheckBox checkBoxHistoric;
 	public static JCheckBox checkBoxAgents;
 	public static final int FRAME_SIZE_HEIGHT = 1000;
@@ -78,6 +78,11 @@ public class MainFrame2 implements ActionListener, ItemListener{
 		
 		// Add the top menu bar
 		menuBar = new JMenuBar();
+		connection = new JMenu("Connection");
+		connectionItem = new JMenuItem("Set the connection to Broker.");
+		connection.add(connectionItem);
+		menuBar.add(connection);
+		connectionItem.addActionListener(this);
 		reset = new JMenu("Reset");
 		resetItem = new JMenuItem("Reset the program.");
 		reset.add(resetItem);
@@ -155,16 +160,22 @@ public class MainFrame2 implements ActionListener, ItemListener{
     	// Function to handle the events in the menu bar
     	JMenuItem source = (JMenuItem)(e.getSource());
     	
+    	// Reset the content of the frame
     	if(resetItem == source){
     		TextLog.getInstance().clean();
     		// Add more reset functionality, e.g. in map:
-    		MapView.getInstance().changeMap(0);
+    		// MapView.getInstance().changeMap(0);
     		comboBox.setSelectedIndex(0);
     	}
     	
     	// Return the credits for the work
     	if(creditsItem == source){
     		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Gruenhagen, Thilo Fischer and Hauke Diers.");
+    	}
+    	
+    	// Open a new frame to enter the IP and Port of the Broker
+    	if(connectionItem == source){
+    		new ConnectionSetterFrame();
     	}
     }
 

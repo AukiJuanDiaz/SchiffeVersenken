@@ -11,8 +11,8 @@ import java.nio.file.Paths;
 
 public class GUINetworkConnection implements Runnable {
 	
-	private static String host = "127.0.0.1";
-	private static short port = 9813;
+	private static String host = "127.0.0.5";
+	private static short port = 9817;
 
     private Socket socket;
     private BufferedWriter output;
@@ -39,7 +39,7 @@ public class GUINetworkConnection implements Runnable {
     	return host;
     }
     
-    public static int getPort() {
+    public static short getPort() {
     	return port;
     }
 
