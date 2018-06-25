@@ -1,5 +1,6 @@
 package sd.group03;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -79,6 +80,19 @@ public class GUINetworkConnection implements Runnable {
                     TextLog.getInstance().write(msg);
                 } else if ("result".equals(type)) {
                     double ett = response.getDouble("ett");
+
+                    JSONArray JsonIntLat= response.optJSONArray("intermediateLat");
+                    JSONArray JsonIntLon= response.optJSONArray("intermediateLon");
+                    
+                    double[] IntLats = new double[JsonIntLat.length()];
+                    double[] IntLons = new double[JsonIntLon.length()];
+                    
+                    for(int i = 0; i < JsonIntLat.length();i++) {
+                    	IntLats[i] = JsonIntLat.optDouble(i);
+                    	IntLons[i] = JsonIntLon.optDouble(i);
+                    	MapView.getInstance().drawlivePoint(IntLons[i],IntLats[i], 1);
+                    }
+                    
                     TextLog.getInstance().write("ETT: " + ett);
                     finished = true;
                 }

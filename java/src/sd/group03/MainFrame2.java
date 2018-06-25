@@ -193,6 +193,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
 				mapSelected -= 2;
 			}
 		} else if ( source == checkBoxAgents){
+			
 			if(ItemEvent.SELECTED == e.getStateChange()){
 				mapSelected += 4;
 			} else {
