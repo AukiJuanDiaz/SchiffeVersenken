@@ -6,8 +6,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-public class MainFrame2 implements ActionListener{
+public class MainFrame2 implements ActionListener, ItemListener{
 	
 	public static void main(String[] args) {
 
@@ -38,8 +40,11 @@ public class MainFrame2 implements ActionListener{
 	JMenuBar menuBar;
 	JMenu reset, credits;
 	JMenuItem resetItem, creditsItem;
+	public static JCheckBox checkBoxHistoric;
+	public static JCheckBox checkBoxAgents;
 	public static final int FRAME_SIZE_HEIGHT = 1000;
 	public static final int FRAME_SIZE_WIDTH = 800;
+	public static int mapSelected = 0;
 
 	/**
 	 * Create the application.
@@ -93,6 +98,13 @@ public class MainFrame2 implements ActionListener{
 		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
 		
 		comboBox = new DropDownBox();
+		checkBoxHistoric = new JCheckBox("Historische Daten");
+		checkBoxAgents = new JCheckBox("Agentengebiete");
+		checkBoxHistoric.setEnabled(false);
+		checkBoxAgents.setEnabled(false);
+		checkBoxHistoric.addItemListener(this);
+		checkBoxAgents.addItemListener(this);
+
 		
 		mapView = MapView.getInstance();
 		mapView.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
@@ -108,7 +120,11 @@ public class MainFrame2 implements ActionListener{
 						.addComponent(mapView, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
 						.addComponent(textLog, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
 						.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
-						.addComponent(comboBox, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(comboBox, GroupLayout.DEFAULT_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(checkBoxHistoric,  GroupLayout.DEFAULT_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+										.addComponent(checkBoxAgents,  GroupLayout.DEFAULT_SIZE, 137, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(inputForm, GroupLayout.PREFERRED_SIZE, 774, Short.MAX_VALUE))
 					.addContainerGap())
 		);
@@ -122,7 +138,11 @@ public class MainFrame2 implements ActionListener{
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 12, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap()
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.CENTER)
+									.addComponent(checkBoxHistoric, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+									.addComponent(checkBoxAgents, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(mapView, GroupLayout.PREFERRED_SIZE, 543, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -147,4 +167,29 @@ public class MainFrame2 implements ActionListener{
     		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Gruenhagen, Thilo Fischer and Hauke Diers.");
     	}
     }
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		
+		Object source = e.getItemSelectable();
+		
+		
+		if (source == checkBoxHistoric){
+			if(ItemEvent.SELECTED == e.getStateChange()){
+				mapSelected += 2;
+			} else {
+				//DESELECTED
+				mapSelected -= 2;
+			}
+		} else if ( source == checkBoxAgents){
+			if(ItemEvent.SELECTED == e.getStateChange()){
+				mapSelected += 4;
+			} else {
+				//DESELECTED
+				mapSelected -= 4;
+			}
+		}
+		mapView.changeMap(mapSelected);
+
+	}
 }

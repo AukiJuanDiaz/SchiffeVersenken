@@ -26,10 +26,15 @@ public class MapView extends JPanel{
     private MapView() {
 		changeMap(0);
     }
+    
+    public int getMap() {
+    	return route;
+    }
 
     public void changeMap(int num) {
     	route = num;
-    	String pic;
+    	String pic = "";
+    	System.out.println(route);
     	switch (route) {
     	   case 0:
     		   pic = "gross.png";
@@ -45,6 +50,18 @@ public class MapView extends JPanel{
 			   break;
 		   case 4:
 			   pic = "kgplot.png";
+			   break;
+		   case 5:
+			   // bh ohne historic mit agent
+			   break;
+		   case 6:
+			   // kg ohne historic mit agent
+			   break;
+		   case 7:
+			   // bh mit historic mit agent
+			   break;
+		   case 8:
+			   // kg mit historic mit agent
 			   break;
 		   default:
 			   pic = "gross.png";
