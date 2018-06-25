@@ -11,6 +11,8 @@ public class DropDownBox extends JComboBox implements ActionListener {
 		 addItem("Gesamtes Gebiet");
 		 addItem("Bremerhaven - Hamburg");
 		 addItem("Kiel - Gdynia");
+		 addItem("Bremerhaven - Hamburg: historical data");
+		 addItem("Kiel - Gdynia: historical data");
 		 addActionListener(this);
 	}
 	

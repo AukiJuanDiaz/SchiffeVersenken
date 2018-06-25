@@ -31,14 +31,23 @@ public class MapView extends JPanel{
     	route = num;
     	String pic;
     	switch (route) {
+    	   case 0:
+    		   pic = "gross.png";
+    		   break;
 		   case 1:
-			   pic = "bh.jpg";
+			   pic = "bh.png";
 			   break;
 		   case 2:
-			   pic = "kg.jpg";
+			   pic = "kg.png";
+			   break;
+		   case 3:
+			   pic = "bhplot.png";
+			   break;
+		   case 4:
+			   pic = "kgplot.png";
 			   break;
 		   default:
-			   pic = "gross.jpg";
+			   pic = "gross.png";
 			   break;
     	}
     	try {
