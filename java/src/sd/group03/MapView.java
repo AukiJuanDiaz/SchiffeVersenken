@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class MapView extends JPanel{
-	
+
 
 	private static MapView instance;
-	
+
     private BufferedImage image;
-    private int route = 0; 
+    private int route = 0;
 
     public static MapView getInstance() {
 	    if (instance == null) {
@@ -22,11 +22,11 @@ public class MapView extends JPanel{
 	    }
     	return instance;
     }
-    
+
     private MapView() {
 		changeMap(0);
     }
-    
+
     public int getMap() {
     	return route;
     }
@@ -52,15 +52,19 @@ public class MapView extends JPanel{
 			   break;
 		   case 5:
 			   // bh ohne historic mit agent
+			   pic = "bhagent.png";
 			   break;
 		   case 6:
 			   // kg ohne historic mit agent
+			   pic = "kgagent.png";
 			   break;
 		   case 7:
 			   // bh mit historic mit agent
+			   pic = "bhplotagent.png";
 			   break;
 		   case 8:
 			   // kg mit historic mit agent
+			   pic = "kgplotagent.png";
 			   break;
 		   default:
 			   pic = "gross.png";
@@ -73,21 +77,21 @@ public class MapView extends JPanel{
 			e.printStackTrace();
 		}
     }
-    
+
     public void drawlivePoint(int xKord, int yKord, int rgb) {
     	image.setRGB(xKord, yKord, rgb);
     	updateUI();
    	}
-    
+
 	public int y_Geo2Pix(double lat, int route) {
 
 		double TOP_LAT = 0;
 		double BOT_LAT = 0;
-		
+
 		double height= (double)instance.getHeight();
 
 
-		
+
 		switch (route) {
 		case 1: // Brhv-HH
 			TOP_LAT = 54.104;
@@ -102,18 +106,18 @@ public class MapView extends JPanel{
 			BOT_LAT = 53.140;
 			break;
 		}
-		
+
 		int yPix = (int) (height - (lat - BOT_LAT)* height/(TOP_LAT - BOT_LAT) );
 		return yPix;
 	}
-	
+
 	public static int x_Geo2Pix(double lon, int route) {
-		
+
 		double width= (double) instance.getWidth();
-		
+
 		double LEFT_LON = 7.973;
 		double RIGHT_LON = 10.292;
-				
+
 		switch (route) {
 		case 1: // Brhv-HH
 			LEFT_LON = 7.973;
@@ -128,17 +132,16 @@ public class MapView extends JPanel{
 			RIGHT_LON = 0;
 			break;
 		}
-		
+
 		int xPix = (int) ((lon - LEFT_LON)*(width / (RIGHT_LON - LEFT_LON)));
 		return xPix;
 	}
- 
-    
+
+
     @Override
     protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-       g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
+       g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters
     }
 
 }
-
