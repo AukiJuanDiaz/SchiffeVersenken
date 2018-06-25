@@ -19,12 +19,21 @@ public class DrawHistData {
 	// unterschiedlich von Bildausschnitt zu Bildausschnitt
 	
 	// WERTE BRHV-HH
-	private static final double LEFT_LON = 7.973;
-	private static final double RIGHT_LON = 10.292;
-	
-	private static final double TOP_LAT = 54.104;
-	private static final double BOT_LAT = 53.140;
+//	private static final double LEFT_LON = 6.84;
+//	private static final double RIGHT_LON = 11.23;
+//	
+//	private static final double TOP_LAT = 55.07;
+//	private static final double BOT_LAT = 53.27;
 
+		//Werte Kiel-Gdynia
+	private static final double LEFT_LON = 9.33;
+	private static final double RIGHT_LON = 20.26;
+	
+	private static final double TOP_LAT = 57.37;
+	private static final double BOT_LAT = 53.04;
+
+	
+	
 	public static int x_Geo2Pix(double lon) {
 		
 		int xPix = (int) ((lon - LEFT_LON)*(WIDTH / (RIGHT_LON - LEFT_LON)));
@@ -36,10 +45,11 @@ public class DrawHistData {
 		return yPix;
 	}
 	
+	
 
 	public static void main(String[] args) throws IOException {
 		
-        final BufferedImage image = ImageIO.read(new File("src\\bh.jpg"));
+        final BufferedImage image = ImageIO.read(new File("src/kg.png"));
         final Graphics2D graphics2D = image.createGraphics ();
         
 		BufferedReader br = null;
@@ -48,7 +58,7 @@ public class DrawHistData {
         
 
         try {
-            br = new BufferedReader(new FileReader("../BrhvHH/Daten/TandTData/TrainingSet.csv"));
+            br = new BufferedReader(new FileReader("../KielGdynia/Daten/TandTData/TrainingSet.csv"));
             
             float old_lat = 0;
             float old_lon = 0;
@@ -71,8 +81,11 @@ public class DrawHistData {
                 float lon = Float.parseFloat(AisRow[2]);
                 float rtt = Float.parseFloat(AisRow[0]);
                 
+                int max_bh = 1741;
+                int max_kg = 2996;
+                
                
-                graphics2D.setColor ( Color.getHSBColor( rtt/1500, 1f,  0.9f) );
+                graphics2D.setColor ( Color.getHSBColor( rtt/2996, 1f,  0.9f) );
                 //graphics2D.drawLine(x_Geo2Pix(old_lon), y_Geo2Pix(old_lat), x_Geo2Pix(lon), y_Geo2Pix(lat));
                 graphics2D.fillRect (x_Geo2Pix(lon),y_Geo2Pix(lat),3,3 );
                 
@@ -104,7 +117,7 @@ public class DrawHistData {
         graphics2D.dispose ();
 
         try {
-			ImageIO.write ( image, "png", new File ( "image.png" ) );
+			ImageIO.write ( image, "png", new File ( "kgplot.png" ) );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
