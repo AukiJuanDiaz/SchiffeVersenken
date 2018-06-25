@@ -13,7 +13,6 @@ public class Agent {
 
         try {
 			minimumLongitude = obj.getDouble("minLong");
-	
 	        maximumLongitude = obj.getDouble("maxLong");
 	
 	        JSONArray jsonPredictors = obj.getJSONArray("predictors");
@@ -26,16 +25,17 @@ public class Agent {
 	                predictors[i] = p;
 	            }
 	            catch (Exception e) {
-	               System.out.println(e.getMessage());
+	                e.printStackTrace();
+	                throw new RuntimeException("Error initializing Predictor!");
 	            }
 	        }
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+            throw new RuntimeException("Invalid config file!");
 		}
     }
 
-    public ModelInput makePrediction(ModelInput inst) {
+    public ModelInput makePrediction(ModelInput inst) throws RuntimeException {
         ModelInput copy = new ModelInput(inst);
 
         for (Predictor p : predictors) {

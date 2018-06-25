@@ -12,36 +12,30 @@ public class Route {
     public Route(JSONObject obj) throws RuntimeException {
 
         try {
-			name = obj.getString("name");
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+            name = obj.getString("name");
 
-        System.out.println("Setting up Route: " + name);
+            System.out.println("Setting up Route: " + name);
 
-        JSONArray jsonAgents;
-		try {
-			jsonAgents = obj.getJSONArray("agents");
+            JSONArray jsonAgents;
+            jsonAgents = obj.getJSONArray("agents");
 
+            agents = new Agent[jsonAgents.length()];
 
-        agents = new Agent[jsonAgents.length()];
+            for(int i = 0; i < jsonAgents.length(); ++i) {
 
-	        for(int i = 0; i < jsonAgents.length(); ++i) {
-	
-	            try {
-	                Agent a = new Agent((JSONObject) jsonAgents.get(i));
-	                agents[i] = a;
-	            }
-	            catch (RuntimeException e) {
-	               System.out.println("Could not create Agent from json data: " + (JSONObject) jsonAgents.get(i));
-	            }
-	        }
-        
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+                try {
+                    Agent a = new Agent((JSONObject) jsonAgents.get(i));
+                    agents[i] = a;
+                }
+                catch (RuntimeException e) {
+                    System.out.println("Could not create Agent from json data: " + (JSONObject) jsonAgents.get(i));
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Invalid config file!");
+        }
     }
 
     public PredictionResult makePrediction(ModelInput inst) throws RuntimeException {
@@ -72,6 +66,10 @@ public class Route {
        }
 
        return false;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

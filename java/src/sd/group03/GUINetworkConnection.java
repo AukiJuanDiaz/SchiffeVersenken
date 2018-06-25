@@ -39,7 +39,15 @@ public class GUINetworkConnection implements Runnable {
 
             boolean finished = false;
             while (!finished) {
-                JSONObject response = new JSONObject(input.readLine());
+                String s = input.readLine();
+                System.out.println("Received string: " + s);
+
+                if(s == null || s.isEmpty()) {
+                    System.out.println("Skipping...");
+                    continue;
+                }
+
+                JSONObject response = new JSONObject(s);
 
                 String type = response.getString("type");
 
@@ -51,10 +59,22 @@ public class GUINetworkConnection implements Runnable {
                     TextLog.getInstance().write("ETT: " + ett);
                     finished = true;
                 }
+                else if ("error".equals(type)) {
+                    String msg = response.getString("message");
+                    TextLog.getInstance().write("FEHLER!");
+                    TextLog.getInstance().write(msg);
+                    finished = true;
+                }
             }
+
+            output.close();
+            input.close();
+            socket.close();
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
+
+        TextLog.getInstance().write("Anfrage abgeschlossen");
     }
 }

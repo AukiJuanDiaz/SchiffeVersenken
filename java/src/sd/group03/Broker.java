@@ -1,13 +1,11 @@
 package sd.group03;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -24,6 +22,8 @@ public class Broker {
 
         try {
 
+            System.out.println("Trying to load config: " + Paths.get(configPath).toString());
+
             String configFile = new String(Files.readAllBytes(Paths.get(configPath)));
             JSONObject jsonConfig = new JSONObject(configFile);
 
@@ -36,11 +36,7 @@ public class Broker {
                 routes[i] = r;
             }
         }
-        catch( IOException e) {
-            System.out.println(e.getMessage());
-        }
-        catch (JSONException e) {
-			// TODO Auto-generated catch block
+        catch(Exception e) {
 			e.printStackTrace();
 		}
     }
@@ -87,11 +83,24 @@ public class Broker {
 
     // Habe ich mal synchronized gemacht um etwaige probleme mit Weka und threads zu vermeiden
     // Kann aber auch sein, dass es ohne funktioniert
-    synchronized public PredictionResult makePrediction(Instance inst) {
+    synchronized public PredictionResult makePrediction(Instance inst) throws RuntimeException {
         ModelInput mi = createModelInput(inst);
         mi.prettyPrint();
         Route r = getRouteForPrediction(mi);
-        if(r != null) return r.makePrediction(mi);
+
+        if(r != null) {
+            BrokerNetworkConnection.guiPrintString("Route gewaehlt: " + r.getName());
+            PredictionResult result = r.makePrediction(mi);
+
+            String s = "Berechnung fertig!\nDas Schiff wird in " + result.getETT() + " minuten das Ziel erreichen.";
+            BrokerNetworkConnection.guiPrintString(s);
+
+            ModelInput last = result.getLast();
+            s = "(Koordinaten: " + last.value("Latitude") + ", " + last.value("Longitude") + ")";
+            BrokerNetworkConnection.guiPrintString(s);
+
+            return result;
+        }
         else return null;
     }
 }

@@ -14,8 +14,12 @@ public class PredictionResult {
         System.out.println(intermediateResults.size() + " intermediates with total ETT: " + getETT());
     }
     public double getETT() {
-        ModelInput last = intermediateResults.get(intermediateResults.size() -1);
+        ModelInput last = getLast();
         return last.value("RemainingTravelTimeInMinutes");
+    }
+
+    public ModelInput getLast() {
+        return intermediateResults.get(intermediateResults.size()-1);
     }
 
     public boolean isValid() {

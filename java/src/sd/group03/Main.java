@@ -12,7 +12,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Path configPath = Paths.get("src/sampleConfig.json");
+        Path configPath;
+
+        if(args.length > 0) {
+            configPath = Paths.get(args[0]);
+        }
+        else {
+            configPath = Paths.get("src/sampleConfig.json");
+        }
+
+        System.out.println("Loading config from file: " + configPath.toString());
 
         try {
             broker = new Broker(configPath.toString());
@@ -27,7 +36,7 @@ public class Main {
 
     private static void startServer() {
 
-        ServerSocket socket = null;
+        ServerSocket socket;
         short port = 9812;
 
         System.out.println("Starting Server");
@@ -37,7 +46,6 @@ public class Main {
             System.out.println("Listening on Port: " + port);
         }
         catch (IOException e) {
-            System.out.println(e);
             e.printStackTrace();
             return;
         }
@@ -50,7 +58,6 @@ public class Main {
                 (new Thread(new BrokerNetworkConnection(broker, connection))).start();
             }
             catch (IOException e) {
-                System.out.println(e);
                 e.printStackTrace();
                 return;
             }

@@ -15,12 +15,21 @@ public class BrokerNetworkConnection implements Runnable {
     private BufferedWriter output;
     private BufferedReader input;
 
+    private static ThreadLocal<BrokerNetworkConnection> currentConnection;
+
+    static {
+        currentConnection = new ThreadLocal<>();
+    }
+
     public BrokerNetworkConnection(Broker b, Socket s) {
+
         broker = b;
         socket = s;
     }
 
     public void run() {
+
+        currentConnection.set(this);
 
         try {
             output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -47,30 +56,47 @@ public class BrokerNetworkConnection implements Runnable {
             guiPrintMessage(result);
             System.out.println(result);
 
+            output.close();
+            input.close();
             socket.close();
         }
         catch (Exception e) {
-            System.out.println(e);
+            guiPrintError(e.toString());
             e.printStackTrace();
-            return;
         }
     }
 
-    public void guiPrintString(String s) {
+    public void sendString(String s) {
+        try {
+            output.write(s + "\n");
+            output.flush();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void guiPrintError(String s) {
         JSONObject obj = new JSONObject();
-        obj.put("type", "message");
+        obj.put("type", "error");
         obj.put("message", s);
         guiPrintMessage(obj);
     }
 
-    public void guiPrintMessage(JSONObject obj) {
-        try {
-            output.write(obj.toString());
-            output.flush();
+    public static void guiPrintString(String s) {
+            JSONObject obj = new JSONObject();
+            obj.put("type", "message");
+            obj.put("message", s);
+            guiPrintMessage(obj);
+    }
+
+    public static void guiPrintMessage(JSONObject obj) {
+
+        BrokerNetworkConnection instance = currentConnection.get();
+
+        if(instance != null) {
+            instance.sendString(obj.toString());
         }
-        catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
+        else System.out.println("ThreadLocal BNC not set!");
     }
 }
