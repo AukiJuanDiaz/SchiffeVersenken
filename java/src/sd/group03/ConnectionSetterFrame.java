@@ -27,7 +27,7 @@ public class ConnectionSetterFrame implements ActionListener {
 		connectionFrame = new JFrame();
 		connectionFrame.setVisible(true);
 		connectionFrame.setResizable(false);
-		connectionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		connectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		connectionFrame.setTitle("Verbindung zum Broker");
 		connectionFrame.setSize(CONNECTION_FRAME_SIZE_WIDTH, CONNECTION_FRAME_SIZE_HEIGHT);
 		

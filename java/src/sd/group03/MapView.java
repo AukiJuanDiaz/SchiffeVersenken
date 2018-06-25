@@ -78,8 +78,14 @@ public class MapView extends JPanel{
 		}
     }
 
-    public void drawlivePoint(int xKord, int yKord, int rgb) {
-    	image.setRGB(xKord, yKord, rgb);
+    public void drawlivePoint(double xKord, double yKord, int route) {
+
+    	final Graphics2D graphics2D = image.createGraphics ();
+        graphics2D.setColor ( Color.getHSBColor( 0.7f, 1f,  0.9f) );
+        graphics2D.fillRect (x_Geo2Pix(xKord,route), y_Geo2Pix(yKord,route),10, 10);
+
+        graphics2D.dispose ();
+
     	updateUI();
    	}
 
