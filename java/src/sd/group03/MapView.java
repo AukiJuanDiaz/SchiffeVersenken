@@ -34,7 +34,6 @@ public class MapView extends JPanel{
     public void changeMap(int num) {
     	route = num;
     	String pic = "";
-    	System.out.println(route);
     	switch (route) {
     	   case 0:
     		   pic = "gross.png";

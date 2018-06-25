@@ -66,29 +66,35 @@ public class BrokerNetworkConnection implements Runnable {
 
     public JSONObject createResultResponse(PredictionResult pr) {
         JSONObject result = new JSONObject();
-
-        if(pr != null) {
-            result.put("type", "result");
-            result.put("ett", pr.getETT());
-
-            JSONArray ett = new JSONArray();
-            JSONArray lat = new JSONArray();
-            JSONArray lon = new JSONArray();
-
-            for(ModelInput mi : pr.intermediateResults) {
-                ett.put(mi.value("RemainingTravelTimeInMinutes"));
-                lat.put(mi.value("Latitude"));
-                lon.put(mi.value("Longitude"));
-            }
-
-            result.put("intermediateETT", ett);
-            result.put("intermediateLat", lat);
-            result.put("intermediateLon", lon);
-        }
-        else {
-            result.put("type", "error");
-            result.put("message", "Broker could not make a prediction!");
-        }
+        try {
+			result.put("type", "result");
+		
+	        if(pr != null) {
+	        
+	            result.put("ett", pr.getETT());
+	
+	            JSONArray ett = new JSONArray();
+	            JSONArray lat = new JSONArray();
+	            JSONArray lon = new JSONArray();
+	
+	            for(ModelInput mi : pr.intermediateResults) {
+	                ett.put(mi.value("RemainingTravelTimeInMinutes"));
+	                lat.put(mi.value("Latitude"));
+	                lon.put(mi.value("Longitude"));
+	            }
+	
+	            result.put("intermediateETT", ett);
+	            result.put("intermediateLat", lat);
+	            result.put("intermediateLon", lon);
+	        
+	        }else {
+	            result.put("type", "error");
+	            result.put("message", "Broker could not make a prediction!");
+	        }
+        } catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return result;
     }
 

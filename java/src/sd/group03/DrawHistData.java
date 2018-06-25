@@ -18,20 +18,13 @@ public class DrawHistData {
 	
 	// unterschiedlich von Bildausschnitt zu Bildausschnitt
 	
-	// WERTE BRHV-HH
-//	private static final double LEFT_LON = 6.84;
-//	private static final double RIGHT_LON = 11.23;
-//	
-//	private static final double TOP_LAT = 55.07;
-//	private static final double BOT_LAT = 53.27;
-
-		//Werte Kiel-Gdynia
-	private static final double LEFT_LON = 9.33;
-	private static final double RIGHT_LON = 20.26;
+	//Werte Kiel-Gdynia
+	private static double LEFT_LON = 0.0;
+	private static double RIGHT_LON = 0.0;
 	
-	private static final double TOP_LAT = 57.37;
-	private static final double BOT_LAT = 53.04;
-
+	private static double TOP_LAT = 0.0;
+	private static double BOT_LAT = 0.0;
+	
 	
 	
 	public static int x_Geo2Pix(double lon) {
@@ -45,9 +38,67 @@ public class DrawHistData {
 		return yPix;
 	}
 	
-	
+	public static void drawbhhist()throws IOException {
+		
+		int max_bh = 1741;
+		
+        final BufferedImage image = ImageIO.read(new File("src/bh.png"));
+        final Graphics2D graphics2D = image.createGraphics ();
+        
+		BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+        
 
-	public static void main(String[] args) throws IOException {
+        try {
+            br = new BufferedReader(new FileReader("../BrhvHH/Daten/TandTData/TrainingSet.csv"));
+                        
+            line = br.readLine(); // read the Header
+            
+            while ((line = br.readLine()) != null) {
+                
+            	// use comma as separator
+                String[] AisRow = line.split(cvsSplitBy);
+                float lat = Float.parseFloat(AisRow[1]);
+                float lon = Float.parseFloat(AisRow[2]);
+                float rtt = Float.parseFloat(AisRow[0]);
+               
+                graphics2D.setColor ( Color.getHSBColor( rtt/max_bh, 1f,  0.9f) );
+                //graphics2D.drawLine(x_Geo2Pix(old_lon), y_Geo2Pix(old_lat), x_Geo2Pix(lon), y_Geo2Pix(lat));
+                graphics2D.fillRect (x_Geo2Pix(lon),y_Geo2Pix(lat),2,3 );
+            }
+            System.out.println("fertig");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        graphics2D.dispose ();
+
+        try {
+			ImageIO.write ( image, "png", new File ( "bhplot.png" ) );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	public static void drawkghist()throws IOException {
+		
+		int max_kg = 2996;
 		
         final BufferedImage image = ImageIO.read(new File("src/kg.png"));
         final Graphics2D graphics2D = image.createGraphics ();
@@ -72,7 +123,7 @@ public class DrawHistData {
                 old_lat = Float.parseFloat(firstRow[1]);
                 old_lon = Float.parseFloat(firstRow[2]);
             }
-            int count = 0;
+            
             while ((line = br.readLine()) != null) {
                 
             	// use comma as separator
@@ -81,17 +132,17 @@ public class DrawHistData {
                 float lon = Float.parseFloat(AisRow[2]);
                 float rtt = Float.parseFloat(AisRow[0]);
                 
-                int max_bh = 1741;
-                int max_kg = 2996;
+                
+                
                 
                
-                graphics2D.setColor ( Color.getHSBColor( rtt/2996, 1f,  0.9f) );
+                graphics2D.setColor ( Color.getHSBColor( rtt/max_kg, 1f,  0.9f) );
                 //graphics2D.drawLine(x_Geo2Pix(old_lon), y_Geo2Pix(old_lat), x_Geo2Pix(lon), y_Geo2Pix(lat));
                 graphics2D.fillRect (x_Geo2Pix(lon),y_Geo2Pix(lat),3,3 );
                 
                 old_lat = lat;
                 old_lon = lon;
-                count++;
+
 
                   
                 }
@@ -111,17 +162,73 @@ public class DrawHistData {
             }
         }
 
-
-
-
         graphics2D.dispose ();
 
         try {
-			ImageIO.write ( image, "png", new File ( "kgplot.png" ) );
+			ImageIO.write ( image, "png", new File ( "bhkgplot.png" ) );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		
+	}
+	
+	public static void drawAgent(double geo, String readfrom, String output)throws IOException {
+		
+        final BufferedImage image = ImageIO.read(new File(readfrom));
+        final Graphics2D graphics2D = image.createGraphics ();
+      
+        
+        
+        graphics2D.setColor ( Color.getHSBColor( 0.7f, 1f,  0.9f) );
+        graphics2D.fillRect (x_Geo2Pix(geo)-1,0,2, 774);
+        System.out.println("fertig");
+
+        graphics2D.dispose ();
+
+        try {
+			ImageIO.write ( image, "png", new File (output) );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+
+	public static void main(String[] args) throws IOException {
+		
+		int option = 2;
+		
+		switch (option) {
+			case 0: // BH plot
+			case 1: // BH Agent
+			case 2: // BH Agentplot
+				LEFT_LON = 6.83;
+				RIGHT_LON = 11.1;
+				TOP_LAT = 55.07;
+				BOT_LAT = 53.25;
+				
+				break;
+			case 3: //KG plot
+			case 4: // KG Agent
+			case 5: // KG Agent Plot
+				//Werte Kiel-Gdynia
+				LEFT_LON = 9.33;
+				RIGHT_LON = 20.26;
+				
+				TOP_LAT = 57.37;
+				BOT_LAT = 53.04;
+				break;
+		}
+		
+		//drawAgent(8.69,"src/bh.png","test.png");
+		
+		drawbhhist();
+		
+		
+		
 
 	}
 
