@@ -1,5 +1,6 @@
 package sd.group03;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -67,6 +68,7 @@ public class BrokerNetworkConnection implements Runnable {
     }
 
     public void sendString(String s) {
+
         try {
             output.write(s + "\n");
             output.flush();

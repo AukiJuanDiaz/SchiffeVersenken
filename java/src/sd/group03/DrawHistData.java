@@ -49,7 +49,20 @@ public class DrawHistData {
 
         try {
             br = new BufferedReader(new FileReader("../BrhvHH/Daten/TandTData/TrainingSet.csv"));
-            line = br.readLine();
+            
+            float old_lat = 0;
+            float old_lon = 0;
+            
+            line = br.readLine(); // read the Header
+            
+            // read the first Koordinates
+            if ((line = br.readLine()) != null) {
+            	
+            	String[] firstRow = line.split(cvsSplitBy);
+                old_lat = Float.parseFloat(firstRow[1]);
+                old_lon = Float.parseFloat(firstRow[2]);
+            }
+            int count = 0;
             while ((line = br.readLine()) != null) {
                 
             	// use comma as separator
@@ -59,8 +72,13 @@ public class DrawHistData {
                 float rtt = Float.parseFloat(AisRow[0]);
                 
                
-                graphics2D.setColor ( Color.getHSBColor( rtt/1500, 1f,  0.5f) );
-                graphics2D.fillRect (x_Geo2Pix(lon),y_Geo2Pix(lat),4,4 );
+                graphics2D.setColor ( Color.getHSBColor( rtt/1500, 1f,  0.9f) );
+                //graphics2D.drawLine(x_Geo2Pix(old_lon), y_Geo2Pix(old_lat), x_Geo2Pix(lon), y_Geo2Pix(lat));
+                graphics2D.fillRect (x_Geo2Pix(lon),y_Geo2Pix(lat),3,3 );
+                
+                old_lat = lat;
+                old_lon = lon;
+                count++;
 
                   
                 }

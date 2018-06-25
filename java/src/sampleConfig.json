@@ -7,7 +7,7 @@
       [
         {
           "minLong": 0,
-          "maxLong": 11,
+          "maxLong": 10,
           "predictors":
           [
             {
