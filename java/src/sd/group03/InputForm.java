@@ -90,7 +90,7 @@ public class InputForm extends JPanel implements ActionListener {
 			TextLog.getInstance().write(message);
 
 			try {
-                (new Thread(new GUINetworkConnection("127.0.0.1", (short) 9812, input))).start();
+                (new Thread(new GUINetworkConnection(input))).start();
             }
             catch (IOException e) {
 			    e.printStackTrace();

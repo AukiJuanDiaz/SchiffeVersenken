@@ -10,18 +10,37 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class GUINetworkConnection implements Runnable {
+	
+	private static String host = "127.0.0.1";
+	private static short port = 9813;
 
     private Socket socket;
     private BufferedWriter output;
     private BufferedReader input;
     private String filePath;
 
-    public GUINetworkConnection(String host, short port, String path) throws IOException {
+    public GUINetworkConnection(String path) throws IOException {
         socket = new Socket(InetAddress.getByName(host), port);
         output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         filePath = path;
+    }
+    
+    public static void setHost(String newHost) {
+    	host = newHost;	
+    }
+    
+    public static void setPort (short newPort) {
+    	port = newPort;
+    }
+    
+    public static String getHost() {
+    	return host;
+    }
+    
+    public static int getPort() {
+    	return port;
     }
 
     public void run() {

@@ -62,7 +62,12 @@ public class BrokerNetworkConnection implements Runnable {
             socket.close();
         }
         catch (Exception e) {
-            guiPrintError(e.toString());
+            try {
+				guiPrintError(e.toString());
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
             e.printStackTrace();
         }
     }
@@ -78,14 +83,14 @@ public class BrokerNetworkConnection implements Runnable {
         }
     }
 
-    public static void guiPrintError(String s) {
+    public static void guiPrintError(String s) throws JSONException {
         JSONObject obj = new JSONObject();
         obj.put("type", "error");
         obj.put("message", s);
         guiPrintMessage(obj);
     }
 
-    public static void guiPrintString(String s) {
+    public static void guiPrintString(String s) throws JSONException {
             JSONObject obj = new JSONObject();
             obj.put("type", "message");
             obj.put("message", s);

@@ -42,7 +42,7 @@ public class Main {
         System.out.println("Starting Server");
 
         try {
-            socket = new ServerSocket(9812);
+            socket = new ServerSocket(port);
             System.out.println("Listening on Port: " + port);
         }
         catch (IOException e) {

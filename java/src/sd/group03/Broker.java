@@ -1,6 +1,7 @@
 package sd.group03;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -89,15 +90,30 @@ public class Broker {
         Route r = getRouteForPrediction(mi);
 
         if(r != null) {
-            BrokerNetworkConnection.guiPrintString("Route gewaehlt: " + r.getName());
+            try {
+				BrokerNetworkConnection.guiPrintString("Route gewaehlt: " + r.getName());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             PredictionResult result = r.makePrediction(mi);
 
             String s = "Berechnung fertig!\nDas Schiff wird in " + result.getETT() + " minuten das Ziel erreichen.";
-            BrokerNetworkConnection.guiPrintString(s);
+            try {
+				BrokerNetworkConnection.guiPrintString(s);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
             ModelInput last = result.getLast();
             s = "(Koordinaten: " + last.value("Latitude") + ", " + last.value("Longitude") + ")";
-            BrokerNetworkConnection.guiPrintString(s);
+            try {
+				BrokerNetworkConnection.guiPrintString(s);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
             return result;
         }
