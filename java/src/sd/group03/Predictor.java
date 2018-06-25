@@ -25,7 +25,8 @@ public class Predictor {
 
     public double makePrediction(Instance inst) throws RuntimeException
     {
-        throw new RuntimeException("Test error");
+        return 0;
+        //throw new RuntimeException("Test error");
         /*double res = Utils.missingValue();
 
         try {

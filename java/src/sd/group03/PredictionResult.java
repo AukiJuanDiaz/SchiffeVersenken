@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class PredictionResult {
 
-    private ArrayList<ModelInput> intermediateResults;
-
+    public ArrayList<ModelInput> intermediateResults;
     public PredictionResult() {
         intermediateResults = new ArrayList<>();
     }

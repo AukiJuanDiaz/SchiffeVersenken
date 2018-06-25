@@ -45,9 +45,9 @@ public class TextLog extends JPanel{
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
 		textArea.setLineWrap(true);
-		
-		textArea.setText("  Welcome on board.");
-		
+
+		clean();
+
 		this.setLayout(gl_textLog);
 		
 		// end GroupLayout on TextLogger

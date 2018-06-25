@@ -1,5 +1,6 @@
 package sd.group03;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import weka.core.Instances;
@@ -48,11 +49,7 @@ public class BrokerNetworkConnection implements Runnable {
 
             PredictionResult pr = broker.makePrediction(insts.get(0));
 
-            JSONObject result = new JSONObject();
-            result.put("type", "result");
-
-            if(pr != null) result.put("ett", pr.getETT());
-            else result.put("ett", -1);
+            JSONObject result = createResultResponse(pr);
 
             guiPrintMessage(result);
             System.out.println(result);
@@ -62,14 +59,37 @@ public class BrokerNetworkConnection implements Runnable {
             socket.close();
         }
         catch (Exception e) {
-            try {
-				guiPrintError(e.toString());
-			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+            guiPrintError(e.toString());
             e.printStackTrace();
         }
+    }
+
+    public JSONObject createResultResponse(PredictionResult pr) {
+        JSONObject result = new JSONObject();
+
+        if(pr != null) {
+            result.put("type", "result");
+            result.put("ett", pr.getETT());
+
+            JSONArray ett = new JSONArray();
+            JSONArray lat = new JSONArray();
+            JSONArray lon = new JSONArray();
+
+            for(ModelInput mi : pr.intermediateResults) {
+                ett.put(mi.value("RemainingTravelTimeInMinutes"));
+                lat.put(mi.value("Latitude"));
+                lon.put(mi.value("Longitude"));
+            }
+
+            result.put("intermediateETT", ett);
+            result.put("intermediateLat", lat);
+            result.put("intermediateLon", lon);
+        }
+        else {
+            result.put("type", "error");
+            result.put("message", "Broker could not make a prediction!");
+        }
+        return result;
     }
 
     public void sendString(String s) {
@@ -83,18 +103,28 @@ public class BrokerNetworkConnection implements Runnable {
         }
     }
 
-    public static void guiPrintError(String s) throws JSONException {
-        JSONObject obj = new JSONObject();
-        obj.put("type", "error");
-        obj.put("message", s);
-        guiPrintMessage(obj);
+    public static void guiPrintError(String s) {
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put("type", "error");
+            obj.put("message", s);
+            guiPrintMessage(obj);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void guiPrintString(String s) throws JSONException {
+    public static void guiPrintString(String s) {
+        try {
             JSONObject obj = new JSONObject();
             obj.put("type", "message");
             obj.put("message", s);
             guiPrintMessage(obj);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void guiPrintMessage(JSONObject obj) {

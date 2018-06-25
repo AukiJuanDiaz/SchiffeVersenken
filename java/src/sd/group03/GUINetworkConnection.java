@@ -1,9 +1,9 @@
 package sd.group03;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -11,8 +11,8 @@ import java.nio.file.Paths;
 
 public class GUINetworkConnection implements Runnable {
 	
-	private static String host = "127.0.0.5";
-	private static short port = 9817;
+	private static String host = "127.0.0.1";
+	private static short port = 9812;
 
     private Socket socket;
     private BufferedWriter output;
@@ -20,7 +20,12 @@ public class GUINetworkConnection implements Runnable {
     private String filePath;
 
     public GUINetworkConnection(String path) throws IOException {
-        socket = new Socket(InetAddress.getByName(host), port);
+        try {
+            socket = new Socket(InetAddress.getByName(host), port);
+        }
+        catch (ConnectException e) {
+            TextLog.getInstance().write("Could not connect to Broker at " + host + ":" + port);
+        }
         output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -54,8 +59,6 @@ public class GUINetworkConnection implements Runnable {
 
             output.write(obj.toString() + "\n");
             output.flush();
-
-            // Only for testing
 
             boolean finished = false;
             while (!finished) {
