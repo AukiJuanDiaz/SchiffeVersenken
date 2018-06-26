@@ -3,10 +3,19 @@ package sd.group03;
 import java.util.ArrayList;
 
 public class PredictionResult {
+	
+	private String RouteName;
 
-    public ArrayList<ModelInput> intermediateResults;
+	public ArrayList<ModelInput> intermediateResults;
     public PredictionResult() {
         intermediateResults = new ArrayList<>();
+    }
+    
+    public void setRouteName(String name) {
+    	RouteName = name;
+    }
+    public String getRouteName() {
+    	return RouteName;
     }
 
     public  void prettyPrint() {

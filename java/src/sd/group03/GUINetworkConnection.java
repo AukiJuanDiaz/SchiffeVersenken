@@ -48,6 +48,16 @@ public class GUINetworkConnection implements Runnable {
     public static short getPort() {
     	return port;
     }
+    
+    private int RouteName2Index(String name) {
+    	if (name.contentEquals("Bremerhaven-Hamburg")) {
+    		return 1;
+    	}else if (name.contentEquals("Kiel-Gdynia")) {
+    		return 2;
+    	}
+    	return 0;
+
+    }
 
     public void run() {
 
@@ -80,9 +90,17 @@ public class GUINetworkConnection implements Runnable {
                     TextLog.getInstance().write(msg);
                 } else if ("result".equals(type)) {
                     double ett = response.getDouble("ett");
-
+                    
+                    
+                    String currentRoute = response.getString("RouteName");
+                    int RouteIdx = RouteName2Index(currentRoute);
+                    if (! MapView.getInstance().isCorrectMap(currentRoute)) {
+                    	MapView.getInstance().changeMap(RouteIdx);
+                    }
+ 
                     JSONArray JsonIntLat= response.optJSONArray("intermediateLat");
                     JSONArray JsonIntLon= response.optJSONArray("intermediateLon");
+                    
                     
                     double[] IntLats = new double[JsonIntLat.length()];
                     double[] IntLons = new double[JsonIntLon.length()];
@@ -90,7 +108,7 @@ public class GUINetworkConnection implements Runnable {
                     for(int i = 0; i < JsonIntLat.length();i++) {
                     	IntLats[i] = JsonIntLat.optDouble(i);
                     	IntLons[i] = JsonIntLon.optDouble(i);
-                    	MapView.getInstance().drawlivePoint(IntLons[i],IntLats[i], 1);
+                    	MapView.getInstance().drawlivePoint(IntLons[i], IntLats[i], RouteIdx);
                     }
                     
                     TextLog.getInstance().write("ETT: " + ett);

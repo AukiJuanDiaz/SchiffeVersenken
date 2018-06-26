@@ -91,6 +91,7 @@ public class Broker {
         if(r != null) {
             BrokerNetworkConnection.guiPrintString("Route gewaehlt: " + r.getName());
             PredictionResult result = r.makePrediction(mi);
+            result.setRouteName(r.getName());
 
             String s = "Berechnung fertig!\nDas Schiff wird in " + result.getETT() + " minuten das Ziel erreichen.";
             BrokerNetworkConnection.guiPrintString(s);

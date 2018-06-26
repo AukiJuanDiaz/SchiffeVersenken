@@ -36,7 +36,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
 	InputForm inputForm;
 	MapView mapView; 
 	TextLog textLog;
-	DropDownBox comboBox;
+	public static DropDownBox comboBox;
 	JMenuBar menuBar;
 	JMenu connection, reset, credits;
 	JMenuItem connectionItem, resetItem, creditsItem;
@@ -52,6 +52,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
 	public MainFrame2() {
 		initialize();
 		frame.setVisible(true);
+		
 	}
 
 	/**

@@ -30,6 +30,47 @@ public class MapView extends JPanel{
     public int getMap() {
     	return route;
     }
+    public void otherMap() {
+    	switch (route) {
+			case 1:
+			case 3:
+			case 5:
+			case 7:
+				changeMap(2);
+				break;
+			case 2:
+			case 4:
+			case 6:
+			case 8:
+				changeMap(1);
+				break;
+		}
+    	
+    }
+    public boolean isCorrectMap(String name) {
+    	if (name.contentEquals("Bremerhaven-Hamburg")) {
+    		switch (route) {
+    		case 1:
+    		case 3:
+    		case 5:
+    		case 7:
+    			return true;
+    		default:
+    			return false;
+    		}
+    	}else if (name.contentEquals("Kiel-Gdynia")) {
+    		switch (route) {
+    		case 2:
+    		case 4:
+    		case 6:
+    		case 8:
+    			return true;
+    		default:
+    			return false;
+    		}    		
+    	}
+    	return false;
+    }
 
     public void changeMap(int num) {
     	route = num;
@@ -40,31 +81,55 @@ public class MapView extends JPanel{
     		   break;
 		   case 1:
 			   pic = "bh.png";
+			   MainFrame2.checkBoxAgents.setSelected(false);
+			   MainFrame2.checkBoxHistoric.setSelected(false);
+			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 2:
 			   pic = "kg.png";
+			   MainFrame2.checkBoxAgents.setSelected(false);
+			   MainFrame2.checkBoxHistoric.setSelected(false);
+			   MainFrame2.comboBox.setSelectedIndex(2);
 			   break;
 		   case 3:
 			   pic = "bhplot.png";
+			   MainFrame2.checkBoxAgents.setSelected(false);
+			   MainFrame2.checkBoxHistoric.setSelected(true);
+			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 4:
 			   pic = "kgplot.png";
+			   MainFrame2.checkBoxAgents.setSelected(false);
+			   MainFrame2.checkBoxHistoric.setSelected(true);
+			   MainFrame2.comboBox.setSelectedIndex(2);
 			   break;
 		   case 5:
 			   // bh ohne historic mit agent
 			   pic = "bhagent.png";
+			   MainFrame2.checkBoxAgents.setSelected(true);
+			   MainFrame2.checkBoxHistoric.setSelected(false);
+			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 6:
 			   // kg ohne historic mit agent
 			   pic = "kgagent.png";
+			   MainFrame2.checkBoxAgents.setSelected(true);
+			   MainFrame2.checkBoxHistoric.setSelected(false);
+			   MainFrame2.comboBox.setSelectedIndex(2);
 			   break;
 		   case 7:
 			   // bh mit historic mit agent
 			   pic = "bhplotagent.png";
+			   MainFrame2.checkBoxAgents.setSelected(true);
+			   MainFrame2.checkBoxHistoric.setSelected(true);
+			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 8:
 			   // kg mit historic mit agent
 			   pic = "kgplotagent.png";
+			   MainFrame2.checkBoxAgents.setSelected(true);
+			   MainFrame2.checkBoxHistoric.setSelected(true);
+			   MainFrame2.comboBox.setSelectedIndex(2);
 			   break;
 		   default:
 			   pic = "gross.png";

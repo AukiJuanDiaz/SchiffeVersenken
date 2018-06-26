@@ -72,7 +72,8 @@ public class BrokerNetworkConnection implements Runnable {
 	        if(pr != null) {
 	        
 	            result.put("ett", pr.getETT());
-	
+	            result.put("RouteName", pr.getRouteName());
+	            
 	            JSONArray ett = new JSONArray();
 	            JSONArray lat = new JSONArray();
 	            JSONArray lon = new JSONArray();
@@ -86,7 +87,7 @@ public class BrokerNetworkConnection implements Runnable {
 	            result.put("intermediateETT", ett);
 	            result.put("intermediateLat", lat);
 	            result.put("intermediateLon", lon);
-	        
+	            
 	        }else {
 	            result.put("type", "error");
 	            result.put("message", "Broker could not make a prediction!");
