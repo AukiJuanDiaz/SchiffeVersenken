@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 
 public class MapView extends JPanel{
 
-
 	private static MapView instance;
 
     private BufferedImage image;
@@ -30,6 +29,7 @@ public class MapView extends JPanel{
     public int getMap() {
     	return route;
     }
+
     public void otherMap() {
     	switch (route) {
 			case 1:
@@ -47,9 +47,15 @@ public class MapView extends JPanel{
 		}
     	
     }
+
     public boolean isCorrectMap(String name) {
-    	if (name.contentEquals("Bremerhaven-Hamburg")) {
-    		switch (route) {
+        int routeIndex = routeName2Index(name);
+
+    	if(routeIndex == 1) {
+
+    	    return route % 2 == 1;
+
+    		/*switch (route) {
     		case 1:
     		case 3:
     		case 5:
@@ -57,9 +63,13 @@ public class MapView extends JPanel{
     			return true;
     		default:
     			return false;
-    		}
-    	}else if (name.contentEquals("Kiel-Gdynia")) {
-    		switch (route) {
+    		}*/
+    	}
+    	else if (routeIndex == 2) {
+
+    	    return route % 2 == 0;
+
+    		/*switch (route) {
     		case 2:
     		case 4:
     		case 6:
@@ -67,12 +77,18 @@ public class MapView extends JPanel{
     			return true;
     		default:
     			return false;
-    		}    		
+    		}*/
     	}
     	return false;
     }
 
+    public void changeMap(String name) {
+        changeMap(routeName2Index(name));
+    }
     public void changeMap(int num) {
+
+    	if(route == num) return;
+
     	route = num;
     	String pic = "";
     	switch (route) {
@@ -143,8 +159,9 @@ public class MapView extends JPanel{
 		}
     }
 
-    public void drawlivePoint(double xKord, double yKord, int route) {
+    public void drawlivePoint(double xKord, double yKord) {
 
+        int route = getMap();
     	final Graphics2D graphics2D = image.createGraphics ();
         graphics2D.setColor ( Color.getHSBColor( 0.7f, 1f,  0.9f) );
         graphics2D.fillRect (x_Geo2Pix(xKord,route), y_Geo2Pix(yKord,route),10, 10);
@@ -207,6 +224,15 @@ public class MapView extends JPanel{
 		int xPix = (int) ((lon - LEFT_LON)*(width / (RIGHT_LON - LEFT_LON)));
 		return xPix;
 	}
+
+    public int routeName2Index(String name) {
+        if (name.contentEquals("Bremerhaven-Hamburg")) {
+            return 1;
+        }else if (name.contentEquals("Kiel-Gdynia")) {
+            return 2;
+        }
+        return 0;
+    }
 
 
     @Override

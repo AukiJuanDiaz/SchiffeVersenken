@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.WeekFields;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
 
@@ -21,7 +22,6 @@ public class Broker {
     public Broker(String configPath) throws RuntimeException {
 
         try {
-
             System.out.println("Trying to load config: " + Paths.get(configPath).toString());
 
             String configFile = new String(Files.readAllBytes(Paths.get(configPath)));
@@ -103,5 +103,27 @@ public class Broker {
             return result;
         }
         else return null;
+    }
+
+    public void evaluateModels(Instances dataset) {
+
+        int size = dataset.size();
+
+        double[] longitudes = new double[size];
+        double[] actuals = new double[size];
+        double[] predicteds = new double[size];
+
+        for(int i = 0; i < size; ++i) {
+            Instance inst = dataset.get(i);
+            ModelInput mi = createModelInput(inst);
+
+            longitudes[i] = mi.value("Longitude");
+            actuals[i] = mi.value("RemainingTravelTimeInMinutes");
+            predicteds[i] = makePrediction(inst).getETT();
+        }
+
+        System.out.println("Longs: " + Arrays.toString(longitudes));
+        System.out.println("RTT: " + Arrays.toString(actuals));
+        System.out.println("ETT: " + Arrays.toString(predicteds));
     }
 }

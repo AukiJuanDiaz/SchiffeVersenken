@@ -1,12 +1,11 @@
 package sd.group03;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.net.ConnectException;
-import java.net.InetAddress;
-import java.net.Socket;
+import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -14,6 +13,7 @@ public class GUINetworkConnection implements Runnable {
 	
 	private static String host = "127.0.0.1";
 	private static short port = 9812;
+	private static int readTimeout = 10000;
 
     private Socket socket;
     private BufferedWriter output;
@@ -23,9 +23,13 @@ public class GUINetworkConnection implements Runnable {
     public GUINetworkConnection(String path) throws IOException {
         try {
             socket = new Socket(InetAddress.getByName(host), port);
+            socket.setSoTimeout(readTimeout);
         }
         catch (ConnectException e) {
-            TextLog.getInstance().write("Could not connect to Broker at " + host + ":" + port);
+            TextLog.getInstance().write("ERROR: Could not connect to Broker at " + host + ":" + port);
+        }
+        catch (SocketException e) {
+            TextLog.getInstance().write("ERROR: Could not set socket timeout");
         }
         output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -49,14 +53,71 @@ public class GUINetworkConnection implements Runnable {
     	return port;
     }
     
-    private int RouteName2Index(String name) {
-    	if (name.contentEquals("Bremerhaven-Hamburg")) {
-    		return 1;
-    	}else if (name.contentEquals("Kiel-Gdynia")) {
-    		return 2;
-    	}
-    	return 0;
 
+    private boolean parseBrokerResponse(String resp) {
+
+        System.out.println("Received string: " + resp);
+
+        if(resp == null || resp.isEmpty()) {
+            System.out.println("Skipping empty response...");
+            return false;
+        }
+
+        try {
+
+            JSONObject response = new JSONObject(resp);
+            String type = response.getString("type");
+
+            switch (type) {
+                case "message":
+                    parseBrokerMessage(response);
+                    return false;
+                case "error":
+                    parseBrokerError(response);
+                    return true;
+                case "result":
+                    parseBrokerResult(response);
+                    return true;
+                default:
+                    TextLog.getInstance().write("ERROR: Could not parse answer from broker!");
+                    TextLog.getInstance().write(resp);
+                    return true;
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void parseBrokerError(JSONObject response) {
+        String msg = response.getString("message");
+        TextLog.getInstance().write("FEHLER!");
+        TextLog.getInstance().write(msg);
+    }
+
+    private void parseBrokerMessage(JSONObject response) {
+        String msg = response.getString("message");
+        TextLog.getInstance().write(msg);
+    }
+
+    private void parseBrokerResult(JSONObject response) {
+
+        try {
+            //double ett = response.getDouble("ett");
+            String route = response.getString("routeName");
+            JSONArray intLat = response.getJSONArray("intermediateLat");
+            JSONArray intLon = response.getJSONArray("intermediateLon");
+
+            MapView.getInstance().changeMap(route);
+            for (int i = 0; i < intLat.length(); i++) {
+                MapView.getInstance().drawlivePoint(intLon.getDouble(i), intLat.getDouble(i));
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            TextLog.getInstance().write("ERROR: Malformed result from broker!");
+        }
     }
 
     public void run() {
@@ -73,52 +134,16 @@ public class GUINetworkConnection implements Runnable {
 
             boolean finished = false;
             while (!finished) {
-                String s = input.readLine();
-                System.out.println("Received string: " + s);
+                try {
+                    String s = input.readLine();
+                    finished = parseBrokerResponse(s);
+                }
+                catch (SocketTimeoutException e) {
+                    TextLog.getInstance().write("ERROR: Broker did not answer after " + readTimeout + " ms!");
 
-                if(s == null || s.isEmpty()) {
-                    System.out.println("Skipping...");
+                    // Quit over finished to perform cleanup
+                    finished = true;
                     continue;
-                }
-
-                JSONObject response = new JSONObject(s);
-
-                String type = response.getString("type");
-
-                if ("message".equals(type)) {
-                    String msg = response.getString("message");
-                    TextLog.getInstance().write(msg);
-                } else if ("result".equals(type)) {
-                    double ett = response.getDouble("ett");
-                    
-                    
-                    String currentRoute = response.getString("RouteName");
-                    int RouteIdx = RouteName2Index(currentRoute);
-                    if (! MapView.getInstance().isCorrectMap(currentRoute)) {
-                    	MapView.getInstance().changeMap(RouteIdx);
-                    }
- 
-                    JSONArray JsonIntLat= response.optJSONArray("intermediateLat");
-                    JSONArray JsonIntLon= response.optJSONArray("intermediateLon");
-                    
-                    
-                    double[] IntLats = new double[JsonIntLat.length()];
-                    double[] IntLons = new double[JsonIntLon.length()];
-                    
-                    for(int i = 0; i < JsonIntLat.length();i++) {
-                    	IntLats[i] = JsonIntLat.optDouble(i);
-                    	IntLons[i] = JsonIntLon.optDouble(i);
-                    	MapView.getInstance().drawlivePoint(IntLons[i], IntLats[i], RouteIdx);
-                    }
-                    
-                    TextLog.getInstance().write("ETT: " + ett);
-                    finished = true;
-                }
-                else if ("error".equals(type)) {
-                    String msg = response.getString("message");
-                    TextLog.getInstance().write("FEHLER!");
-                    TextLog.getInstance().write(msg);
-                    finished = true;
                 }
             }
 

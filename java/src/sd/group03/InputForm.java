@@ -76,15 +76,11 @@ public class InputForm extends JPanel implements ActionListener {
 	
 	public void handleInput(){
 		String input = textField.getText();
-		if(input.isEmpty()){
-			TextLog.getInstance().write("");
-		} else {
 
-            // Tests for MapView
-			if (input.contains("make point")) {
-                MapView.getInstance().drawlivePoint(50, 50, 0xC71585);
-                return;
-            }
+		if(input.isEmpty()) {
+			TextLog.getInstance().write("");
+		}
+		else {
 
 			String message = "Try to send file (\"" + input + "\") to Broker ...";
 			TextLog.getInstance().write(message);

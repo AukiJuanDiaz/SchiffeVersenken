@@ -49,6 +49,12 @@ public class BrokerNetworkConnection implements Runnable {
 
             PredictionResult pr = broker.makePrediction(insts.get(0));
 
+            /*
+            //Uncomment to evaluate models. Results in stdout.
+            PredictionResult pr = null;
+            broker.evaluteModels(insts);
+             */
+
             JSONObject result = createResultResponse(pr);
 
             guiPrintMessage(result);
@@ -93,7 +99,6 @@ public class BrokerNetworkConnection implements Runnable {
 	            result.put("message", "Broker could not make a prediction!");
 	        }
         } catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         return result;
