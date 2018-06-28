@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: sd.group03.Main
+Main-Class: sd.group03.broker.Main
 
