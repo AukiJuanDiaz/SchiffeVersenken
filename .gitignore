@@ -7,6 +7,9 @@
 /BrhvHH/Daten/SubstepsDuringDataPreparation/CondensedDataSetGroupByTripIDLatLong.csv
 /BrhvHH/Daten/SubstepsDuringDataPreparation/Data_prepared_complete.csv
 
+/BrhvHH/Daten/TandTDataAgents/*.csv
+/KielGdynia/Daten/TandTDataAgents/*.csv
+
 
 /KielGdynia/Daten/FinalePredictionDaten.csv
 /KielGdynia/Daten/SubstepsDuringDataPreparation/CompleteDataSetAfterCleaning.csv
