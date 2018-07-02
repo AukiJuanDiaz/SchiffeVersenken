@@ -60,7 +60,7 @@ public class TextLog extends JPanel{
 	}
 	
 	synchronized public void clean(){
-		textArea.setText("  Welcome on board.");
+		textArea.setText("  Willkommen an Bord.");
 		lineNumber = 1;
 	}
 }

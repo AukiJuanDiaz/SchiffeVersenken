@@ -26,10 +26,10 @@ public class GUINetworkConnection implements Runnable {
             socket.setSoTimeout(readTimeout);
         }
         catch (ConnectException e) {
-            TextLog.getInstance().write("ERROR: Could not connect to Broker at " + host + ":" + port);
+            TextLog.getInstance().write("FEHLER: Es konnte keine Verbindung zum Broker hergestellt werden bei " + host + ":" + port);
         }
         catch (SocketException e) {
-            TextLog.getInstance().write("ERROR: Could not set socket timeout");
+            TextLog.getInstance().write("FEHLER: Es konnte kein Socket-Timeout gesetzt werden.");
         }
         output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -56,10 +56,10 @@ public class GUINetworkConnection implements Runnable {
 
     private boolean parseBrokerResponse(String resp) {
 
-        System.out.println("Received string: " + resp);
+        System.out.println("Empfangene Nachricht: " + resp);
 
         if(resp == null || resp.isEmpty()) {
-            System.out.println("Skipping empty response...");
+            System.out.println("Überspringe leere Antworten...");
             return false;
         }
 
@@ -79,7 +79,7 @@ public class GUINetworkConnection implements Runnable {
                     parseBrokerResult(response);
                     return true;
                 default:
-                    TextLog.getInstance().write("ERROR: Could not parse answer from broker!");
+                    TextLog.getInstance().write("FEHLER: Antwort des Brokers konnte nicht verarbeitet werden!");
                     TextLog.getInstance().write(resp);
                     return true;
             }
@@ -116,7 +116,7 @@ public class GUINetworkConnection implements Runnable {
         }
         catch (JSONException e) {
             e.printStackTrace();
-            TextLog.getInstance().write("ERROR: Malformed result from broker!");
+            TextLog.getInstance().write("FEHLER: Falschformatierte Antwort vom Broker!");
         }
     }
 
@@ -139,7 +139,7 @@ public class GUINetworkConnection implements Runnable {
                     finished = parseBrokerResponse(s);
                 }
                 catch (SocketTimeoutException e) {
-                    TextLog.getInstance().write("ERROR: Broker did not answer after " + readTimeout + " ms!");
+                    TextLog.getInstance().write("FEHLER: Der Broker hat nicht geantwortet nach " + readTimeout + " ms!");
 
                     // Quit over finished to perform cleanup
                     finished = true;

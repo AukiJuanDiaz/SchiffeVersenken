@@ -17,7 +17,7 @@ public class InputForm extends JPanel implements ActionListener {
 		this.setBackground(Color.WHITE);
 
 		// Initialize the Open File-Button
-		testButton = new JButton("Open File");
+		testButton = new JButton("Datei öffnen");
 		testButton.setBackground(Color.WHITE);
 		testButton.addActionListener(this);
 		
@@ -37,7 +37,7 @@ public class InputForm extends JPanel implements ActionListener {
 		});
 
 		// Create a label in inputForm-Panel
-		JLabel lblEnterFilePath = new JLabel("Enter file path: ");
+		JLabel lblEnterFilePath = new JLabel("Dateipfad eingeben: ");
 		
 		
 		// Place Components of InputForm
@@ -48,7 +48,7 @@ public class InputForm extends JPanel implements ActionListener {
 					.addContainerGap()
 					.addComponent(lblEnterFilePath)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 565, GroupLayout.PREFERRED_SIZE)
+					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(testButton)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -82,7 +82,7 @@ public class InputForm extends JPanel implements ActionListener {
 		}
 		else {
 
-			String message = "Try to send file (\"" + input + "\") to Broker ...";
+			String message = "Es wird versucht die Datei (\"" + input + "\") zum Broker zu senden...";
 			TextLog.getInstance().write(message);
 
 			try {
