@@ -2,6 +2,10 @@ package sd.group03.gui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,6 +16,11 @@ public class MapView extends JPanel{
 
     private BufferedImage image;
     private int route = -1;
+
+    private double [] livexPoints = new double[4];
+    private double [] liveyPoints = new double[4];
+    
+    private int drawRouteIdx = -1;
 
     public static MapView getInstance() {
 	    if (instance == null) {
@@ -52,31 +61,31 @@ public class MapView extends JPanel{
 
     	    return route % 2 == 1;
 
-    		/*switch (route) {
-    		case 1:
-    		case 3:
-    		case 5:
-    		case 7:
-    			return true;
-    		default:
-    			return false;
-    		}*/
     	}
     	else if (routeIndex == 2) {
 
     	    return route % 2 == 0;
-
-    		/*switch (route) {
-    		case 2:
-    		case 4:
-    		case 6:
-    		case 8:
-    			return true;
-    		default:
-    			return false;
-    		}*/
     	}
     	return false;
+    }
+    
+    
+    //TODO
+    public void changeMap_ifnec(String name) {
+    	if (! isCorrectMap(name)) {
+    		// HintergrundMap ändern
+    		if (getMap() == 0) {
+    			changeMap(routeName2Index(name));
+    		}else {
+	    		if(getMap() % 2 == 1) {
+	    			// BremHH
+	    			changeMap(getMap()+1);
+	    		}else {
+	    			// KielGd
+	    			changeMap(getMap()-1);
+	    		}
+    		}
+    	}
     }
 
     public void changeMap(String name) {
@@ -84,7 +93,7 @@ public class MapView extends JPanel{
     }
     public void changeMap(int num) {
 
-    	if(route == num) return;
+    	//if(route == num) return;
 
     	route = num;
     	String pic;
@@ -94,24 +103,28 @@ public class MapView extends JPanel{
     		   break;
 		   case 1:
 			   pic = "images/bh.png";
+			   drawlivePoints();			   
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(false);
 			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 2:
 			   pic = "images/kg.png";
+			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(false);
 			   MainFrame2.comboBox.setSelectedIndex(2);
 			   break;
 		   case 3:
 			   pic = "images/bhplot.png";
+			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 4:
 			   pic = "images/kgplot.png";
+			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(2);
@@ -119,6 +132,7 @@ public class MapView extends JPanel{
 		   case 5:
 			   // bh ohne historic mit agent
 			   pic = "images/bhagent.png";
+			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(true);
 			   MainFrame2.checkBoxHistoric.setSelected(false);
 			   MainFrame2.comboBox.setSelectedIndex(1);
@@ -126,6 +140,7 @@ public class MapView extends JPanel{
 		   case 6:
 			   // kg ohne historic mit agent
 			   pic = "images/kgagent.png";
+			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(true);
 			   MainFrame2.checkBoxHistoric.setSelected(false);
 			   MainFrame2.comboBox.setSelectedIndex(2);
@@ -133,6 +148,7 @@ public class MapView extends JPanel{
 		   case 7:
 			   // bh mit historic mit agent
 			   pic = "images/bhplotagent.png";
+			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(true);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(1);
@@ -140,6 +156,7 @@ public class MapView extends JPanel{
 		   case 8:
 			   // kg mit historic mit agent
 			   pic = "images/kgplotagent.png";
+			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(true);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(2);
@@ -155,18 +172,51 @@ public class MapView extends JPanel{
 			e.printStackTrace();
 		}
     }
+    
+    public void savePoints(JSONArray lons, JSONArray lats, String Routename) {
+    	
+    	drawRouteIdx = routeName2Index(Routename);
+    	
+    	for (int i = 0; i < 4;i++) {
+    		livexPoints[i]=0;
+    		liveyPoints[i]=0;
+    	}
+    	
+    	for (int i = 0; i< lons.length(); i++) {
+    		try {
+				livexPoints[i] = lons.getDouble(i);
+				liveyPoints[i] = lats.getDouble(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    	}
+    	
+    	
+    }
 
-    public void drawlivePoint(double xKord, double yKord) {
+    public void drawlivePoints() {
+    	
+    	
+    	int route = getMap() %2 ;
+    	if (route == drawRouteIdx) {
+	    	final Graphics2D graphics2D = image.createGraphics ();
+	    	for (int i = 0; i < 4; i++) {
+	    
+	    		graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  0f) );
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-3, y_Geo2Pix(liveyPoints[i],route)-11,6, 22);
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-11, y_Geo2Pix(liveyPoints[i],route)-3,22, 6);
+	            
+	    		graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  1f) );
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-2, y_Geo2Pix(liveyPoints[i],route)-10,4, 20);
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-10, y_Geo2Pix(liveyPoints[i],route)-2,20, 4);
+	    	}
 
-        int route = getMap();
-    	final Graphics2D graphics2D = image.createGraphics ();
-        graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  1f) );
-        graphics2D.fillRect (x_Geo2Pix(xKord,route)-2, y_Geo2Pix(yKord,route)-10,4, 20);
-        graphics2D.fillRect (x_Geo2Pix(xKord,route)-10, y_Geo2Pix(yKord,route)-2,20, 4);
+	    	graphics2D.dispose ();
 
-        graphics2D.dispose ();
-
-    	updateUI();
+	    	updateUI();
+    	}
    	}
 
 	public int y_Geo2Pix(double lat, int route) {
@@ -178,8 +228,10 @@ public class MapView extends JPanel{
 
 		switch (route) {
 		case 1: // Brhv-HH
-			TOP_LAT = 54.104;
-			BOT_LAT = 53.140;
+//			TOP_LAT = 54.104;
+//			BOT_LAT = 53.140;
+			TOP_LAT = 55.07;
+			BOT_LAT = 53.25;
 			break;
 		case 2: // Kiel-Gdynia
 			TOP_LAT = 57.37;
@@ -204,12 +256,17 @@ public class MapView extends JPanel{
 
 		switch (route) {
 		case 1: // Brhv-HH
-			LEFT_LON = 7.973;
-			RIGHT_LON = 10.292;
+//			LEFT_LON = 7.973;
+//			RIGHT_LON = 10.292;
+			LEFT_LON = 6.83;
+			RIGHT_LON = 11.1;
 			break;
 		case 2: // Kiel-Gdynia
+//			LEFT_LON = 9.33;
+//			RIGHT_LON = 20.26;
 			LEFT_LON = 9.33;
-			RIGHT_LON = 20.26;
+			RIGHT_LON = 20.26;			
+
 			break;
 		default: // grosse Karte
 			LEFT_LON = 0;
