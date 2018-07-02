@@ -228,8 +228,10 @@ public class MapView extends JPanel{
 
 		switch (route) {
 		case 1: // Brhv-HH
-			TOP_LAT = 54.104;
-			BOT_LAT = 53.140;
+//			TOP_LAT = 54.104;
+//			BOT_LAT = 53.140;
+			TOP_LAT = 55.07;
+			BOT_LAT = 53.25;
 			break;
 		case 2: // Kiel-Gdynia
 			TOP_LAT = 57.37;
@@ -254,12 +256,17 @@ public class MapView extends JPanel{
 
 		switch (route) {
 		case 1: // Brhv-HH
-			LEFT_LON = 7.973;
-			RIGHT_LON = 10.292;
+//			LEFT_LON = 7.973;
+//			RIGHT_LON = 10.292;
+			LEFT_LON = 6.83;
+			RIGHT_LON = 11.1;
 			break;
 		case 2: // Kiel-Gdynia
+//			LEFT_LON = 9.33;
+//			RIGHT_LON = 20.26;
 			LEFT_LON = 9.33;
-			RIGHT_LON = 20.26;
+			RIGHT_LON = 20.26;			
+
 			break;
 		default: // grosse Karte
 			LEFT_LON = 0;
