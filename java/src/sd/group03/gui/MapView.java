@@ -203,7 +203,12 @@ public class MapView extends JPanel{
     	if (route == drawRouteIdx) {
 	    	final Graphics2D graphics2D = image.createGraphics ();
 	    	for (int i = 0; i < 4; i++) {
-	            graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  1f) );
+	    
+	    		graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  0f) );
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-3, y_Geo2Pix(liveyPoints[i],route)-11,6, 22);
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-11, y_Geo2Pix(liveyPoints[i],route)-3,22, 6);
+	            
+	    		graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  1f) );
 	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-2, y_Geo2Pix(liveyPoints[i],route)-10,4, 20);
 	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-10, y_Geo2Pix(liveyPoints[i],route)-2,20, 4);
 	    	}
