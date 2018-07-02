@@ -79,18 +79,18 @@ public class MainFrame2 implements ActionListener, ItemListener{
 		
 		// Add the top menu bar
 		menuBar = new JMenuBar();
-		connection = new JMenu("Connection");
-		connectionItem = new JMenuItem("Set the connection to Broker.");
+		connection = new JMenu("Verbindung");
+		connectionItem = new JMenuItem("Einstellen der Verbindung zum Broker");
 		connection.add(connectionItem);
 		menuBar.add(connection);
 		connectionItem.addActionListener(this);
-		reset = new JMenu("Reset");
-		resetItem = new JMenuItem("Reset the program.");
+		reset = new JMenu("Zurücksetzen");
+		resetItem = new JMenuItem("Programm auf Start zurücksetzen");
 		reset.add(resetItem);
 		menuBar.add(reset);
 		resetItem.addActionListener(this);
-		credits = new JMenu("Credits");
-		creditsItem = new JMenuItem("And the winner is...");
+		credits = new JMenu("Über uns");
+		creditsItem = new JMenuItem("Team");
 		credits.add(creditsItem);
 		menuBar.add(credits);
 		creditsItem.addActionListener(this);
@@ -172,7 +172,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
     	
     	// Return the credits for the work
     	if(creditsItem == source){
-    		TextLog.getInstance().write("This application was designed, trained and implemented by Arne Gruenhagen, Thilo Fischer and Hauke Diers.");
+    		TextLog.getInstance().write("Dieses Programm wurde konzipiert, implementiert und trainiert von Arne Gruenhagen, Thilo Fischer und Hauke Diers.");
     	}
     	
     	// Open a new frame to enter the IP and Port of the Broker
