@@ -109,10 +109,12 @@ public class GUINetworkConnection implements Runnable {
             JSONArray intLat = response.getJSONArray("intermediateLat");
             JSONArray intLon = response.getJSONArray("intermediateLon");
 
-            MapView.getInstance().changeMap(route);
+            MapView.getInstance().changeMap_ifnec(route);
             for (int i = 0; i < intLat.length(); i++) {
-                MapView.getInstance().drawlivePoint(intLon.getDouble(i), intLat.getDouble(i));
+                MapView.getInstance().savePoints(intLon, intLat, route);
             }
+            MapView.getInstance().drawlivePoints();
+            
         }
         catch (JSONException e) {
             e.printStackTrace();

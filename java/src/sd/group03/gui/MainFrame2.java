@@ -167,6 +167,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
     		// Add more reset functionality, e.g. in map:
     		// MapView.getInstance().changeMap(0);
     		comboBox.setSelectedIndex(0);
+    		inputForm.textField.setText("");
     	}
     	
     	// Return the credits for the work
@@ -203,6 +204,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
 			}
 		}
 		mapView.changeMap(mapSelected);
+		mapView.drawlivePoints();
 
 	}
 }

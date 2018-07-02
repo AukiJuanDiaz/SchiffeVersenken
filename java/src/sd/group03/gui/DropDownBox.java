@@ -21,11 +21,12 @@ public class DropDownBox extends JComboBox implements ActionListener {
 		switch (i) {
 		case 0:
 			// Gesamtes Gebiet
-			MainFrame2.mapSelected = 0;
+
 			MainFrame2.checkBoxHistoric.setSelected(false);
 			MainFrame2.checkBoxAgents.setSelected(false);
 			MainFrame2.checkBoxHistoric.setEnabled(false);
 			MainFrame2.checkBoxAgents.setEnabled(false);
+			MainFrame2.mapSelected = 0;
 			break;
 		case 1:
 			// Bremerhaven Gebiet
