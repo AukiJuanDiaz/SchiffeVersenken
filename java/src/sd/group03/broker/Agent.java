@@ -38,8 +38,8 @@ public class Agent {
     public ModelInput makePrediction(ModelInput inst) throws RuntimeException {
         ModelInput copy = new ModelInput(inst);
 
-        BrokerNetworkConnection.guiPrintString("Agent with Longitude [" + minimumLongitude + ", " +
-                                                maximumLongitude + ") predicting...");
+        BrokerNetworkConnection.guiPrintString("Agent mit Breitengrad [" + minimumLongitude + ", " +
+                                                maximumLongitude + ") trifft Vorhersage...");
 
         for (Predictor p : predictors) {
             double res = p.makePrediction(inst);
