@@ -90,13 +90,13 @@ public class GUINetworkConnection implements Runnable {
         return false;
     }
 
-    private void parseBrokerError(JSONObject response) {
+    private void parseBrokerError(JSONObject response) throws JSONException {
         String msg = response.getString("message");
         TextLog.getInstance().write("FEHLER!");
         TextLog.getInstance().write(msg);
     }
 
-    private void parseBrokerMessage(JSONObject response) {
+    private void parseBrokerMessage(JSONObject response) throws JSONException {
         String msg = response.getString("message");
         TextLog.getInstance().write(msg);
     }

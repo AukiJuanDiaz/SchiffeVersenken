@@ -42,8 +42,7 @@ public class MapView extends JPanel{
 			case 8:
 				changeMap(1);
 				break;
-		}
-    	
+		}	
     }
 
     public boolean isCorrectMap(String name) {
@@ -161,8 +160,9 @@ public class MapView extends JPanel{
 
         int route = getMap();
     	final Graphics2D graphics2D = image.createGraphics ();
-        graphics2D.setColor ( Color.getHSBColor( 0.7f, 1f,  0.9f) );
-        graphics2D.fillRect (x_Geo2Pix(xKord,route), y_Geo2Pix(yKord,route),10, 10);
+        graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  1f) );
+        graphics2D.fillRect (x_Geo2Pix(xKord,route)-2, y_Geo2Pix(yKord,route)-10,4, 20);
+        graphics2D.fillRect (x_Geo2Pix(xKord,route)-10, y_Geo2Pix(yKord,route)-2,20, 4);
 
         graphics2D.dispose ();
 
@@ -176,20 +176,18 @@ public class MapView extends JPanel{
 
 		double height= (double)instance.getHeight();
 
-
-
 		switch (route) {
 		case 1: // Brhv-HH
 			TOP_LAT = 54.104;
 			BOT_LAT = 53.140;
 			break;
 		case 2: // Kiel-Gdynia
-			TOP_LAT = 0;
-			BOT_LAT = 0;
+			TOP_LAT = 57.37;
+			BOT_LAT = 53.04;
 			break;
 		default: // grosse Karte
-			TOP_LAT = 54.104;
-			BOT_LAT = 53.140;
+			TOP_LAT = 0;
+			BOT_LAT = 0;
 			break;
 		}
 
@@ -199,10 +197,10 @@ public class MapView extends JPanel{
 
 	public static int x_Geo2Pix(double lon, int route) {
 
-		double width= (double) instance.getWidth();
+		double LEFT_LON = 0;
+		double RIGHT_LON = 0;
 
-		double LEFT_LON = 7.973;
-		double RIGHT_LON = 10.292;
+		double width= (double) instance.getWidth();
 
 		switch (route) {
 		case 1: // Brhv-HH
@@ -210,8 +208,8 @@ public class MapView extends JPanel{
 			RIGHT_LON = 10.292;
 			break;
 		case 2: // Kiel-Gdynia
-			LEFT_LON = 0;
-			RIGHT_LON = 0;
+			LEFT_LON = 9.33;
+			RIGHT_LON = 20.26;
 			break;
 		default: // grosse Karte
 			LEFT_LON = 0;
@@ -231,7 +229,6 @@ public class MapView extends JPanel{
         }
         return 0;
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {
