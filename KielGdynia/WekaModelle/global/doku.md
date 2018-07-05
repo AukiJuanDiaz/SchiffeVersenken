@@ -64,4 +64,31 @@ Mean absolute error                    114.437
 Root mean squared error                224.4243
 Relative absolute error                 21.018  %
 Root relative squared error             34.2273 %
-Total Number of Instances           110488    
+Total Number of Instances           110488   
+
+######################################
+
+M5P -M 20
+
+=== Summary ===
+
+Correlation coefficient                  0.9472
+Mean absolute error                    109.9481
+Root mean squared error                210.3401
+Relative absolute error                 20.1935 %
+Root relative squared error             32.0793 %
+Total Number of Instances           110488     
+
+
+######################################
+
+M5P -M 30
+
+=== Summary ===
+
+Correlation coefficient                  0.9496
+Mean absolute error                    108.0982
+Root mean squared error                205.4749
+Relative absolute error                 19.8538 %
+Root relative squared error             31.3373 %
+Total Number of Instances           110488     
