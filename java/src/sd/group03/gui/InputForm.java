@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class InputForm extends JPanel implements ActionListener {
 	JButton testButton;
@@ -84,6 +86,10 @@ public class InputForm extends JPanel implements ActionListener {
 
 			String message = "Es wird versucht die Datei (\"" + input + "\") zum Broker zu senden...";
 			TextLog.getInstance().write(message);
+				
+			new AISLinePicker(input);
+
+            
 
 			try {
                 (new Thread(new GUINetworkConnection(input))).start();
