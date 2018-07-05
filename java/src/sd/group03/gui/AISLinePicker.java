@@ -1,5 +1,6 @@
 package sd.group03.gui;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -17,14 +18,17 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JButton;
 
-public class AISLinePicker implements ActionListener {
+public class AISLinePicker implements ActionListener, ListSelectionListener {
 	private JFrame linePickerFrame;
 	public static final int CONNECTION_FRAME_SIZE_HEIGHT = 500;
 	public static final int CONNECTION_FRAME_SIZE_WIDTH = 500;
 	private JList list;
 	private String datas[];
+	private JButton submitButton;
 
 	
 	AISLinePicker(String path){
@@ -41,10 +45,11 @@ public class AISLinePicker implements ActionListener {
 		int cornerY = (screenSizeHeight / 2) - (CONNECTION_FRAME_SIZE_HEIGHT / 2);
 		linePickerFrame.setLocation(cornerX, cornerY);
 		
+		
 		String aisData = null;
 		try {
 			aisData = new String(Files.readAllBytes(Paths.get(path)));
-			System.out.println(aisData);
+			// System.out.println(aisData);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,11 +80,36 @@ public class AISLinePicker implements ActionListener {
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
+		list.addListSelectionListener(this);
+		list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		JScrollPane listScroller = new JScrollPane(list);
-		listScroller.setPreferredSize(new Dimension(250, 80));
+		// listScroller.setPreferredSize(new Dimension(250, 80));
 		
-		linePickerFrame.add(listScroller);
+		submitButton = new JButton("Markierte Zeile auswählen");
+		submitButton.setEnabled(false);
+		submitButton.addActionListener(this);
+		
+		GroupLayout groupLayout = new GroupLayout(linePickerFrame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createParallelGroup()
+					.addComponent(listScroller)
+					.addGroup(groupLayout.createSequentialGroup()
+							.addGap(162 - submitButton.getWidth() )
+							.addComponent(submitButton)
+							)
+					
+					)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addComponent(listScroller)
+					.addComponent(submitButton)
+					)
+		);
+		linePickerFrame.getContentPane().setLayout(groupLayout);
 		
 		linePickerFrame.setVisible(true);
 	}
@@ -92,6 +122,25 @@ public class AISLinePicker implements ActionListener {
 	}
 	
 	public void handleInput(){
+			// TODO Compose the final string, that should be submitted
+			// Probably the .arff header is needed, followed by the selection line.
+		
+			String selection = list.getSelectedValue().toString();
+			System.out.println(selection);
+	}
+	
+	public void valueChanged(ListSelectionEvent e) {
+	    if (e.getValueIsAdjusting() == false) {
 
+	        if (list.getSelectedIndex() == -1) {
+	        //No selection, disable fire button.
+	        	submitButton.setEnabled(false);
+
+	        } else {
+	        //Selection, enable the fire button.
+	        	submitButton.setEnabled(true);
+	            
+	        }
+	    }
 	}
 }
