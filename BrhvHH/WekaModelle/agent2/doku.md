@@ -22,6 +22,17 @@ Total Number of Instances            36214
 
 ##########################################################################
 
+knnRTT
+
+Correlation coefficient                  0.9688
+Mean absolute error                      7.8662
+Root mean squared error                 11.7746
+Relative absolute error                 19.6542 %
+Root relative squared error             24.4226 %
+Total Number of Instances            36214     
+
+##########################################################################
+
 m5pSOG
 
 Correlation coefficient                  0.7419
