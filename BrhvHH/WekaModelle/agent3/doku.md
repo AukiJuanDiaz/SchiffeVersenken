@@ -1,6 +1,17 @@
 Dokumentation für agent3 Bremerhaven-Hamburg
 
 ##########################################################################
+
+linearRegressionRTT
+
+Correlation coefficient                  0.9078
+Mean absolute error                     16.292 
+Root mean squared error                 20.7182
+Relative absolute error                 40.0393 %
+Root relative squared error             42.5969 %
+Total Number of Instances            38447
+
+##########################################################################
 m5pLatitude
 
 Correlation coefficient                  0.3862
@@ -9,6 +20,18 @@ Root mean squared error                  0.018
 Relative absolute error                 65.1333 %
 Root relative squared error             97.0839 %
 Total Number of Instances            38447
+
+##########################################################################
+
+multilayerPerceptronRTT
+
+Correlation coefficient                 -0     
+Mean absolute error                     61.5213
+Root mean squared error                 76.1088
+Relative absolute error                151.1952 %
+Root relative squared error            156.4809 %
+Total Number of Instances            38447     
+
 
 ##########################################################################
 
