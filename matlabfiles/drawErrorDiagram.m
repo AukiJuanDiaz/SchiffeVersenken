@@ -14,7 +14,7 @@ ylabel('Absoluter Fehler','FontSize',40,'FontWeight','bold')
 yyaxis right
 
 scatter(actual, relative);
-ylim([-70, 70]);
+ylim([-35,35]);
 refline(0,0);
 ylabel('Relativer Fehler','FontSize',40,'FontWeight','bold')
 end

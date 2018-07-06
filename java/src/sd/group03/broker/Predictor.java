@@ -34,10 +34,11 @@ public class Predictor {
 
         try {
             // Set and reset the class attribute to the appropriate value for this predictor
-            int oldClassIndex = inst.classIndex();
-            inst.dataset().setClassIndex(getClassIndex());
+            //int oldClassIndex = inst.classIndex();
+            //inst.dataset().setClassIndex(getClassIndex());
+            inst.dataset().setClassIndex(0);
             res = model.classifyInstance(inst);
-            inst.dataset().setClassIndex(oldClassIndex);
+            //inst.dataset().setClassIndex(oldClassIndex);
         }
         catch (Exception e)
         {

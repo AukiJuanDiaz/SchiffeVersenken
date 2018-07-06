@@ -47,12 +47,12 @@ public class BrokerNetworkConnection implements Runnable {
             DataSource dataSource = new DataSource(is);
             Instances insts = dataSource.getDataSet();
 
-            PredictionResult pr = broker.makePrediction(insts.get(0));
+            //PredictionResult pr = broker.makePrediction(insts.get(0));
 
 
             //Uncomment to evaluate models. Results in stdout.
-            //PredictionResult pr = null;
-            //broker.evaluateModels(insts);
+            PredictionResult pr = null;
+            broker.evaluateModels(insts);
 
             JSONObject result = createResultResponse(pr);
 
@@ -85,7 +85,7 @@ public class BrokerNetworkConnection implements Runnable {
 	            JSONArray lon = new JSONArray();
 	
 	            for(ModelInput mi : pr.intermediateResults) {
-	                ett.put(mi.value("RemainingTravelTimeInMinutes"));
+	                //ett.put(mi.value("RemainingTravelTimeInMinutes"));
 	                lat.put(mi.value("Latitude"));
 	                lon.put(mi.value("Longitude"));
 	            }

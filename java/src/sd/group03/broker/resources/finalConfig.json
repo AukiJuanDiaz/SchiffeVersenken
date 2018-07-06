@@ -82,11 +82,57 @@
       [
         {
           "minLong": 10.1,
+          "maxLong": 12.26,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/kigd/agent1/RTT_M5P500.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            },
+            {
+              "modelPath": "resources/kigd/agent1/Lat_M5P500.model",
+              "classAttribute": "Latitude"
+            },
+            {
+              "modelPath": "resources/kigd/agent1/COG_M5P40.model",
+              "classAttribute": "COG"
+            },
+            {
+              "modelPath": "resources/kigd/agent1/SOG_M5P040.model",
+              "classAttribute": "SOG"
+            }
+          ]
+        },
+        {
+          "minLong": 12.26,
+          "maxLong": 14.6,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/kigd/agent2/rtt_IBK100.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            },
+            {
+              "modelPath": "resources/kigd/agent2/lat_M5P500.model",
+              "classAttribute": "Latitude"
+            },
+            {
+              "modelPath": "resources/kigd/agent2/COG_IBK100.model",
+              "classAttribute": "COG"
+            },
+            {
+              "modelPath": "resources/kigd/agent2/SOG_M5P40.model",
+              "classAttribute": "SOG"
+            }
+          ]
+        },
+        {
+          "minLong": 14.6,
           "maxLong": 20,
           "predictors":
           [
             {
-              "modelPath": "resources/M5P.model",
+              "modelPath": "resources/kigd/agent3/RTT_M5P1000.model",
               "classAttribute": "RemainingTravelTimeInMinutes"
             }
           ]

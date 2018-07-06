@@ -105,16 +105,24 @@ public class Broker {
             ModelInput mi = createModelInput(inst);
 
             longitudes[i] = mi.value("Longitude");
-            double end = inst.value(7);
-            double now = inst.value(11);
-            actuals[i] = (end-now)/60000;
+
+            //Fall Marrone
+            //double end = inst.value(7);
+            //double now = inst.value(11);
+            //actuals[i] = (end-now)/60000;
+
+            // Unbenutzt glaube ich
             //actuals[i] = mi.value("RemainingTravelTimeInMinutes");
+
+            // Fall Hauke
+            actuals[i] = inst.value(inst.numValues()-1);
+
             PredictionResult pr = makePrediction(inst);
             predicteds[i] = pr.getETT();
         }
 
-        System.out.println("Longs: " + Arrays.toString(longitudes));
-        System.out.println("RTT: " + Arrays.toString(actuals));
-        System.out.println("ETT: " + Arrays.toString(predicteds));
+        System.out.println("lon = " + Arrays.toString(longitudes) + ";");
+        System.out.println("rtt = " + Arrays.toString(actuals) + ";");
+        System.out.println("ett = " + Arrays.toString(predicteds) + ";");
     }
 }
