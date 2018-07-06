@@ -9,6 +9,17 @@ Mean absolute error                     59.0738
 Root mean squared error                197.8731
 Total Number of Instances            76449     
 
+##########################################################################
+
+knnRTT
+
+Correlation coefficient                  0.6242
+Mean absolute error                     48.5115
+Root mean squared error                122.9342
+Relative absolute error                 46.7773 %
+Root relative squared error             81.1141 %
+Total Number of Instances            76449     
+
 
 ##########################################################################
 
@@ -56,6 +67,17 @@ Root mean squared error                  4.1256
 Relative absolute error                107.2976 %
 Root relative squared error            131.1734 %
 Total Number of Instances            76449   
+
+##########################################################################
+
+knnSOG
+
+Correlation coefficient                  0.5437
+Mean absolute error                      2.1479
+Root mean squared error                  2.7412
+Relative absolute error                 83.906  %
+Root relative squared error             87.1558 %
+Total Number of Instances            76449    
 
 ##########################################################################
 
