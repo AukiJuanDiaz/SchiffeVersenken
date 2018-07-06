@@ -18,23 +18,26 @@ public class GUINetworkConnection implements Runnable {
     private Socket socket;
     private BufferedWriter output;
     private BufferedReader input;
-    private String filePath;
+    // private String filePath;
+    private String AISfile;
 
-    public GUINetworkConnection(String path) throws IOException {
+    public GUINetworkConnection(String AIS) throws IOException, SocketException {
         try {
             socket = new Socket(InetAddress.getByName(host), port);
             socket.setSoTimeout(readTimeout);
         }
         catch (ConnectException e) {
             TextLog.getInstance().write("FEHLER: Es konnte keine Verbindung zum Broker hergestellt werden bei " + host + ":" + port);
+            throw e;
         }
         catch (SocketException e) {
             TextLog.getInstance().write("FEHLER: Es konnte kein Socket-Timeout gesetzt werden.");
+            throw e;
         }
         output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-        filePath = path;
+        AISfile = AIS;
     }
     
     public static void setHost(String newHost) {
@@ -126,10 +129,12 @@ public class GUINetworkConnection implements Runnable {
 
         try {
             JSONObject obj = new JSONObject();
-            String aisData = new String(Files.readAllBytes(Paths.get(filePath)));
-
+            // String aisData = new String(Files.readAllBytes(Paths.get(filePath)));
+            
+           
+            
             obj.put("type", "prediction-request");
-            obj.put("data", aisData);
+            obj.put("data", AISfile);
 
             output.write(obj.toString() + "\n");
             output.flush();

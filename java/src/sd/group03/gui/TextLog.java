@@ -2,6 +2,8 @@ package sd.group03.gui;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.text.DefaultCaret;
+
 import java.awt.*;
 
 public class TextLog extends JPanel{
@@ -43,8 +45,13 @@ public class TextLog extends JPanel{
 		textArea.setForeground(Color.GREEN);
 		textArea.setBackground(Color.BLACK);
 		textArea.setEditable(false);
-		scrollPane.setViewportView(textArea);
 		textArea.setLineWrap(true);
+		
+		DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
+		scrollPane.setViewportView(textArea);
+		
 
 		clean();
 

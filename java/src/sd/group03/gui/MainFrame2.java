@@ -39,7 +39,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
 	public static DropDownBox comboBox;
 	JMenuBar menuBar;
 	JMenu connection, reset, credits;
-	JMenuItem connectionItem, resetItem, creditsItem;
+	JMenuItem connectionItem, resetItem, creditsItem, schiffItem;
 	public static JCheckBox checkBoxHistoric;
 	public static JCheckBox checkBoxAgents;
 	public static final int FRAME_SIZE_HEIGHT = 1000;
@@ -91,9 +91,12 @@ public class MainFrame2 implements ActionListener, ItemListener{
 		resetItem.addActionListener(this);
 		credits = new JMenu("Über uns");
 		creditsItem = new JMenuItem("Team");
+		schiffItem = new JMenuItem("Volle Fahrt");
 		credits.add(creditsItem);
+		credits.add(schiffItem);
 		menuBar.add(credits);
 		creditsItem.addActionListener(this);
+		schiffItem.addActionListener(this);
 		frame.setJMenuBar(menuBar);
 		
 		
@@ -178,6 +181,30 @@ public class MainFrame2 implements ActionListener, ItemListener{
     	// Open a new frame to enter the IP and Port of the Broker
     	if(connectionItem == source){
     		new ConnectionSetterFrame();
+    	}
+    	
+    	//Return the BuddelSchiff
+    	if(schiffItem == source){
+    		
+    		TextLog.getInstance().write("                             ~;");
+    		TextLog.getInstance().write("   Volle                    ,/|\\,");
+    		TextLog.getInstance().write("   Fahrt                  ,/' |\\ \\,");
+    		TextLog.getInstance().write("   voraus!              ,/'   | |  \\");
+    		TextLog.getInstance().write("                      ,/'     | |   |");
+    		TextLog.getInstance().write("                    ,/'       |/    |");
+    		TextLog.getInstance().write("                  ,/__________|-----' ,");
+    		TextLog.getInstance().write("                 ___.....-----''-----/");
+    		TextLog.getInstance().write("                 \\                  /");
+    		TextLog.getInstance().write("~^~-~^~^^~^~-~^~^~~-~^~^~`~^~`~^^~^~-^~^~^~-~^~^~^~-~^~^");
+
+
+			/*
+    		TextLog.getInstance().write(".--------------.");
+    		TextLog.getInstance().write("|     _._ _     `.,______");
+    		TextLog.getInstance().write("|    (__((_(       ___(_()");
+    		TextLog.getInstance().write("|  \'-:--:-.    ,'`");
+    		TextLog.getInstance().write("'-|-'-----'--|-'");
+    		*/
     	}
     }
 

@@ -84,19 +84,10 @@ public class InputForm extends JPanel implements ActionListener {
 		}
 		else {
 
-			String message = "Es wird versucht die Datei (\"" + input + "\") zum Broker zu senden...";
+			String message = "Es wird versucht die Datei (\"" + input + "\") zu öffnen...";
 			TextLog.getInstance().write(message);
 				
 			new AISLinePicker(input);
-
-            
-
-			try {
-                (new Thread(new GUINetworkConnection(input))).start();
-            }
-            catch (IOException e) {
-			    e.printStackTrace();
-            }
 		}
 	}
 }

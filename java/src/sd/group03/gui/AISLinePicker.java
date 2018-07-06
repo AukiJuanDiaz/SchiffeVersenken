@@ -29,6 +29,7 @@ public class AISLinePicker implements ActionListener, ListSelectionListener {
 	private JList list;
 	private String datas[];
 	private JButton submitButton;
+	private String arffHeader = "";
 
 	
 	AISLinePicker(String path){
@@ -68,10 +69,16 @@ public class AISLinePicker implements ActionListener, ListSelectionListener {
 				
 				char first = lines[i].charAt(0);
 					if (first == '@'){
-						// Do nothing
+						arffHeader += lines[i];
+						arffHeader += "\n";
 					} else {
+						if (first == '\n'){
+							// skip linebreaks
+						} else {
+						
 						data[numberValidLines] = lines[i];
 						numberValidLines++;
+						}
 					}
 			}
 		}
@@ -122,11 +129,23 @@ public class AISLinePicker implements ActionListener, ListSelectionListener {
 	}
 	
 	public void handleInput(){
-			// TODO Compose the final string, that should be submitted
-			// Probably the .arff header is needed, followed by the selection line.
-		
 			String selection = list.getSelectedValue().toString();
-			System.out.println(selection);
+			String result = arffHeader + selection;
+			System.out.println(result);
+			
+			
+			try {
+                (new Thread(new GUINetworkConnection(result))).start();
+            }
+            catch (Exception e) {
+			    e.printStackTrace();
+            }
+			
+			TextLog.getInstance().write("Es wurde die Zeile Nummer " + String.valueOf((list.getSelectedIndex() + 1)) + " ausgewaehlt.");
+			
+			linePickerFrame.setVisible(false);
+			linePickerFrame.dispose();
+			
 	}
 	
 	public void valueChanged(ListSelectionEvent e) {
