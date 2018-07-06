@@ -14,6 +14,14 @@ Total Number of Instances               151110
 
 ##########################################################################
 
+m5pTree.model 
+
+Correlation coefficient                  0.8638
+Mean absolute error                     47.7822
+Root mean squared error                109.1777
+Relative absolute error                 27.9391 %
+Root relative squared error             50.8463 %
+Total Number of Instances           151110   
 
 
 ##########################################################################

@@ -1,6 +1,9 @@
 package sd.group03.broker;
 
+import weka.core.Utils;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PredictionResult {
 	
@@ -22,8 +25,16 @@ public class PredictionResult {
         System.out.println(intermediateResults.size() + " intermediates with total ETT: " + getETT());
     }
     public double getETT() {
-        ModelInput last = getLast();
-        return last.value("RemainingTravelTimeInMinutes");
+
+        Iterator<ModelInput> it = intermediateResults.iterator();
+        
+        // Skip starting point
+        if(it.hasNext()) it.next();
+        else return Utils.missingValue();
+
+        double res = 0;
+        while(it.hasNext()) res += it.next().value("RemainingTravelTimeInMinutes");
+        return res;
     }
 
     public ModelInput getLast() {

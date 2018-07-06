@@ -12,7 +12,7 @@ public class Main {
 
 
         try {
-            broker = new Broker("resources/sampleConfig.json");
+            broker = new Broker("resources/finalConfig.json");
             startServer();
         }
         catch (Exception e)

@@ -2,9 +2,13 @@ package sd.group03.broker;
 
 import weka.core.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class ModelInput extends DenseInstance {
 
@@ -63,6 +67,24 @@ public class ModelInput extends DenseInstance {
         }
 
         return new Instances("dataset", atts,1);
+    }
+
+    public void setTimeFeatures(double wekaEpoch, int minuteOffset) {
+
+        long seconds = (long) wekaEpoch / 1000;
+        seconds += minuteOffset * 60;
+        int nanoseconds = (int) (wekaEpoch % 1000) * 1000;
+
+        LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, nanoseconds, ZoneOffset.ofHours(1));
+
+        setValue("WeekdayInt", dateTime.getDayOfWeek().getValue());
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        setValue("WeekOfYearInt", dateTime.get(weekFields.weekOfWeekBasedYear()));
+        setValue("HourInt", dateTime.getHour());
+    }
+
+    public void setTimeFeatures(double wekaEpoch) {
+        setTimeFeatures(wekaEpoch, 0);
     }
 
     void prettyPrint() {

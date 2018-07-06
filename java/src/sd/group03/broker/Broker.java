@@ -6,12 +6,8 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.WeekFields;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Broker {
@@ -55,21 +51,8 @@ public class Broker {
             mi.setValue(a.name(), inst.value(a));
         }
 
-        // TODO: fix, ist leider buggy bei arff input
-        //if(mi.value("WeekdayInt") == Utils.missingValue())
-        {
-            double wekaEpoch = inst.value(dataset.attribute("time"));
-            long seconds = (long) wekaEpoch / 1000;
-            int nanoseconds = (int) (wekaEpoch % 1000) * 1000;
-
-            LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, nanoseconds, ZoneOffset.ofHours(1));
-
-            mi.setValue("WeekdayInt", dateTime.getDayOfWeek().getValue());
-            WeekFields weekFields = WeekFields.of(Locale.getDefault());
-            mi.setValue("WeekOfYearInt", dateTime.get(weekFields.weekOfWeekBasedYear()));
-            mi.setValue("HourInt", dateTime.getHour());
-
-        }
+        double wekaEpoch = inst.value(dataset.attribute("time"));
+        mi.setTimeFeatures(wekaEpoch);
 
         return mi;
     }
@@ -92,7 +75,9 @@ public class Broker {
 
         if(r != null) {
             BrokerNetworkConnection.guiPrintString("Route gewaehlt: " + r.getName());
-            PredictionResult result = r.makePrediction(mi);
+
+            double startTime = inst.value(inst.dataset().attribute("time"));
+            PredictionResult result = r.makePrediction(mi, startTime);
             result.setRouteName(r.getName());
 
             String s = "Berechnung fertig!\nDas Schiff wird in " + result.getETT() + " minuten das Ziel erreichen.";
@@ -120,8 +105,12 @@ public class Broker {
             ModelInput mi = createModelInput(inst);
 
             longitudes[i] = mi.value("Longitude");
-            actuals[i] = mi.value("RemainingTravelTimeInMinutes");
-            predicteds[i] = makePrediction(inst).getETT();
+            double end = inst.value(7);
+            double now = inst.value(11);
+            actuals[i] = (end-now)/60000;
+            //actuals[i] = mi.value("RemainingTravelTimeInMinutes");
+            PredictionResult pr = makePrediction(inst);
+            predicteds[i] = pr.getETT();
         }
 
         System.out.println("Longs: " + Arrays.toString(longitudes));

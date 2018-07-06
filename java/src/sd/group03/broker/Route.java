@@ -38,13 +38,14 @@ public class Route {
         }
     }
 
-    public PredictionResult makePrediction(ModelInput inst) throws RuntimeException {
+    public PredictionResult makePrediction(ModelInput inst, double startTime) throws RuntimeException {
 
         PredictionResult pr = new PredictionResult();
-
+        pr.addIntermediate(inst);
         ModelInput cpy = new ModelInput(inst);
-
         boolean skipping = true;
+
+        int elapsedMinutes = 0;
 
         for(Agent a : agents) {
 
@@ -52,10 +53,14 @@ public class Route {
 
                 skipping = false;
                 cpy = a.makePrediction(cpy);
+                elapsedMinutes += cpy.value("RemainingTravelTimeInMinutes");
+                cpy.setTimeFeatures(startTime, elapsedMinutes);
                 pr.addIntermediate(new ModelInput(cpy));
             }
             else if(!skipping) throw new RuntimeException("Agent rejected output from former Agent");
         }
+
+        System.out.println("Route ETT: " + elapsedMinutes);
         return pr;
     }
 

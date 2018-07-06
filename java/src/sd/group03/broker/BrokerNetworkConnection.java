@@ -49,11 +49,10 @@ public class BrokerNetworkConnection implements Runnable {
 
             PredictionResult pr = broker.makePrediction(insts.get(0));
 
-            /*
+
             //Uncomment to evaluate models. Results in stdout.
-            PredictionResult pr = null;
-            broker.evaluteModels(insts);
-             */
+            //PredictionResult pr = null;
+            //broker.evaluateModels(insts);
 
             JSONObject result = createResultResponse(pr);
 

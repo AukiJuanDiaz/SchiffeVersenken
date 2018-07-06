@@ -45,6 +45,8 @@ public class Agent {
             double res = p.makePrediction(inst);
             copy.setValue(p.getClassIndex(), res);
         }
+
+        copy.setValue("Longitude", maximumLongitude);
         return copy;
     }
 

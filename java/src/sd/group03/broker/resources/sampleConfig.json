@@ -11,7 +11,7 @@
           "predictors":
           [
             {
-              "modelPath": "resources/gobalRandomTree2.model",
+              "modelPath": "resources/m5pTree.model",
               "classAttribute": "RemainingTravelTimeInMinutes"
             }
           ]
@@ -22,6 +22,17 @@
       "name": "Kiel-Gdynia",
       "agents":
       [
+        {
+          "minLong": 10.1,
+          "maxLong": 20,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/M5P.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            }
+          ]
+        }
       ]
     }
   ]
