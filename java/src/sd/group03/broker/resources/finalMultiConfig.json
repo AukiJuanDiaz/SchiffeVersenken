@@ -11,7 +11,7 @@
           "predictors":
           [
             {
-              "modelPath": "resources/brhh/agent1/m5pRTT.model",
+              "modelPath": "resources/brhh/agent1/randomTreeRTT.model",
               "classAttribute": "RemainingTravelTimeInMinutes"
             },
             {
