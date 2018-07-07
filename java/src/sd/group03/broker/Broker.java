@@ -6,6 +6,7 @@ import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Scanner;
@@ -79,12 +80,14 @@ public class Broker {
             double startTime = inst.value(inst.dataset().attribute("time"));
             PredictionResult result = r.makePrediction(mi, startTime);
             result.setRouteName(r.getName());
-
-            String s = "Berechnung fertig!\nDas Schiff wird in " + result.getETT() + " minuten das Ziel erreichen.";
+            
+            
+            String s = "Berechnung fertig!\nDas Schiff wird in " + ((int) result.getETT()) + " Minuten das Ziel erreichen.";
             BrokerNetworkConnection.guiPrintString(s);
 
             ModelInput last = result.getLast();
-            s = "(Koordinaten: " + last.value("Latitude") + ", " + last.value("Longitude") + ")";
+            DecimalFormat numberFormat = new DecimalFormat("#.00");
+            s = "(Koordinaten: " + numberFormat.format(last.value("Latitude")) + ", " + numberFormat.format(last.value("Longitude")) + ")";
             BrokerNetworkConnection.guiPrintString(s);
 
             return result;
@@ -106,16 +109,16 @@ public class Broker {
 
             longitudes[i] = mi.value("Longitude");
 
-            //Fall Marrone
-            //double end = inst.value(7);
-            //double now = inst.value(11);
-            //actuals[i] = (end-now)/60000;
+            //Fall AIS-Data-Format
+            double end = inst.value(7);
+            double now = inst.value(11);
+            actuals[i] = (end-now)/60000;
 
             // Unbenutzt glaube ich
             //actuals[i] = mi.value("RemainingTravelTimeInMinutes");
 
-            // Fall Hauke
-            actuals[i] = inst.value(inst.numValues()-1);
+            // Fall TAndT-Data-Format
+            // actuals[i] = inst.value(inst.numValues()-1);
 
             PredictionResult pr = makePrediction(inst);
             predicteds[i] = pr.getETT();

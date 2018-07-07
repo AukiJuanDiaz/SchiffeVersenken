@@ -12,8 +12,8 @@ public class Main {
 
 
         try {
-            broker = new Broker("resources/finalConfig.json");
-            startServer();
+            broker = new Broker("resources/finalMultiConfig.json");
+            startServer(args);
         }
         catch (Exception e)
         {
@@ -22,10 +22,17 @@ public class Main {
         }
     }
 
-    private static void startServer() {
+    private static void startServer(String[] args) {
 
         ServerSocket socket;
-        short port = 9812;
+        short port = 0;
+            
+        if(args.length == 2){
+        	port = Short.parseShort(args[1]);
+        } else {
+        	port = 9812;
+        }
+        
 
         System.out.println("Starting Server");
 
