@@ -1,0 +1,143 @@
+{
+  "routes":
+  [
+    {
+      "name": "Bremerhaven-Hamburg",
+      "agents":
+      [
+        {
+          "minLong": 0,
+          "maxLong": 8.69,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/brhh/agent1/m5pRTT.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            },
+            {
+              "modelPath": "resources/brhh/agent1/m5pLatitude.model",
+              "classAttribute": "Latitude"
+            },
+            {
+              "modelPath": "resources/brhh/agent1/m5pCOG.model",
+              "classAttribute": "COG"
+            },
+            {
+              "modelPath": "resources/brhh/agent1/m5pSOG.model",
+              "classAttribute": "SOG"
+            }
+          ]
+        },
+        {
+          "minLong": 8.69,
+          "maxLong": 9.39,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/brhh/agent2/m5pRTT.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            },
+            {
+              "modelPath": "resources/brhh/agent2/m5pLatitude.model",
+              "classAttribute": "Latitude"
+            },
+            {
+              "modelPath": "resources/brhh/agent2/m5pCOG.model",
+              "classAttribute": "COG"
+            },
+            {
+              "modelPath": "resources/brhh/agent2/m5pSOG.model",
+              "classAttribute": "SOG"
+            }
+          ]
+        },
+        {
+          "minLong": 9.39,
+          "maxLong": 10.01,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/brhh/agent3/m5pRTT.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            },
+            {
+              "modelPath": "resources/brhh/agent3/m5pLatitude.model",
+              "classAttribute": "Latitude"
+            },
+            {
+              "modelPath": "resources/brhh/agent3/m5pCOG.model",
+              "classAttribute": "COG"
+            },
+            {
+              "modelPath": "resources/brhh/agent3/m5pSOG.model",
+              "classAttribute": "SOG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kiel-Gdynia",
+      "agents":
+      [
+        {
+          "minLong": 10.1,
+          "maxLong": 12.26,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/kigd/agent1/RTT_M5P500.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            },
+            {
+              "modelPath": "resources/kigd/agent1/Lat_M5P500.model",
+              "classAttribute": "Latitude"
+            },
+            {
+              "modelPath": "resources/kigd/agent1/COG_M5P40.model",
+              "classAttribute": "COG"
+            },
+            {
+              "modelPath": "resources/kigd/agent1/SOG_M5P040.model",
+              "classAttribute": "SOG"
+            }
+          ]
+        },
+        {
+          "minLong": 12.26,
+          "maxLong": 14.6,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/kigd/agent2/rtt_IBK100.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            },
+            {
+              "modelPath": "resources/kigd/agent2/lat_M5P500.model",
+              "classAttribute": "Latitude"
+            },
+            {
+              "modelPath": "resources/kigd/agent2/COG_IBK100.model",
+              "classAttribute": "COG"
+            },
+            {
+              "modelPath": "resources/kigd/agent2/SOG_M5P40.model",
+              "classAttribute": "SOG"
+            }
+          ]
+        },
+        {
+          "minLong": 14.6,
+          "maxLong": 20,
+          "predictors":
+          [
+            {
+              "modelPath": "resources/kigd/agent3/RTT_M5P1000.model",
+              "classAttribute": "RemainingTravelTimeInMinutes"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
