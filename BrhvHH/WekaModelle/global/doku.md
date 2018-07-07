@@ -26,3 +26,14 @@ Total Number of Instances           151110
 
 ##########################################################################
 
+randomForest 
+
+Correlation coefficient                  0.9082
+Mean absolute error                     41.2204
+Root mean squared error                 89.6936
+Relative absolute error                 24.1023 %
+Root relative squared error             41.7722 %
+Total Number of Instances           151110 
+
+##########################################################################
+
