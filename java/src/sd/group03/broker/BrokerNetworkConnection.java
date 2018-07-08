@@ -47,11 +47,11 @@ public class BrokerNetworkConnection implements Runnable {
             DataSource dataSource = new DataSource(is);
             Instances insts = dataSource.getDataSet();
 
-            //PredictionResult pr = broker.makePrediction(insts.get(0));
+            PredictionResult pr = broker.makePrediction(insts.get(0));
 
 
             //Uncomment to evaluate models. Results in stdout.
-            PredictionResult pr = null;
+           // PredictionResult pr = null;
             broker.evaluateModels(insts);
 
             JSONObject result = createResultResponse(pr);

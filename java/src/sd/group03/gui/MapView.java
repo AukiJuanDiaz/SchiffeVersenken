@@ -63,6 +63,10 @@ public class MapView extends JPanel{
 
     	}
     	else if (routeIndex == 2) {
+    		
+    		if (route == 0) {
+    			return false;
+    		}
 
     	    return route % 2 == 0;
     	}
@@ -199,18 +203,26 @@ public class MapView extends JPanel{
     public void drawlivePoints() {
     	
     	
-    	int route = getMap() %2 ;
-    	if (route == drawRouteIdx) {
+    	int area = 0;
+    	if (route == 0) {
+    		return;
+    	}else if (route % 2 == 1 ) {
+    		area = 1;
+    	}else if (route == 2 || route == 4 || route == 6 || route == 8) {
+    		area = 2;
+    	}
+    	
+    	if (area == drawRouteIdx) {
 	    	final Graphics2D graphics2D = image.createGraphics ();
 	    	for (int i = 0; i < 4; i++) {
 	    
 	    		graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  0f) );
-	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-3, y_Geo2Pix(liveyPoints[i],route)-11,6, 22);
-	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-11, y_Geo2Pix(liveyPoints[i],route)-3,22, 6);
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],area)-3, y_Geo2Pix(liveyPoints[i],area)-11,6, 22);
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],area)-11, y_Geo2Pix(liveyPoints[i],area)-3,22, 6);
 	            
 	    		graphics2D.setColor ( Color.getHSBColor( 0.7f, 0f,  1f) );
-	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-2, y_Geo2Pix(liveyPoints[i],route)-10,4, 20);
-	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],route)-10, y_Geo2Pix(liveyPoints[i],route)-2,20, 4);
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],area)-2, y_Geo2Pix(liveyPoints[i],area)-10,4, 20);
+	            graphics2D.fillRect (x_Geo2Pix(livexPoints[i],area)-10, y_Geo2Pix(liveyPoints[i],area)-2,20, 4);
 	    	}
 
 	    	graphics2D.dispose ();
@@ -265,7 +277,7 @@ public class MapView extends JPanel{
 //			LEFT_LON = 9.33;
 //			RIGHT_LON = 20.26;
 			LEFT_LON = 9.33;
-			RIGHT_LON = 20.26;			
+			RIGHT_LON = 20.20;			
 
 			break;
 		default: // grosse Karte
