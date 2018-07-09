@@ -2,11 +2,15 @@ package sd.group03.gui;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,6 +18,8 @@ import java.nio.file.Paths;
 public class InputForm extends JPanel implements ActionListener {
 	JButton testButton;
 	JTextField textField;
+	private static String lastOpenedFilePath = "";
+	
 
 	InputForm(){
 		this.setBackground(Color.WHITE);
@@ -37,6 +43,7 @@ public class InputForm extends JPanel implements ActionListener {
 				}
 			}
 		});
+		
 
 		// Create a label in inputForm-Panel
 		JLabel lblEnterFilePath = new JLabel("Dateipfad eingeben: ");
@@ -68,6 +75,14 @@ public class InputForm extends JPanel implements ActionListener {
 		this.setLayout(gl_inputForm);
 		// End of Automatically generated code by groupGrid in Design-Mode
 	}
+	
+    public static void setlastOpenedFilePath (String input) {
+    	lastOpenedFilePath = input;
+    }
+    
+    public static String getlastOpenedFilePath() {
+    	return lastOpenedFilePath;
+    }
 
 	public void actionPerformed(ActionEvent ae) {
 		
@@ -77,17 +92,34 @@ public class InputForm extends JPanel implements ActionListener {
 	}
 	
 	public void handleInput(){
-		String input = textField.getText();
-
-		if(input.isEmpty()) {
-			TextLog.getInstance().write("");
-		}
-		else {
-
-			String message = "Es wird versucht die Datei (\"" + input + "\") zu öffnen...";
-			TextLog.getInstance().write(message);
+		
+		//Create a file chooser
+		final JFileChooser fc = new JFileChooser();
+		FileFilterArff ffa = new FileFilterArff();
+		fc.setFileFilter(ffa);
+		
+		String pathToFile = null;
+		String InTextField = textField.getText();
+		
+		if(InTextField.equals("Bitte geben Sie hier den Pfad zur Datei ein...") || InTextField.equals(lastOpenedFilePath) ){
+			int returnVal = fc.showOpenDialog(testButton);
 				
-			new AISLinePicker(input);
+	        if (returnVal == JFileChooser.APPROVE_OPTION) {
+	            File file = fc.getSelectedFile();
+	            pathToFile = file.getAbsolutePath();
+	            String message = "Es wird versucht die Datei (\"" + file.getName() + "\") zu öffnen...";
+				TextLog.getInstance().write(message);
+				textField.setText(pathToFile);
+	        } else {
+	        	String message = "Es wurde keine Datei vom Nutzer ausgewählt...";
+	            TextLog.getInstance().write(message);
+	        }
+		} else {
+			String message = "Es wird versucht die Datei (\"" + InTextField + "\") zu öffnen...";
+			TextLog.getInstance().write(message);
+			pathToFile = InTextField;
 		}
+		lastOpenedFilePath = pathToFile;
+        new AISLinePicker(pathToFile);
 	}
 }

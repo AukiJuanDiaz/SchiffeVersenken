@@ -172,6 +172,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
     		comboBox.setSelectedIndex(0);
     		
     		inputForm.textField.setText("");
+    		inputForm.setlastOpenedFilePath("");
     	}
     	
     	// Return the credits for the work
