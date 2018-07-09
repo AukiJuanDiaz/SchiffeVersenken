@@ -3,12 +3,13 @@ package sd.group03.broker;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weka.core.Utils;
 
 public class Agent {
 
     private Predictor[] predictors;
     private double minimumLongitude, maximumLongitude;
-    private double showLongitude;
+    private double showLongitude, showLatitude;
 
     public Agent(JSONObject obj) throws RuntimeException {
 
@@ -16,6 +17,7 @@ public class Agent {
 			minimumLongitude = obj.getDouble("minLong");
 	        maximumLongitude = obj.getDouble("maxLong");
 	        showLongitude = obj.optDouble("showLong", maximumLongitude);
+	        showLatitude = obj.optDouble("showLat", Utils.missingValue());
 	
 	        JSONArray jsonPredictors = obj.getJSONArray("predictors");
 	
@@ -49,6 +51,11 @@ public class Agent {
         }
 
         copy.setValue("Longitude", showLongitude);
+
+        if(!Double.isNaN(showLatitude)) {
+           copy.setValue("Latitude", showLatitude);
+        }
+
         return copy;
     }
 

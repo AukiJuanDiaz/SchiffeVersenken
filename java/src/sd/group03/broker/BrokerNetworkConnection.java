@@ -43,16 +43,17 @@ public class BrokerNetworkConnection implements Runnable {
             System.out.println("Received JSON: " + request.toString());
 
             String rawData = request.getString("data");
+            boolean multiAgent = request.getBoolean("isMultiPrediction");
+
             InputStream is = new ByteArrayInputStream(rawData.getBytes(StandardCharsets.UTF_8));
             DataSource dataSource = new DataSource(is);
             Instances insts = dataSource.getDataSet();
 
-            PredictionResult pr = broker.makePrediction(insts.get(0));
-
+            PredictionResult pr = broker.makePrediction(insts.get(0), multiAgent);
 
             //Uncomment to evaluate models. Results in stdout.
-           // PredictionResult pr = null;
-            broker.evaluateModels(insts);
+            //PredictionResult pr = null;
+            //broker.evaluateModels(insts);
 
             JSONObject result = createResultResponse(pr);
 

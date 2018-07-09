@@ -54,23 +54,12 @@
         {
           "minLong": 9.39,
           "maxLong": 10.01,
+          "showLong": 10,
           "predictors":
           [
             {
               "modelPath": "resources/brhh/agent3/m5pRTT.model",
               "classAttribute": "RemainingTravelTimeInMinutes"
-            },
-            {
-              "modelPath": "resources/brhh/agent3/m5pLatitude.model",
-              "classAttribute": "Latitude"
-            },
-            {
-              "modelPath": "resources/brhh/agent3/m5pCOG.model",
-              "classAttribute": "COG"
-            },
-            {
-              "modelPath": "resources/brhh/agent3/m5pSOG.model",
-              "classAttribute": "SOG"
             }
           ]
         }

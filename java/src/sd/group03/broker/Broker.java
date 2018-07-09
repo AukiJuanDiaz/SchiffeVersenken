@@ -7,13 +7,15 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Scanner;
 
 public class Broker {
 
-    private Route[] routes;
+    private ArrayList<Route> multiRoutes;
+    private ArrayList<Route> singleRoutes;
 
     public Broker(String configPath) throws RuntimeException {
 
@@ -28,11 +30,19 @@ public class Broker {
 
             JSONArray jsonRoutes = jsonConfig.getJSONArray("routes");
 
-            routes = new Route[jsonRoutes.length()];
+            multiRoutes = new ArrayList<>();
+            singleRoutes = new ArrayList<>();
 
             for (int i = 0; i < jsonRoutes.length(); ++i) {
-                Route r = new Route(jsonRoutes.getJSONObject(i));
-                routes[i] = r;
+                JSONObject route = jsonRoutes.getJSONObject(i);
+                Route r = new Route(route);
+
+                if(r.isMultiAgent()) {
+                    multiRoutes.add(r);
+                }
+                else {
+                    singleRoutes.add(r);
+                }
             }
         }
         catch(Exception e) {
@@ -58,9 +68,11 @@ public class Broker {
         return mi;
     }
 
-    private Route getRouteForPrediction(ModelInput inst) {
+    private Route getRouteForPrediction(ModelInput inst, boolean multiAgent) {
 
-        for(Route r : routes) {
+        ArrayList<Route> list = multiAgent ? multiRoutes : singleRoutes;
+
+        for(Route r : list) {
             if(r.isApplicable(inst)) return r;
         }
 
@@ -69,10 +81,10 @@ public class Broker {
 
     // Habe ich mal synchronized gemacht um etwaige probleme mit Weka und threads zu vermeiden
     // Kann aber auch sein, dass es ohne funktioniert
-    synchronized public PredictionResult makePrediction(Instance inst) throws RuntimeException {
+    synchronized public PredictionResult makePrediction(Instance inst, boolean multiAgent) throws RuntimeException {
         ModelInput mi = createModelInput(inst);
         mi.prettyPrint();
-        Route r = getRouteForPrediction(mi);
+        Route r = getRouteForPrediction(mi, multiAgent);
 
         if(r != null) {
             BrokerNetworkConnection.guiPrintString("Route gewaehlt: " + r.getName());
@@ -92,7 +104,10 @@ public class Broker {
 
             return result;
         }
-        else return null;
+        else {
+            BrokerNetworkConnection.guiPrintString("Broker konnte keine anwendbare Route finden!");
+            return null;
+        }
     }
 
     public void evaluateModels(Instances dataset) {
@@ -120,7 +135,7 @@ public class Broker {
             // Fall TAndT-Data-Format
             // actuals[i] = inst.value(inst.numValues()-1);
 
-            PredictionResult pr = makePrediction(inst);
+            PredictionResult pr = makePrediction(inst, true);
             predicteds[i] = pr.getETT();
         }
 

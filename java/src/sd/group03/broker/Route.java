@@ -77,4 +77,8 @@ public class Route {
         return name;
     }
 
+    public boolean isMultiAgent() {
+        return agents.length > 1;
+    }
+
 }
