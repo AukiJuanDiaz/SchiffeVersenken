@@ -104,6 +104,7 @@ public class MapView extends JPanel{
     	switch (route) {
     	   case 0:
     		   pic = "images/gross.png";
+    		   MainFrame2.comboBox.setSelectedIndex(0);
     		   break;
 		   case 1:
 			   pic = "images/bh.png";
