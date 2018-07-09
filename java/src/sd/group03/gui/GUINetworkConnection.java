@@ -13,6 +13,7 @@ public class GUINetworkConnection implements Runnable {
 	
 	private static String host = "127.0.0.1";
 	private static short port = 9812;
+	private static boolean isMultiPrediction = true;
 	private static int readTimeout = 10000;
 
     private Socket socket;
@@ -48,12 +49,20 @@ public class GUINetworkConnection implements Runnable {
     	port = newPort;
     }
     
+    public static void setModus (boolean newModus) {
+    	isMultiPrediction = newModus;
+    }
+    
     public static String getHost() {
     	return host;
     }
     
     public static short getPort() {
     	return port;
+    }
+    
+    public static boolean getModus() {
+    	return isMultiPrediction;
     }
     
 
@@ -135,6 +144,7 @@ public class GUINetworkConnection implements Runnable {
             
             obj.put("type", "prediction-request");
             obj.put("data", AISfile);
+            obj.put("isMultiPrediction", isMultiPrediction);
 
             output.write(obj.toString() + "\n");
             output.flush();

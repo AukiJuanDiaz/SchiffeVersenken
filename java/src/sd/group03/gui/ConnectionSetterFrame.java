@@ -5,10 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
@@ -19,6 +21,8 @@ public class ConnectionSetterFrame implements ActionListener {
 	private JTextField textFieldIP;
 	private JTextField textFieldPort;
 	private JButton submitButton;
+	private JRadioButton multiAgent;
+	private JRadioButton singleAgent;
 	private String IP = GUINetworkConnection.getHost();
 	private short port = GUINetworkConnection.getPort();
 	
@@ -28,7 +32,7 @@ public class ConnectionSetterFrame implements ActionListener {
 		connectionFrame.setResizable(false);
 		connectionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		connectionFrame.setTitle("Verbindung zum Broker");
-		connectionFrame.setSize(CONNECTION_FRAME_SIZE_WIDTH, CONNECTION_FRAME_SIZE_HEIGHT);
+		connectionFrame.setSize(300, 180);
 		
 		int screenSizeHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 		int screenSizeWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -49,38 +53,65 @@ public class ConnectionSetterFrame implements ActionListener {
 		submitButton = new JButton("Neue Verbindung setzen");
 		submitButton.addActionListener(this);
 		
+		multiAgent = new JRadioButton("Multi Agent-Vorhersage");
+		
+		singleAgent = new JRadioButton("Single Agent-Vorhersage");
+		
+		// Show the button as selected, which was selected for the last connection. Default multi.
+		if (GUINetworkConnection.getModus()){
+			multiAgent.setSelected(true);
+		} else {
+			singleAgent.setSelected(true);
+		}
+
+		
+		ButtonGroup group = new ButtonGroup();
+	    group.add(multiAgent);
+	    group.add(singleAgent);
+		
 		GroupLayout groupLayout = new GroupLayout(connectionFrame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(labelIP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(labelPort, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(textFieldIP)
-						.addComponent(textFieldPort, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
-					.addContainerGap(18, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(65)
-					.addComponent(submitButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(70))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(labelPort, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+									.addGap(18))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(labelIP, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(textFieldIP)
+								.addComponent(textFieldPort, GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(79)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(multiAgent, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+								.addComponent(singleAgent, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+								.addComponent(submitButton))))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(labelIP)
-						.addComponent(textFieldIP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textFieldIP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(labelIP))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(labelPort)
 						.addComponent(textFieldPort, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(multiAgent)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(singleAgent)
+					.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
 					.addComponent(submitButton)
-					.addContainerGap(16, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		connectionFrame.getContentPane().setLayout(groupLayout);
 	}
@@ -90,6 +121,7 @@ public class ConnectionSetterFrame implements ActionListener {
 		if(e.getSource() == this.submitButton){
 			handleInput();			
 		}
+		
 	}
 	
 	public void handleInput(){
@@ -97,7 +129,19 @@ public class ConnectionSetterFrame implements ActionListener {
 		port = Short.parseShort(textFieldPort.getText());
 		GUINetworkConnection.setHost(IP);
 		GUINetworkConnection.setPort(port);
-		TextLog.getInstance().write("Neue Verbindung zum Broker mit der IP: " + IP + " und Port: " + String.valueOf(port) + " wird gesetzt.");
+		
+		String textLogMsg = "Neue Verbindung zum Broker mit der IP: " + IP + " und Port: " + String.valueOf(port) + " wird gesetzt.";
+		
+		if(multiAgent.isSelected()){
+			GUINetworkConnection.setModus(true);
+			textLogMsg = textLogMsg + " Die Vorhersage läuft im Multi Agent-Modus.";
+
+		} else {
+			GUINetworkConnection.setModus(false);
+			textLogMsg = textLogMsg + " Die Vorhersage läuft im Single Agent-Modus.";
+		}
+		
+		TextLog.getInstance().write(textLogMsg);
 		connectionFrame.setVisible(false);
 		connectionFrame.dispose();
 	}
