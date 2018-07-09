@@ -8,12 +8,14 @@ public class Agent {
 
     private Predictor[] predictors;
     private double minimumLongitude, maximumLongitude;
+    private double showLongitude;
 
     public Agent(JSONObject obj) throws RuntimeException {
 
         try {
 			minimumLongitude = obj.getDouble("minLong");
 	        maximumLongitude = obj.getDouble("maxLong");
+	        showLongitude = obj.optDouble("showLong", maximumLongitude);
 	
 	        JSONArray jsonPredictors = obj.getJSONArray("predictors");
 	
@@ -46,7 +48,7 @@ public class Agent {
             copy.setValue(p.getClassIndex(), res);
         }
 
-        copy.setValue("Longitude", maximumLongitude);
+        copy.setValue("Longitude", showLongitude);
         return copy;
     }
 

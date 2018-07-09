@@ -129,6 +129,7 @@
         {
           "minLong": 14.6,
           "maxLong": 20,
+          "showLong": 18.57,
           "predictors":
           [
             {
