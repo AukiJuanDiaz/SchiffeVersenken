@@ -68,6 +68,7 @@ public class DropDownBox extends JComboBox implements ActionListener {
 			break;
 		}
         MapView.getInstance().changeMap(MainFrame2.mapSelected);
+        MapView.getInstance().drawlivePoints();
 	}
 
 }

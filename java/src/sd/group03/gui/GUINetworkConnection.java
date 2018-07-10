@@ -125,6 +125,7 @@ public class GUINetworkConnection implements Runnable {
             for (int i = 0; i < intLat.length(); i++) {
                 MapView.getInstance().savePoints(intLon, intLat, route);
             }
+            MapView.getInstance().clearMap();
             MapView.getInstance().drawlivePoints();
             
         }

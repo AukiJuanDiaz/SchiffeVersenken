@@ -173,6 +173,8 @@ public class MainFrame2 implements ActionListener, ItemListener{
     		
     		inputForm.textField.setText("");
     		inputForm.setlastOpenedFilePath("");
+//    		MapView.getInstance().clearMap();
+    		MapView.getInstance().resetPoints();
     	}
     	
     	// Return the credits for the work

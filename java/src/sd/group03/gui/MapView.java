@@ -107,29 +107,25 @@ public class MapView extends JPanel{
     		   MainFrame2.comboBox.setSelectedIndex(0);
     		   break;
 		   case 1:
-			   pic = "images/bh.png";
-			   drawlivePoints();			   
+			   pic = "images/bh.png";			   
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(false);
 			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 2:
 			   pic = "images/kg.png";
-			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(false);
 			   MainFrame2.comboBox.setSelectedIndex(2);
 			   break;
 		   case 3:
 			   pic = "images/bhplot.png";
-			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(1);
 			   break;
 		   case 4:
 			   pic = "images/kgplot.png";
-			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(false);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(2);
@@ -137,7 +133,6 @@ public class MapView extends JPanel{
 		   case 5:
 			   // bh ohne historic mit agent
 			   pic = "images/bhagent.png";
-			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(true);
 			   MainFrame2.checkBoxHistoric.setSelected(false);
 			   MainFrame2.comboBox.setSelectedIndex(1);
@@ -153,7 +148,6 @@ public class MapView extends JPanel{
 		   case 7:
 			   // bh mit historic mit agent
 			   pic = "images/bhplotagent.png";
-			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(true);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(1);
@@ -161,7 +155,6 @@ public class MapView extends JPanel{
 		   case 8:
 			   // kg mit historic mit agent
 			   pic = "images/kgplotagent.png";
-			   drawlivePoints();
 			   MainFrame2.checkBoxAgents.setSelected(true);
 			   MainFrame2.checkBoxHistoric.setSelected(true);
 			   MainFrame2.comboBox.setSelectedIndex(2);
@@ -170,6 +163,7 @@ public class MapView extends JPanel{
 			   pic = "images/gross.png";
 			   break;
     	}
+
     	try {
     	    image = ImageIO.read(getClass().getResource(pic));
 			updateUI();
@@ -200,9 +194,20 @@ public class MapView extends JPanel{
     	
     	
     }
+    
+    public void clearMap() {
+    	changeMap(getMap());
+    }
 
-    public void drawlivePoints() {
+    public void resetPoints() {
+    	for (int i = 0; i < 4;i++) {
+    		livexPoints[i]=0;
+    		liveyPoints[i]=0;
+    	}
     	
+    }
+    
+    public void drawlivePoints() {
     	
     	int area = 0;
     	if (route == 0) {
