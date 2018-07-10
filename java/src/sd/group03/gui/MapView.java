@@ -297,9 +297,9 @@ public class MapView extends JPanel{
 	}
 
     public int routeName2Index(String name) {
-        if (name.contentEquals("Bremerhaven-Hamburg")) {
+        if (name.contentEquals("Bremerhaven-Hamburg") || name.contentEquals("Bremerhaven-Hamburg Single Agent")) {
             return 1;
-        }else if (name.contentEquals("Kiel-Gdynia")) {
+        }else if (name.contentEquals("Kiel-Gdynia")|| name.contentEquals("Kiel-Gdynia Single Agent")) {
             return 2;
         }
         return 0;

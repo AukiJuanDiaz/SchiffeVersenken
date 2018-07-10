@@ -179,7 +179,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
     	
     	// Return the credits for the work
     	if(creditsItem == source){
-    		TextLog.getInstance().write("Dieses Programm wurde konzipiert, implementiert und trainiert von Arne Gruenhagen, Thilo Fischer und Hauke Diers.");
+    		TextLog.getInstance().write("Dieses Programm wurde konzipiert, implementiert und trainiert von Arne Grünhagen, Thilo Fischer und Hauke Diers.");
     	}
     	
     	// Open a new frame to enter the IP and Port of the Broker
