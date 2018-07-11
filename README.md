@@ -15,9 +15,7 @@ The final presentation for the course, which contains the history of the project
 
 ### Easy to use, directly start the .jar
 
-
-
-
+TODO:
 - GUI
 - Picture of GUI
 
@@ -27,25 +25,12 @@ The final presentation for the course, which contains the history of the project
 
 ### Build it yourself
 
-What things you need to install the software and how to install them
+TODO: What things you need to install the software and how to install them
 
-Our project depends on the following libraries:
+Our project depend on the following libraries:
 
 * [weka](https://www.cs.waikato.ac.nz/ml/weka/) - Machine Learning
 * [org.json](https://mvnrepository.com/artifact/org.json/json) - Communication between GUI and Broker<
-
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-
 
 ## Authors
 
@@ -53,8 +38,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 * **Arne Grünhagen** - [Arnegrnhgen](https://github.com/Arnegrnhgen)
 * **Thilo Fischer** - [Inu7el](https://github.com/Inu7el)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Acknowledgments
 
-* A big acknowledgment to the course instructor Mr. marrone for hosting our weakly SCRUM-meetings. 
+* A big acknowledgment to the course instructor Mr. Marrone for hosting our weekly (and weakly) SCRUM-meetings. 
