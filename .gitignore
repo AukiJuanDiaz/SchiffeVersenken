@@ -26,3 +26,5 @@
 
 /java/broker/src/sd/group03/broker/resources/brhh/global/RandomForest.model
 /java/broker/src/sd/group03/broker/resources/kigd/global/RandomForest.model
+
+*.class
