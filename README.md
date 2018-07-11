@@ -7,12 +7,15 @@ The architecture is easy to scale, so with more data it is easily possible to pr
 
 ## About
 
-This project was part of the course 'Software Development' at the Technical University Hamburg in the summerterm 2018. 
-The final presentation for the course, which contains the history of the project and quality benchmarks for the traveltime estimations is in the directory 'Presentation'. The slides are in German. 
+This project was part of the course "Software Development" at the Technical University Hamburg in the summerterm 2018. 
+The final presentation for the course, which contains the history of the project and quality benchmarks for the traveltime estimations, is in the directory "Presentation". The slides are in German. 
 
 
 ## Starting the application
 
+### Easy to use, directly start the .jar
+
+TODO:
 - GUI
 - Picture of GUI
 
@@ -20,27 +23,14 @@ The final presentation for the course, which contains the history of the project
 - Modelle entpacken
 - Prerequisites: nur java
 
-What things you need to install the software and how to install them
+### Build it yourself
 
-```
-Give examples
-```
+TODO: What things you need to install the software and how to install them
 
+Our project depend on the following libraries:
 
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* [weka](https://www.cs.waikato.ac.nz/ml/weka/) - Machine Learning
+* [org.json](https://mvnrepository.com/artifact/org.json/json) - Communication between GUI and Broker<
 
 ## Authors
 
@@ -48,8 +38,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 * **Arne Grünhagen** - [Arnegrnhgen](https://github.com/Arnegrnhgen)
 * **Thilo Fischer** - [Inu7el](https://github.com/Inu7el)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Acknowledgments
 
-* A big acknowledgment to the course instructor Mr. marrone for hosting our weakly SCRUM-meetings. 
+* A big acknowledgment to the course instructor Mr. Marrone for hosting our weekly (and weakly) SCRUM-meetings. 
