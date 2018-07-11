@@ -32,6 +32,7 @@ public class MainFrame2 implements ActionListener, ItemListener{
     }
 	
 	// Declare Elements in GUI
+	ImageIcon icon = null;
 	private JFrame frame;
 	InputForm inputForm;
 	MapView mapView; 
@@ -68,8 +69,10 @@ public class MainFrame2 implements ActionListener, ItemListener{
 		int cornerX = (screenSizeWidth / 2) - (FRAME_SIZE_WIDTH / 2);
 		int cornerY = (screenSizeHeight / 2) - (FRAME_SIZE_HEIGHT / 2);
 		
+		icon = new ImageIcon("src/sd/group03/gui/images/icon.png");
+				
 		frame = new JFrame();
-		
+		frame.setIconImage(icon.getImage());
 		frame.setTitle("Schiffe versenken");		
 		frame.setBounds(cornerX, cornerY, FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
 		frame.setResizable(false);

@@ -41,7 +41,7 @@ public class AISLinePicker implements ActionListener, ListSelectionListener {
 			aisData = new String(Files.readAllBytes(Paths.get(path)));
 			// System.out.println(aisData);
 		} catch (IOException e) {
-		    TextLog.getInstance().write("Fehler: Datei konnte nicht geöffnet werden! (" + path + ")");
+		    TextLog.getInstance().write("Fehler: Datei konnte nicht geoeffnet werden! (" + path + ")");
 			e.printStackTrace();
 			return;
 		}
@@ -81,7 +81,7 @@ public class AISLinePicker implements ActionListener, ListSelectionListener {
 		JScrollPane listScroller = new JScrollPane(list);
 		// listScroller.setPreferredSize(new Dimension(250, 80));
 		
-		submitButton = new JButton("Markierte Zeile ausw�hlen");
+		submitButton = new JButton("Markierte Zeile auswaehlen");
 		submitButton.setEnabled(false);
 		submitButton.addActionListener(this);
 		
