@@ -7,11 +7,16 @@ The architecture is easy to scale, so with more data it is easily possible to pr
 
 ## About
 
-This project was part of the course 'Software Development' at the Technical University Hamburg in the summerterm 2018. 
-The final presentation for the course, which contains the history of the project and quality benchmarks for the traveltime estimations is in the directory 'Presentation'. The slides are in German. 
+This project was part of the course "Software Development" at the Technical University Hamburg in the summerterm 2018. 
+The final presentation for the course, which contains the history of the project and quality benchmarks for the traveltime estimations, is in the directory "Presentation". The slides are in German. 
 
 
 ## Starting the application
+
+### Easy to use, directly start the .jar
+
+
+
 
 - GUI
 - Picture of GUI
@@ -20,7 +25,11 @@ The final presentation for the course, which contains the history of the project
 - Modelle entpacken
 - Prerequisites: nur java
 
+### Build it yourself
+
 What things you need to install the software and how to install them
+
+Dependencies for the following libraries are used
 
 ```
 Give examples
@@ -38,9 +47,7 @@ Give examples
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
