@@ -1,26 +1,15 @@
 package sd.group03.gui;
 
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.JButton;
 
 public class AISLinePicker implements ActionListener, ListSelectionListener {
 	private JFrame linePickerFrame;
@@ -52,11 +41,10 @@ public class AISLinePicker implements ActionListener, ListSelectionListener {
 			aisData = new String(Files.readAllBytes(Paths.get(path)));
 			// System.out.println(aisData);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		    TextLog.getInstance().write("Fehler: Datei konnte nicht geÃ¶ffnet werden! (" + path + ")");
 			e.printStackTrace();
+			return;
 		}
-		
-		
 		
 		String lines[] = aisData.split("\\r?\\n");
 		
@@ -93,7 +81,7 @@ public class AISLinePicker implements ActionListener, ListSelectionListener {
 		JScrollPane listScroller = new JScrollPane(list);
 		// listScroller.setPreferredSize(new Dimension(250, 80));
 		
-		submitButton = new JButton("Markierte Zeile auswählen");
+		submitButton = new JButton("Markierte Zeile auswï¿½hlen");
 		submitButton.setEnabled(false);
 		submitButton.addActionListener(this);
 		
