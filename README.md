@@ -29,12 +29,10 @@ The final presentation for the course, which contains the history of the project
 
 What things you need to install the software and how to install them
 
-Dependencies for the following libraries are used
+Our project depends on the following libraries:
 
-```
-Give examples
-```
-
+* [weka](https://www.cs.waikato.ac.nz/ml/weka/) - Machine Learning
+* [org.json](https://mvnrepository.com/artifact/org.json/json) - Communication between GUI and Broker<
 
 
 ## Built With
