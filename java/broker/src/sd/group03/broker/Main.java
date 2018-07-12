@@ -26,9 +26,8 @@ public class Main {
 
         ServerSocket socket;
         short port = 0;
-            
-        if(args.length == 2){
-        	port = Short.parseShort(args[1]);
+        if(args.length > 0){
+        	port = Short.parseShort(args[0]);
         } else {
         	port = 9812;
         }
