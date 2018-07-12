@@ -22,6 +22,12 @@ Our project depend on the following libraries. For building the code, you need t
 * [weka](https://www.cs.waikato.ac.nz/ml/weka/) - Machine Learning
 * [org.json](https://mvnrepository.com/artifact/org.json/json) - Communication between GUI and Broker<
 
+There are three main-methods in these classes:
+
+* The main-method of the GUI is in the class MainFrame2
+* The main-method of the Broker is in the class Main
+* The third main-method belongs to the class DrawHistData and is not needed for using the application
+
 ## Authors
 
 * **Hauke Diers** - [AukiJuanDiaz](https://github.com/AukiJuanDiaz)
