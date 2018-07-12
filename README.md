@@ -13,21 +13,11 @@ The final presentation for the course, which contains the history of the project
 
 ## Starting the application
 
-### Easy to use, directly start the .jar
-
-TODO:
-- GUI
-- Picture of GUI
-
-- Broker
-- Modelle entpacken
-- Prerequisites: nur java
-
 ### Build it yourself
 
-TODO: What things you need to install the software and how to install them
+For building our .java-files, you will need a Java-IDE (e.g. Eclipse). Our code is written in Java 1.8.
 
-Our project depend on the following libraries:
+Our project depend on the following libraries. For building the code, you need to include these libraries:
 
 * [weka](https://www.cs.waikato.ac.nz/ml/weka/) - Machine Learning
 * [org.json](https://mvnrepository.com/artifact/org.json/json) - Communication between GUI and Broker<
